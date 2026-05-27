@@ -29,13 +29,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen">
-      <Banner />
-
-      <Sidebar />
-
-      <main className="flex-1">{children}</main>
-    </div>
     <html
       lang="fr"
       className={cn(
@@ -46,7 +39,13 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <div className="h-20">
+        <Banner />
+        </div>
+        <Sidebar />
+        {children}
+      </body>
     </html>
   );
 }
