@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/common/sidebar";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
 import { cn } from "@/lib/utils";
 
 const frauncesHeading = Fraunces({
@@ -29,12 +29,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <div className="h-20">
-      <Banner />
-      </div>
-      <Sidebar />
-      {children}
-    </>
+    <html
+      lang="fr"
+      className={cn(
+        "h-full",
+        "antialiased",
+        frauncesHeading.variable,
+        plusJakarta.variable,
+        "font-sans",
+      )}
+    >
+      <body className="min-h-full flex flex-col">
+        {children}
+      </body>
+    </html>
   );
 }
