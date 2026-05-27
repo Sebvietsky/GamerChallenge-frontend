@@ -1,15 +1,41 @@
-import type { ReactNode } from "react";
+import type { Metadata } from "next";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import "../globals.css";
+import { cn } from "@/lib/utils";
 
-interface PublicLayoutProps {
-  children: ReactNode;
-}
+const frauncesHeading = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-heading"
+})
 
-export default function PublicLayout({ children }: PublicLayoutProps) {
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-body"
+})
+
+export const metadata: Metadata = {
+  title: "GamerChallenges",
+  description:
+    "Participate in epic gaming challenges and compete on the leaderboard",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <div className="min-h-screen">
-      {/* Public header/navbar will go here */}
-      <main className="flex-1">{children}</main>
-      {/* Public footer will go here */}
-    </div>
+    <html
+      lang="fr"
+      className={cn(
+        "h-full",
+        "antialiased",
+        frauncesHeading.variable,
+        plusJakarta.variable,
+        "font-sans",
+      )}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+    </html>
   );
 }
