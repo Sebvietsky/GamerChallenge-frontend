@@ -1,3 +1,6 @@
+import { Banner } from "@/components/common/banner";
+import { Sidebar } from "@/components/common/sidebar";
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
@@ -26,6 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <div className="min-h-screen">
+      <Banner />
+
+      <Sidebar />
+
+      <main className="flex-1">{children}</main>
+    </div>
     <html
       lang="fr"
       className={cn(
