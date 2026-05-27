@@ -1,3 +1,5 @@
+import { Banner } from "@/components/common/banner";
+import { Sidebar } from "@/components/common/sidebar";
 import type { ReactNode } from "react";
 
 interface PublicLayoutProps {
@@ -7,9 +9,11 @@ interface PublicLayoutProps {
 export default function PublicLayout({ children }: PublicLayoutProps) {
   return (
     <div className="min-h-screen">
-      {/* Public header/navbar will go here */}
+      <Banner />
+
+      <Sidebar />
+
       <main className="flex-1">{children}</main>
-      {/* Public footer will go here */}
     </div>
   );
 }

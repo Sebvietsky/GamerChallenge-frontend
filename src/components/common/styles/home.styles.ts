@@ -1,9 +1,9 @@
 export const homeStyles = {
   page: `
     min-h-screen
-    bg-[#F4F1FB]
-    p-4`,
-
+    bg-[#B9D8F0]
+    p-4
+    `,
   layout: ``,
 
   title: `
