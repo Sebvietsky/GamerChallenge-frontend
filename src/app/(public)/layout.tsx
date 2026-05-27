@@ -5,17 +5,18 @@ import { cn } from "@/lib/utils";
 
 const frauncesHeading = Fraunces({
   subsets: ["latin"],
-  variable: "--font-heading"
+  variable: "--font-frances"
 })
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-body"
+  variable: "--font-plus-jakarta"
 })
 
 export const metadata: Metadata = {
   title: "GamerChallenges",
   description:
+  // TODO Change métadata
     "Participate in epic gaming challenges and compete on the leaderboard",
 };
 
