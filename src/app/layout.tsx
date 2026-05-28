@@ -6,18 +6,18 @@ import { cn } from "@/lib/utils";
 
 const frauncesHeading = Fraunces({
   subsets: ["latin"],
-  variable: "--font-frances"
-})
+  variable: "--font-frances",
+});
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta"
-})
+  variable: "--font-plus-jakarta",
+});
 
 export const metadata: Metadata = {
   title: "GamerChallenges",
   description:
-  // TODO Change métadata
+    // TODO Change métadata
     "Participate in epic gaming challenges and compete on the leaderboard",
 };
 
@@ -28,8 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html
+      suppressHydrationWarning
       lang="fr"
-      data-scroll-behavior="smooth"
       className={cn(
         "h-full",
         "antialiased",
@@ -38,9 +38,7 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body className="min-h-full flex flex-col">
-        {children}
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
