@@ -1,11 +1,8 @@
-import { Banner } from "@/components/common/banner";
-import { Sidebar } from "@/components/common/sidebar";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ScrollBehavior } from "next/dist/client/components/router-reducer/router-reducer-types";
 
 const frauncesHeading = Fraunces({
   subsets: ["latin"],
@@ -27,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html
