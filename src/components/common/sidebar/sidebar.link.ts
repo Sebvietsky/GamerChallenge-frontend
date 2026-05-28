@@ -40,7 +40,7 @@ export const sidebarLinks = [
 
   {
     label: "Mes Favoris",
-    href: "/favoris",
+    href: "/dashboard/favorites",
     icon: Heart,
   },
 ];
