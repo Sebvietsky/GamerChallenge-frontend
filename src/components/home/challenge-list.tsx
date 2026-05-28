@@ -2,7 +2,7 @@
 import { ChallengeCard } from "./challenge-card";
 
 // STYLES
-import { homeStyles as styles } from "@/components/common/styles/home.styles";
+import { homeStyles as styles } from "@/styles/global.styles";
 
 export function ChallengeList() {
   return (
