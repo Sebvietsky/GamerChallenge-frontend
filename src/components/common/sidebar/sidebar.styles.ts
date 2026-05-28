@@ -50,7 +50,7 @@ export const sidebarStyles = {
      de la sidebar.
   ====================================================== */
 
-  logo: "flex self-center justify-center h-24 border-b border-border/50",
+  logo: "border-b border-border/50",
 
   /* ======================================================
    MOBILE HEADER

@@ -14,10 +14,6 @@ export default function HomePage() {
           {/* CHALLENGE SHOWCASE */}
           <section className={styles.showcaseSection}>
             <div className={styles.showcaseContent}>
-              <div className={styles.showcaseBadge}>
-                🎮 Plateforme communautaire gaming
-              </div>
-
               <h1 className={styles.showcaseTitle}>
                 Crée des défis pour ton jeu de cœur et fais découvrir de
                 nouvelles manières d’y jouer à la communauté !

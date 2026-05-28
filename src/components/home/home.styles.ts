@@ -18,9 +18,6 @@ export const homeStyles = {
 
   showcaseContent: "relative z-10 max-w-3xl",
 
-  showcaseBadge:
-    "glass-effect mb-5 inline-flex items-center rounded-full px-4 py-2 text-xs text-white md:text-sm",
-
   showcaseTitle: "max-w-3xl text-4xl leading-tight font-bold md:text-5xl",
 
   showcaseDescription:
@@ -40,7 +37,7 @@ export const homeStyles = {
     "bg-primary hover:bg-primary/90 rounded-2xl px-5 py-3 text-sm font-medium text-white transition-all hover:scale-[1.02] md:px-6 md:py-4 md:text-base",
 
   secondaryButton:
-    "glass-effect hover:bg-white/20 rounded-2xl border border-white/20 px-5 py-3 text-sm font-medium text-white transition-all md:px-6 md:py-4 md:text-base",
+    "glass-effect hover:bg-white/20 rounded-2xl border border-white/20 px-5 py-3 text-sm font-medium text-brand-secondary transition-all md:px-6 md:py-4 md:text-base",
 
   lightButton:
     "soft-border bg-surface hover:bg-surface-accent rounded-2xl px-5 py-3 text-sm font-medium text-text transition-all md:px-6 md:py-4 md:text-base",

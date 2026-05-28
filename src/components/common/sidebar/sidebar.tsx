@@ -26,7 +26,7 @@ export function Sidebar({ mobile = false }: SidebarProps) {
       {/* MOBILE HEADER */}
       {mobile && (
         <div className={styles.mobileHeader}>
-          <Link href="/">
+          <Link href="/" className="inline-flew w-fit">
             <Image
               src="/Logo-Gamer-Challenge.png"
               alt="Logo Gamer Challenge"
@@ -44,8 +44,8 @@ export function Sidebar({ mobile = false }: SidebarProps) {
 
       {/* DESKTOP LOGO */}
       {!mobile && (
-        <div className={styles.logoIcon}>
-          <Link href="/">
+        <div className={styles.logo}>
+          <Link href="/" className="inline-flew w-fit">
             <Image
               src="/Logo-Gamer-Challenge.png"
               alt="Logo Gamer Challenge"
