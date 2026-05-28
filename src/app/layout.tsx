@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ScrollBehavior } from "next/dist/client/components/router-reducer/router-reducer-types";
 
 const frauncesHeading = Fraunces({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
+      data-scroll-behavior="smooth"
       className={cn(
         "h-full",
         "antialiased",
@@ -39,7 +41,7 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body suppressHydrationWarning className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col">
         {children}
       </body>
     </html>

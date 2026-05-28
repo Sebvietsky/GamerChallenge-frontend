@@ -354,7 +354,7 @@ BASE
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
 
   html {
@@ -362,7 +362,7 @@ BASE
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-text antialiased;
   }
 
   button:not(:disabled),
@@ -377,6 +377,14 @@ BASE
     font-family: var(--font-heading);
     letter-spacing: -0.03em;
   }
+  input {
+    @apply border-input border rounded text-text-soft px-2 outline-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary/50 focus:border-secondary
+  }
+
+  input:autofill {
+    @apply bg-primary
+  }
+
 }
 
 /* =========================================================
