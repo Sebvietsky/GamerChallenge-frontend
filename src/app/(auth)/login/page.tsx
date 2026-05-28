@@ -2,63 +2,58 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/images/Logo-Gamer-Challenge.png";
-import { Input } from "@/components/ui/input";
+import { loginStyles as styles } from "@/styles/login.styles" ;
+import { commonStyles as common } from "@/styles/common-auth.styles" ;
+import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   return (
-    <main className="flex flex-col gap-6 p-6 max-w-sm mx-auto">
-      <div className="flex flex-col items-center gap-2">
-        <Link href="/">
-          <Image
-            className="h-16 w-16"
-            src={logo}
-            alt="Logo Gamer Challenge"
-            loading="eager"
-          />
-        </Link>
-        <h1 className="text-2xl font-bold font-heading">Login</h1>
-        <p className="text-sm text-muted-foreground">Sign in to your account</p>
+    <main className={common.main}>
+    <div className={common.container}>
+      <Link href="/">
+        <Image className={common.logo} width={100} height={100} src="/images/logo.png" alt="Logo Gamer Challenge" loading="eager"/>
+      </Link>
+      <h1 className={common.h1}>Connection</h1>
+      <p className={common.p}>Connectez-vous à votre compte</p>
+    </div>
+
+    <form className={common.form}>
+      <div className={common.labelContainer}>
+        <label htmlFor="email">Email</label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="monemail@mail.com"
+          required
+        />
       </div>
 
-      <form className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="email">Email</label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            placeholder="monemail@mail.com"
-          />
-        </div>
+      <div className={common.labelContainer}>
+        <label htmlFor="password">Mot de passe</label>
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          placeholder="monMotdePasse!"
+          required
+        />
+      </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="password">Mot de passe</label>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder="monMotdePasse!"
-          />
-        </div>
+      <Button type="submit" className={common.submitButton}>
+        Se connecter
+      </Button>
+    </form>
 
-        <Button type="submit" className="w-full mt-2 hover:brightness-110">
-          Se connecter
-        </Button>
-      </form>
-
-      <p className="text-center text-xs text-muted-foreground">
-        Pas encore de compte ?{" "}
-        <Link
-          className="text-primary text hover:underline font-semibold"
-          href="/register"
-        >
-          Créer un compte
-        </Link>
-      </p>
-    </main>
+    <p className={styles.pSoft}>
+      Pas encore de compte ?{" "}
+      <Link className={common.link} href="/register">
+        Créer un compte
+      </Link>
+    </p>
+  </main>
   );
 }
