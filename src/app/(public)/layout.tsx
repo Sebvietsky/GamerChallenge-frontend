@@ -29,23 +29,12 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html
-      lang="fr"
-      className={cn(
-        "h-full",
-        "antialiased",
-        frauncesHeading.variable,
-        plusJakarta.variable,
-        "font-sans",
-      )}
-    >
-      <body className="min-h-full flex flex-col">
-        <div className="h-20">
-          <Banner />
-        </div>
-        <Sidebar />
-        {children}
-      </body>
-    </html>
+    <>
+      <div className="h-20">
+        <Banner />
+      </div>
+      <Sidebar />
+      {children}
+    </>
   );
 }

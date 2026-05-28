@@ -34,13 +34,13 @@ export const sidebarLinks = [
 
   {
     label: "Mes participations",
-    href: "/participations",
+    href: "/dashboard/participations",
     icon: FileText,
   },
 
   {
     label: "Mes Favoris",
-    href: "/favoris",
+    href: "/dashboard/favorites",
     icon: Heart,
   },
 ];

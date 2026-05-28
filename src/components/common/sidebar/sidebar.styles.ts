@@ -1,13 +1,13 @@
 export const sidebarStyles = {
   sidebar:
-    "flex h-[calc(100vh-32px)] w-[280px] flex-col rounded-[32px] border border-[#E7E2F3] bg-white/70 p-5 backdrop-blur-xl",
+    "flex h-[calc(100vh-32px)] w-[280px] flex-col rounded-none border border-[#E7E2F3] bg-white/70 p-5 backdrop-blur-xl",
 
   logoContainer: "mb-8 flex items-center gap-4",
 
   logoIcon:
     "flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-300",
 
-  logoText: "text-lg font-bold text-[#2C2560]",
+  logoText: "text-lg font-bold text-text",
 
   searchContainer: "mb-4",
 

@@ -1,8 +1,7 @@
-"use-client"
-
 import Image from "next/image";
 import Link from "next/link";
 import { commonStyles as common} from "@/styles/common-auth.styles";
+import { registerStyle as styles } from "@/styles/register.styles";
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -15,55 +14,56 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-// .object({
-//     username: z.string().min(2),
-//     email: z.email(),
-//     password: z
-//       .string()
-//       .min(12)
-//       .max(100)
-//       .regex(/[a-z]/, "Password must contain at least one lowercase caracter")
-//       .regex(/[A-Z]/, "Password must contain at least one uppercase caracter")
-//       .regex(/[0-9]/, "Password must contain at least one number"),
-//     confirm: z.string(),
-//     country: z.string().optional(),
-//     bio: z.string().optional(),
-//     profilePicture: z.string().optional(),
-//   })
-
-
 export default function RegisterPage() {
   return (
     <main className={common.main}>
+      {/* Header register */}
       <div className={common.container}>
         <Link href="/">
         <Image className={common.logo} width={100} height={100} src="/images/logo.png" alt="Logo de Gamer Challenge" loading="eager"/>
         </Link>
         <h1 className="text-2xl font-bold">Créer un compte</h1>
       </div>
+      {/* Form */}
       <form className={common.form} action="submit">
         <div className={common.labelContainer}>
           <label htmlFor="username">Nom d'utilisateur</label>
           <Input
+          id="username"
+          name="username"
+          autoComplete="username"
           placeholder="Nom de compte"
           required
           />
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="email">Email</label>
-          <Input 
+          <Input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="exemple@mail.com" 
           required
           />
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="password">Mot de passe</label>
           <Input 
+          autoComplete="new-password"
+          id="password"
+          name="password"
+          type="password"
           required
           />
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="confirm">Confirmation de mot de passe</label>
           <Input 
+          id="confirm"
+          name="confirm"
+          autoComplete="new-password"
+          type="password"
           required
           />
         </div>
@@ -75,7 +75,8 @@ export default function RegisterPage() {
             </SelectTrigger>
             <SelectContent>
               {countries.map((country) => (
-                <SelectItem key={country.code} value={country.code}>
+                // Code Country or Name Country
+                <SelectItem key={country.code} value={country.name}> 
                   {country.name}
                 </SelectItem>
               ))}
@@ -83,15 +84,22 @@ export default function RegisterPage() {
           </Select>
         </div>
         <div className={common.labelContainer}>
-          <label htmlFor="bio">Biograhpie</label>
+          <label htmlFor="bio">Biographie</label>
           <Textarea placeholder="Ecrivez votre biographie ici"/>
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="profilPicture">Photo de profil</label>
-          <Input type="file"/>
+          <Input
+          id="profilPicture"
+          name="profilPicture"
+          type="file"
+          accept="image/*"
+          className={styles.imageInput}
+          />
         </div>
         <Button className={common.submitButton} type="submit">Créez votre compte</Button>
       </form>
+      {/* End Form */}
     </main>
   );
 }

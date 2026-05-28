@@ -1,5 +1,5 @@
 export const homeStyles = {
-  page: "min-h-screen bg-[#F4F1FB] p-4",
+  page: "min-h-screen bg-lilac p-4",
 
   layout: "flex gap-4",
 

@@ -14,7 +14,7 @@ export function Sidebar() {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.logo}>
+      <div className={styles.logoIcon}>
         <Link href="/">
           <Image
             className="h-16 w-16"
