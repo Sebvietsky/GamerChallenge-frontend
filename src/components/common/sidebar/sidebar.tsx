@@ -14,7 +14,7 @@ export function Sidebar() {
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.logo}>
+      <div className={styles.logoIcon}>
         <Link href="/">
           <Image
             src="/Logo-Gamer-Challenge.png"

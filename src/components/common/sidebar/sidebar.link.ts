@@ -34,7 +34,7 @@ export const sidebarLinks = [
 
   {
     label: "Mes participations",
-    href: "/participations",
+    href: "/dashboard/participations",
     icon: FileText,
   },
 
