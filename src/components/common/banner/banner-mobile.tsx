@@ -2,9 +2,14 @@
 
 import Link from "next/link";
 
-import { Menu, User } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import { Sidebar } from "@/components/common/sidebar/sidebar";
 import { getAvatar } from "@/features/auth/auth.utils";
@@ -25,8 +30,12 @@ export function BannerMobile() {
             <Menu size={20} />
           </SheetTrigger>
 
-          <SheetContent side="left" className={styles.mobileSidebar}>
-            <Sidebar />
+          <SheetContent
+            side="left"
+            showCloseButton={false}
+            className={styles.mobileSidebar}
+          >
+            <Sidebar mobile />
           </SheetContent>
         </Sheet>
 

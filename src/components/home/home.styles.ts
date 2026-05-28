@@ -1,43 +1,49 @@
 export const homeStyles = {
-  page: "min-h-screen bg-background p-4",
+  /* =========================================================
+  PAGE
+  ========================================================= */
+
+  page: "min-h-screen overflow-x-hidden bg-background p-3 md:p-4",
 
   layout: "flex gap-4",
 
-  main: "gaming-card rounded-3xl flex-1 p-6",
+  main: "gaming-card flex-1 rounded-[32px] p-4 md:p-6",
 
   /* =========================================================
   SHOWCASE
   ========================================================= */
 
   showcaseSection:
-    "gaming-gradient relative mt-6 overflow-hidden rounded-3xl p-10 text-white shadow-2xl",
+    "gaming-gradient relative mt-4 overflow-hidden rounded-[32px] p-6 text-white shadow-2xl md:mt-6 md:p-10",
 
   showcaseContent: "relative z-10 max-w-3xl",
 
   showcaseBadge:
-    "glass-effect mb-6 inline-flex items-center rounded-full px-4 py-2 text-sm text-white",
+    "glass-effect mb-5 inline-flex items-center rounded-full px-4 py-2 text-xs text-white md:text-sm",
 
-  showcaseTitle: "max-w-3xl text-5xl leading-tight font-bold",
+  showcaseTitle: "max-w-3xl text-4xl leading-tight font-bold md:text-5xl",
 
-  showcaseDescription: "mt-6 max-w-2xl text-lg leading-relaxed text-white/80",
+  showcaseDescription:
+    "mt-5 max-w-2xl text-sm leading-relaxed text-white/80 md:mt-6 md:text-lg",
 
-  showcaseActions: "mt-8 flex items-center gap-4",
+  showcaseActions:
+    "mt-8 flex flex-col gap-3 sm:flex-row sm:items-center md:gap-4",
 
   showcaseGlow:
-    "bg-brand-primary/20 absolute -bottom-24 -left-20 h-[280px] w-[280px] rounded-full blur-3xl",
+    "bg-brand-primary/20 absolute -bottom-24 -left-20 h-[220px] w-[220px] rounded-full blur-3xl md:h-[280px] md:w-[280px]",
 
   /* =========================================================
   BUTTONS
   ========================================================= */
 
   primaryButton:
-    "bg-primary hover:bg-primary/90 rounded-2xl px-6 py-4 font-medium text-white transition-all hover:scale-[1.02]",
+    "bg-primary hover:bg-primary/90 rounded-2xl px-5 py-3 text-sm font-medium text-white transition-all hover:scale-[1.02] md:px-6 md:py-4 md:text-base",
 
   secondaryButton:
-    "glass-effect hover:bg-white/20 rounded-2xl border border-white/20 px-6 py-4 font-medium text-white transition-all",
+    "glass-effect hover:bg-white/20 rounded-2xl border border-white/20 px-5 py-3 text-sm font-medium text-white transition-all md:px-6 md:py-4 md:text-base",
 
   lightButton:
-    "soft-border bg-surface hover:bg-surface-accent rounded-2xl px-6 py-4 font-medium text-text transition-all",
+    "soft-border bg-surface hover:bg-surface-accent rounded-2xl px-5 py-3 text-sm font-medium text-text transition-all md:px-6 md:py-4 md:text-base",
 
   /* =========================================================
   CHALLENGES
@@ -45,20 +51,21 @@ export const homeStyles = {
 
   challengeSection: "mt-10 flex flex-col gap-6",
 
-  sectionHeader: "flex items-center justify-between",
+  sectionHeader:
+    "flex flex-col gap-3 md:flex-row md:items-center md:justify-between",
 
-  sectionTitle: "text-text text-3xl font-bold",
+  sectionTitle: "text-text text-2xl font-bold md:text-3xl",
 
-  sectionDescription: "text-text-muted mt-2 text-sm",
+  sectionDescription: "text-text-muted mt-1 text-sm",
 
   /* =========================================================
   CTA SECTION
   ========================================================= */
 
   communitySection:
-    "mt-12 flex items-center justify-between rounded-3xl bg-gradient-to-r from-[var(--brand-primary-light)]/20 to-[var(--brand-gold)]/20 p-8",
+    "mt-12 flex flex-col gap-6 rounded-[32px] bg-gradient-to-r from-[var(--brand-primary-light)]/20 to-[var(--brand-gold)]/20 p-6 md:flex-row md:items-center md:justify-between md:p-8",
 
-  communityTitle: "text-text text-3xl font-bold",
+  communityTitle: "text-text text-2xl font-bold md:text-3xl",
 
-  communityDescription: "text-text-muted mt-2",
+  communityDescription: "text-text-muted mt-2 text-sm md:text-base",
 };

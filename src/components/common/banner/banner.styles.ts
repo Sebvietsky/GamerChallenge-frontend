@@ -1,30 +1,23 @@
 export const bannerStyles = {
   /* ======================================================
-     COMMON CONTAINER
+     HEADER CONTAINER
      ======================================================
 
-     Conteneur principal de la banner.
-
-     - w-full :
-       prend toute la largeur disponible
+     Header principal utilisé :
+     - mobile
+     - desktop
 
      - h-20 :
-       hauteur fixe = 80px
-
-     - px-4 md:px-6 :
-       padding responsive
+       hauteur = 80px
 
      - bg-background/80 :
-       fond semi-transparent
+       effet glassmorphism
 
      - backdrop-blur-xl :
-       effet glassmorphism léger
+       flou arrière-plan
 
      - border-b :
-       bordure basse subtile
-
-     Cette banner est utilisée sur
-     pratiquement toutes les pages.
+       séparation visuelle
   ====================================================== */
 
   container:
@@ -34,143 +27,88 @@ export const bannerStyles = {
      MOBILE CONTAINER
      ======================================================
 
-     Structure interne de la version mobile.
+     Conteneur mobile du header.
 
-     - flex :
-       active flexbox
-
-     - items-center :
-       centre verticalement les éléments
+     - lg:hidden :
+       visible uniquement mobile/tablette
 
      - justify-between :
-       espace le menu burger et l'avatar
-
-     - h-full :
-       prend toute la hauteur du header
-
-     Visible uniquement en mobile/tablette.
+       menu à gauche
+       avatar à droite
   ====================================================== */
 
-  mobileContainer: "flex items-center justify-between w-full h-full",
+  mobileContainer: "flex h-full items-center justify-between lg:hidden",
 
   /* ======================================================
      MOBILE MENU BUTTON
      ======================================================
 
-     Bouton burger affiché uniquement
-     en version mobile.
+     Bouton ouverture sidebar mobile.
 
-     - h-11 w-11 :
-       taille tactile confortable
+     - h-12 w-12 :
+       zone tactile confortable
 
      - rounded-2xl :
-       coins arrondis cohérents avec la DA
-
-     - bg-surface :
-       utilise la couleur surface du design system
-
-     - hover:bg-surface-accent :
-       feedback visuel au hover
-
-     Ce bouton ouvre le Sheet shadcn
-     contenant la sidebar mobile.
+       cohérent avec la DA
   ====================================================== */
 
   mobileMenuButton:
-    "flex items-center justify-center h-11 w-11 rounded-2xl border border-border/50 bg-surface text-text hover:bg-surface-accent transition-colors duration-200",
+    "flex h-12 w-12 items-center justify-center rounded-2xl border border-border/50 bg-surface text-text transition-colors duration-200 hover:bg-surface-accent",
 
   /* ======================================================
      MOBILE SIDEBAR
      ======================================================
 
-     Style du SheetContent shadcn.
+     Sheet contenant la sidebar mobile.
 
-     - w-[300px] :
-       largeur du drawer mobile
+     - 85vw :
+       responsive mobile
 
-     - border-none :
-       retire les styles par défaut
+     - max-w-sm :
+       largeur maximale propre
 
      - bg-transparent :
-       laisse la sidebar gérer son fond
+       évite bande blanche
 
      - p-0 :
-       supprime le padding interne natif
+       supprime padding natif
   ====================================================== */
 
-  mobileSidebar:
-    "w-[85vw] max-w-[320px] bg-transparent border-none p-0 shadown-none",
+  mobileSidebar: "w-[85vw] max-w-sm border-none bg-transparent p-0 shadow-none",
 
   /* ======================================================
      DESKTOP CONTAINER
      ======================================================
 
-     Structure desktop de la banner.
+     Header desktop.
 
-     - flex :
-       active flexbox
-
-     - justify-end :
-       pousse l'avatar à droite
-
-     - items-center :
-       alignement vertical
-
-     - h-full :
-       prend toute la hauteur disponible
-
-     Visible uniquement sur desktop.
+     - hidden lg:flex :
+       visible uniquement desktop
   ====================================================== */
 
-  desktopContainer: "flex items-center justify-end w-full h-full",
+  desktopContainer: "hidden h-full items-center justify-end lg:flex",
 
   /* ======================================================
-     AVATAR CONTAINER
+     AVATAR
      ======================================================
 
-     Conteneur principal de l'avatar.
+     Avatar utilisateur.
 
-     - h-11 w-11 :
-       taille cohérente avec les boutons UI
-
-     - border :
-       contour subtil utilisant les tokens
-
-     Sert d'accès rapide :
-     - connexion
-     - profil
-     - dashboard
+     - ring :
+       contour léger
   ====================================================== */
 
-  avatarContainer: "h-11 w-11 border border-border/50",
+  avatarContainer: "h-12 w-12 ring-2 ring-border/50",
 
-  /* ======================================================
-     AVATAR IMAGE
-     ======================================================
-
-     Image utilisateur.
-
-     - object-cover :
-       évite les déformations d'image
-
-     - bg-brand-secondary :
-       fallback couleur branding
-  ====================================================== */
-
-  avatar: "bg-brand-secondary object-cover",
+  avatar: "object-cover",
 
   /* ======================================================
      AVATAR FALLBACK
      ======================================================
 
-     Affiché lorsqu'aucun avatar
-     utilisateur n'est disponible.
-
-     - bg-surface-accent :
-       fond violet clair
-
-     - text-secondary :
-       couleur cohérente avec la charte graphique
+     Fallback affiché :
+     - si pas d'image
+     - ou chargement échoué
   ====================================================== */
 
   avatarFallback: "bg-surface-accent text-secondary",
