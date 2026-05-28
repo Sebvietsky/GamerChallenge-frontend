@@ -1,13 +1,17 @@
-"use-client";
+"use client"
 
 import Image from "next/image";
 import Link from "next/link";
+import { useLogin } from "@/features/auth/hooks/useLogin";
 import { loginStyles as styles } from "@/styles/login.styles" ;
 import { commonStyles as common } from "@/styles/common-auth.styles" ;
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button";
 
+
+
 export default function LoginPage() {
+  const { handleSubmit, error, loading } = useLogin();
   return (
     <main className={common.main}>
       {/* Header Login */}
@@ -19,7 +23,8 @@ export default function LoginPage() {
       <p className={common.p}>Connectez-vous à votre compte</p>
     </div>
     {/* Form Login */}
-    <form className={common.form}>
+    <form onSubmit={handleSubmit} className={common.form}>
+      {error && <p className="text-destructive text-sm">{error}</p>}
       <div className={common.labelContainer}>
         <label htmlFor="email">Email</label>
         <Input
@@ -44,8 +49,8 @@ export default function LoginPage() {
         />
       </div>
 
-      <Button type="submit" className={common.submitButton}>
-        Se connecter
+      <Button type="submit" className={common.submitButton} disabled={loading}>
+        {loading ? "Connexion..." : "Se connecter"}
       </Button>
     </form>
     {/* Footer Login */}
