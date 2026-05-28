@@ -1,29 +1,121 @@
 export const sidebarStyles = {
+  /* ======================================================
+     SIDEBAR CONTAINER
+     ======================================================
+
+     - w-64 :
+       largeur fixe = 256px
+
+     - h-screen :
+       prend toute la hauteur de l'écran
+
+     - flex flex-col :
+       organise les éléments verticalement
+
+     - bg-surface :
+       couleur provenant du design system
+
+     - border-r :
+       ajoute une bordure à droite
+
+     - border-border/50 :
+       utilise le token border avec 50% d'opacité
+  ====================================================== */
+
   sidebar:
-    "flex h-[calc(100vh-32px)] w-[280px] flex-col rounded-none border border-[#E7E2F3] bg-white/70 p-5 backdrop-blur-xl",
+    "w-64 h-screen flex flex-col bg-background border-r border-border/50",
 
-  logoContainer: "mb-8 flex items-center gap-4",
+  /* ======================================================
+     LOGO SECTION
+     ======================================================
 
-  logoIcon:
-    "flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-300",
+     Contient le logo en haut de la sidebar.
 
-  logoText: "text-lg font-bold text-text",
+     - flex :
+       active flexbox
 
-  searchContainer: "mb-4",
+     - items-center :
+       centre verticalement
 
-  searchInput:
-    "h-12 w-full rounded-2xl border border-[#ECE7F7] bg-white px-4 text-sm outline-none placeholder:text-[#B2ACD3]",
+     - justify-center :
+       centre horizontalement
 
-  navigation: "flex flex-col gap-2",
+     - h-24 :
+       hauteur = 96px
+
+     - border-b :
+       bordure basse
+
+     Cette section agit comme le "header"
+     de la sidebar.
+  ====================================================== */
+
+  logo: "flex self-center justify-center h-24 border-b border-border/50",
+
+  /* ======================================================
+     NAVIGATION
+     ======================================================
+
+     Conteneur des liens de navigation.
+
+     - flex-col :
+       liens empilés verticalement
+
+     - gap-2 :
+       espace entre les liens
+
+     - p-4 :
+       padding interne = 16px
+  ====================================================== */
+
+  navigation: "flex flex-col gap-2 p-4",
+
+  /* ======================================================
+     NAV ITEM
+     ======================================================
+
+     Style d'un lien non actif.
+
+     - flex items-center :
+       aligne icône + texte horizontalement
+
+     - gap-3 :
+       espace entre icône et texte
+
+     - px-4 py-3 :
+       padding horizontal + vertical
+
+     - rounded-2xl :
+       coins très arrondis modernes
+
+     - text-text-muted :
+       couleur texte secondaire
+
+     - hover:bg-surface-accent :
+       fond au hover
+
+     - transition-colors :
+       animation couleur fluide
+  ====================================================== */
 
   navItem:
-    "flex items-center gap-4 rounded-2xl px-4 py-3 text-sm font-medium text-[#2C2560] transition-all hover:bg-[#F3F0FF]",
+    "flex items-center gap-3 px-4 py-3 rounded-2xl text-text-muted hover:bg-surface-accent transition-colors duration-200",
+
+  /* ======================================================
+     NAV ITEM ACTIVE
+     ======================================================
+
+     Style du lien actuellement actif.
+
+     Différence principale :
+     - fond violet clair
+     - texte accentué
+     - font-medium
+
+     Cela permet de montrer visuellement
+     la page actuelle.
+  ====================================================== */
 
   navItemActive:
-    "flex items-center gap-4 rounded-2xl bg-[#F1ECFF] px-4 py-3 text-sm font-medium text-[#6A5AE0]",
-
-  footer: "mt-auto flex items-center gap-3",
-
-  footerButton:
-    "flex h-12 w-12 items-center justify-center rounded-2xl border border-[#ECE7F7] bg-white transition-all hover:bg-[#F3F0FF]",
+    "flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-accent text-secondary font-medium",
 };

@@ -17,11 +17,10 @@ export function Sidebar() {
       <div className={styles.logoIcon}>
         <Link href="/">
           <Image
-            className="h-16 w-16"
             src="/Logo-Gamer-Challenge.png"
             alt="Logo Gamer Challenge"
-            width={64}
-            height={64}
+            width={100}
+            height={100}
             loading="eager"
           />
         </Link>
