@@ -1,5 +1,5 @@
-import { Banner } from "@/components/common/banner";
-import { Sidebar } from "@/components/common/sidebar";
+import { Banner } from "@/components/common/banner/banner";
+import { Sidebar } from "@/components/common/sidebar/sidebar";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html
