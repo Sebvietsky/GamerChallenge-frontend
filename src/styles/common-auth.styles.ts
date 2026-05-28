@@ -1,5 +1,5 @@
 export const commonStyles = {
-  main: "flex flex-col gap-6 p-6 max-w-sm mx-auto",
+  main: "flex flex-col gap-6 p-6 max-w-sm mx-auto overflow-auto",
   container: "flex flex-col items-center gap-2",
   h1: "text-2xl font-bold font-heading",
   p: "text-sm text-muted-foreground",
