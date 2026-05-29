@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { LoginPayload, RegisterPayload, AuthResponse } from "../types/auth.type";
 
-const API_URL = process.env.API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export async function login(payload: LoginPayload) {
   //TODO A verifier route pour login
@@ -42,6 +42,8 @@ export async function register(payload: RegisterPayload ): Promise<AuthResponse>
   if (payload.bio) formData.append("bio", payload.bio);
   if (payload.profilPicture) formData.append("profilPicture", payload.profilPicture);
 
+  console.log(formData)
+
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     credentials: "include",
@@ -50,7 +52,7 @@ export async function register(payload: RegisterPayload ): Promise<AuthResponse>
 
   if(!response.ok) {
     const contentType = response.headers.get("content-type");
-    if (contentType?.includes("application.json")) {
+    if (contentType?.includes("application/json")) {
       const error = await response.json()
       throw new Error(error.message ?? messageFromStatus(response.status))
     }

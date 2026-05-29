@@ -16,7 +16,7 @@ const schema = z.object({
   email: z.string().email("Email invalide"),
 
   password: z.string()
-    .min(8, "8 caractères minimum")
+    .min(12, "12 caractères minimum")
     .regex(/[A-Z]/, "Au moins une majuscule")
     .regex(/[0-9]/, "Au moins un chiffre")
     .regex(/[^a-zA-Z0-9]/, "Au moins un caractère spécial (!@#$%...)"),

@@ -116,17 +116,12 @@ export default function RegisterPage() {
         <div className={common.labelContainer}>
           <label htmlFor="profilPicture">Photo de profil</label>
           <Input
-          id="profilPicture"
-          type="file"
-          accept="image/*"
-          className={styles.imageInput}
-          onChange={(e) => {
-            const file = e.target.files?.[0]
-            if(file) register("profilPicture")
-          }}
+            id="profilPicture"
+            type="file"
+            accept="image/*"
+            className={styles.imageInput}
+            {...register("profilPicture")}
           />
-          
-
         </div>
         <Button className={common.submitButton} type="submit" disabled={isSubmitting}>{isSubmitting ? "Création..." : "Créer votre compte"}</Button>
       </form>
