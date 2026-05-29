@@ -29,4 +29,5 @@ export type User = {
   country: string
   bio?: string
   profilPicture?: string
+  role: "admin" | "user" | "moderator"
 }

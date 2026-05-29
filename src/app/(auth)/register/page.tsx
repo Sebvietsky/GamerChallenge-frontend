@@ -31,12 +31,12 @@ export default function RegisterPage() {
         <h1 className="text-2xl font-bold">Créer un compte</h1>
       </div>
       {/* Form */}
-      <form className={common.form} onSubmit={handleSubmit}>
+      <form className={common.form} onSubmit={handleSubmit} noValidate>
 
         {error && <p className="text-destructive text-sm">{error}</p>}
 
         <div className={common.labelContainer}>
-          <label htmlFor="username">Nom d'utilisateur</label>
+          <label htmlFor="username">{"Nom d'utilisateur"}</label>
           <Input
           id="username"
           {...register("username")}

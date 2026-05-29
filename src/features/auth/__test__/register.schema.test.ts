@@ -3,7 +3,7 @@ import { z } from "zod"
 
 const schema = z.object({
   username: z.string().min(2).max(20).regex(/^[a-zA-Z0-9_-]+$/),
-  email: z.email("Email invalide"),
+  email: z.string().email("Email invalide"),
   password: z.string().min(8).regex(/[^a-zA-Z0-9]/),
   confirm: z.string(),
   country: z.string().min(1, "Veuillez choisir un pays"),

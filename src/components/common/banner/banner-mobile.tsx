@@ -9,16 +9,16 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { Sidebar } from "@/components/common/sidebar/sidebar";
-import { getAvatar } from "@/features/auth/auth.utils";
 import { bannerStyles as styles } from "./banner.styles";
 
 export function BannerMobile() {
   // TEMPORAIRE
-  const user = null;
+  const { user } = useAuth();
 
-  const avatarSrc = getAvatar(user?.image);
+  const avatarSrc = user?.profilPicture;
 
   return (
     <header className={styles.container}>
@@ -39,7 +39,7 @@ export function BannerMobile() {
         </Sheet>
 
         {/* AVATAR */}
-        <Link href={user ? "/dashboard" : "/login"}>
+        <Link href="/dashboard">
           <Avatar className={styles.avatarContainer}>
             <AvatarImage
               className={styles.avatar}
