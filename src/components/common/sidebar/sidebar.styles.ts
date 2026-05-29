@@ -81,7 +81,7 @@ export const sidebarStyles = {
        padding interne = 16px
   ====================================================== */
 
-  navigation: "flex flex-col gap-2 p-4",
+  navigation: "text-bold flex flex-col gap-2 p-4",
 
   /* ======================================================
      NAV ITEM
