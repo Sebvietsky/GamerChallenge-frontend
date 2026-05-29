@@ -1,50 +1,49 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Manrope, Roboto } from "next/font/google";
+import { AuthProvider } from "@/features/auth/context/AuthContext";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const robotoHeading = Roboto({
+const frauncesHeading = Fraunces({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--font-frances",
 });
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-plus-jakarta",
 });
 
 export const metadata: Metadata = {
   title: "GamerChallenges",
   description:
+    // TODO Change métadata
     "Participate in epic gaming challenges and compete on the leaderboard",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html
-      lang="en"
+      suppressHydrationWarning
+      lang="fr"
       className={cn(
         "h-full",
         "antialiased",
-        geistSans.variable,
-        geistMono.variable,
+        frauncesHeading.variable,
+        plusJakarta.variable,
         "font-sans",
-        manrope.variable,
-        robotoHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider>
+          {children} 
+        </AuthProvider>
+      </body>
     </html>
   );
 }

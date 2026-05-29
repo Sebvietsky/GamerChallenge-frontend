@@ -1,15 +1,18 @@
+import { Banner } from "@/components/common/banner/banner";
+import { Sidebar } from "@/components/common/sidebar/sidebar";
+
 import type { ReactNode } from "react";
 
-interface PublicLayoutProps {
-  children: ReactNode;
-}
-
-export default function PublicLayout({ children }: PublicLayoutProps) {
+export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen">
-      {/* Public header/navbar will go here */}
-      <main className="flex-1">{children}</main>
-      {/* Public footer will go here */}
+    <div className="flex min-h-screen bg-background">
+      <Sidebar />
+
+      <div className="flex flex-1 flex-col">
+        <Banner />
+
+        <main className="flex-1 overflow-auto">{children}</main>
+      </div>
     </div>
   );
 }
