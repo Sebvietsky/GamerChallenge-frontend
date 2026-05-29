@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
+    "docker:dev": "docker compose up --build",
+    "docker:prod": "docker compose -f docker-compose.yaml up -d --build",
+    "docker:down": "docker compose down",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

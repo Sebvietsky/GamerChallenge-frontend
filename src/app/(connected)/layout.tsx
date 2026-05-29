@@ -1,4 +1,7 @@
 import type { ReactNode } from "react";
+import { Sidebar } from "@/components/common/sidebar/sidebar";
+import { Banner } from "@/components/common/banner/banner";
+import { ProtectedRoute } from "@/components/common/ProtectedRoute/ProtectedRoute";
 
 interface ProtectedLayoutProps {
   children: ReactNode;
@@ -6,14 +9,17 @@ interface ProtectedLayoutProps {
 
 export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
   return (
-    <div className="min-h-screen">
-      {/* Sidebar/Navigation for protected pages will go here */}
-      <div className="flex">
-        <aside className="w-64 bg-slate-50 border-r">
-          {/* Sidebar content */}
-        </aside>
-        <main className="flex-1">{children}</main>
-      </div>
-    </div>
+    //TODO A décommenter <ProtectedRoute>
+      <div className="flex min-h-screen bg-background">
+            <div className="hidden lg:block">
+              <Sidebar />
+            </div>
+      
+            <div className="flex flex-1 flex-col">
+            <Banner />
+              <main className="flex-1 overflow-auto">{children}</main>
+            </div>
+          </div>
+    // </ProtectedRoute>
   );
 }

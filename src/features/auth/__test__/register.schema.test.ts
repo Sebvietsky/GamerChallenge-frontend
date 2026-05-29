@@ -1,20 +1,28 @@
-import { describe, it, expect } from "vitest"
-import { z } from "zod"
+import { describe, it, expect } from "vitest";
+import { z } from "zod";
 
-const schema = z.object({
-  username: z.string().min(2).max(20).regex(/^[a-zA-Z0-9_-]+$/),
-  email: z.email("Email invalide"),
-  password: z.string().min(8).regex(/[^a-zA-Z0-9]/),
-  confirm: z.string(),
-  country: z.string().min(1, "Veuillez choisir un pays"),
-  bio: z.string().max(500).optional(),
-}).refine(d => d.password === d.confirm, {
-  message: "Les mots de passe ne correspondent pas",
-  path: ["confirm"],
-})
+const schema = z
+  .object({
+    username: z
+      .string()
+      .min(2)
+      .max(20)
+      .regex(/^[a-zA-Z0-9_-]+$/),
+    email: z.string().email("Email invalide"),
+    password: z
+      .string()
+      .min(8)
+      .regex(/[^a-zA-Z0-9]/),
+    confirm: z.string(),
+    country: z.string().min(1, "Veuillez choisir un pays"),
+    bio: z.string().max(500).optional(),
+  })
+  .refine((schema) => schema.password === schema.confirm, {
+    message: "Les mots de passe ne correspondent pas",
+    path: ["confirm"],
+  });
 
 describe("Register schema", () => {
-
   it("valide un formulaire correct", () => {
     const result = schema.safeParse({
       username: "gamer_01",
@@ -22,9 +30,9 @@ describe("Register schema", () => {
       password: "Password1!",
       confirm: "Password1!",
       country: "FR",
-    })
-    expect(result.success).toBe(true)
-  })
+    });
+    expect(result.success).toBe(true);
+  });
 
   it("rejette un username trop court", () => {
     const result = schema.safeParse({
@@ -33,42 +41,43 @@ describe("Register schema", () => {
       password: "Password1!",
       confirm: "Password1!",
       country: "FR",
-    })
-    expect(result.success).toBe(false)
-  })
+    });
+    expect(result.success).toBe(false);
+  });
 
   it("rejette un email invalide", () => {
     const result = schema.safeParse({
       username: "gamer_01",
-      email: "pas-un-email",
+      email: "pas-un-email", // ← email invalide
       password: "Password1!",
       confirm: "Password1!",
       country: "FR",
-    })
-    expect(result.success).toBe(false)
-  })
+    });
+    expect(result.success).toBe(false);
+  });
 
   it("rejette si les mots de passe ne correspondent pas", () => {
     const result = schema.safeParse({
       username: "gamer_01",
       email: "test@mail.com",
-      password: "Password1!",
-      confirm: "AutreMotDePasse1!",
+      password: "Password1!", // ← mots de passe ne correspondent pas
+      confirm: "AutreMotDePasse1!", // ← mots de passe ne correspondent pas
       country: "FR",
-    })
-    expect(result.success).toBe(false)
-    expect(result.error?.issues[0].message).toBe("Les mots de passe ne correspondent pas")
-  })
+    });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe(
+      "Les mots de passe ne correspondent pas",
+    );
+  });
 
   it("rejette un mot de passe sans caractère spécial", () => {
     const result = schema.safeParse({
       username: "gamer_01",
       email: "test@mail.com",
-      password: "Password1",  // ← pas de caractère spécial
+      password: "Password1", // ← pas de caractère spécial
       confirm: "Password1",
       country: "FR",
-    })
-    expect(result.success).toBe(false)
-  })
-
-})
+    });
+    expect(result.success).toBe(false);
+  });
+});
