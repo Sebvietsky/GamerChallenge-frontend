@@ -23,7 +23,7 @@ export default function LoginPage() {
       <p className={common.p}>Connectez-vous à votre compte</p>
     </div>
     {/* Form Login */}
-    <form onSubmit={handleSubmit} className={common.form}>
+    <form onSubmit={handleSubmit} className={common.form} noValidate>
       {error && <p className="text-destructive text-sm">{error}</p>}
       <div className={common.labelContainer}>
         <label htmlFor="email">Email</label>
