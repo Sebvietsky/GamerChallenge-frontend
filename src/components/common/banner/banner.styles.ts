@@ -3,62 +3,113 @@ export const bannerStyles = {
      HEADER CONTAINER
      ======================================================
 
-     - flex :
-       active flexbox
-
-     - items-center :
-       centre verticalement les éléments
-
-     - justify-end :
-       pousse les éléments à droite
-
-     - w-full :
-       largeur complète
+     Header principal utilisé :
+     - mobile
+     - desktop
 
      - h-20 :
        hauteur = 80px
 
-     - px-6 :
-       padding horizontal = 24px
-
-     - bg-surface/80 :
-       utilise le token surface avec transparence
+     - bg-background/80 :
+       effet glassmorphism
 
      - backdrop-blur-xl :
-       crée un effet glassmorphism
+       flou arrière-plan
 
      - border-b :
-       bordure basse
-
-     Le header reste dans le flow normal :
-     PAS de fixed
-     PAS de absolute
-
-     Cela permet au layout flex de gérer
-     correctement son placement.
+       séparation visuelle
   ====================================================== */
 
   container:
-    "flex items-center justify-end w-full h-20 px-6 bg-background/80 backdrop-blur-xl border-b border-border/50",
+    "w-full h-20 px-4 md:px-6 bg-background/80 backdrop-blur-xl border-b border-border/50",
+
+  /* ======================================================
+     MOBILE CONTAINER
+     ======================================================
+
+     Conteneur mobile du header.
+
+     - lg:hidden :
+       visible uniquement mobile/tablette
+
+     - justify-between :
+       menu à gauche
+       avatar à droite
+  ====================================================== */
+
+  mobileContainer: "flex h-full items-center justify-between lg:hidden",
+
+  /* ======================================================
+     MOBILE MENU BUTTON
+     ======================================================
+
+     Bouton ouverture sidebar mobile.
+
+     - h-12 w-12 :
+       zone tactile confortable
+
+     - rounded-2xl :
+       cohérent avec la DA
+  ====================================================== */
+
+  mobileMenuButton:
+    "flex h-12 w-12 items-center justify-center rounded-2xl border border-border/50 bg-surface text-text transition-colors duration-200 hover:bg-surface-accent",
+
+  /* ======================================================
+     MOBILE SIDEBAR
+     ======================================================
+
+     Sheet contenant la sidebar mobile.
+
+     - 85vw :
+       responsive mobile
+
+     - max-w-sm :
+       largeur maximale propre
+
+     - bg-transparent :
+       évite bande blanche
+
+     - p-0 :
+       supprime padding natif
+  ====================================================== */
+
+  mobileSidebar: "w-[85vw] max-w-sm border-none bg-transparent p-0 shadow-none",
+
+  /* ======================================================
+     DESKTOP CONTAINER
+     ======================================================
+
+     Header desktop.
+
+     - hidden lg:flex :
+       visible uniquement desktop
+  ====================================================== */
+
+  desktopContainer: "hidden h-full items-center justify-end lg:flex",
+
+  /* ======================================================
+     AVATAR
+     ======================================================
+
+     Avatar utilisateur.
+
+     - ring :
+       contour léger
+  ====================================================== */
+
+  avatarContainer: "h-12 w-12 ring-2 ring-border/50",
+
+  avatar: "object-cover",
 
   /* ======================================================
      AVATAR FALLBACK
      ======================================================
 
-     Affiché lorsque l'utilisateur
-     n'a pas d'image de profil.
-
-     - bg-surface-accent :
-       fond violet clair
-
-     - text-secondary :
-       couleur icône
-
-     Le fallback contient :
-     - soit une icône User
-     - soit l'initiale du pseudo
+     Fallback affiché :
+     - si pas d'image
+     - ou chargement échoué
   ====================================================== */
-  avatar: "bg-brand-secondary",
 
   avatarFallback: "bg-surface-accent text-secondary",
 };

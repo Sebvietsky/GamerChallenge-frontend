@@ -50,7 +50,20 @@ export const sidebarStyles = {
      de la sidebar.
   ====================================================== */
 
-  logo: "flex self-center justify-center h-24 border-b border-border/50",
+  logo: "border-b border-border/50",
+
+  /* ======================================================
+   MOBILE HEADER
+   ====================================================== */
+
+  mobileHeader: "flex items-center justify-between px-4 py-6",
+
+  /* ======================================================
+   MOBILE CLOSE BUTTON
+   ====================================================== */
+
+  mobileCloseButton:
+    "flex h-11 w-11 items-center justify-center rounded-2xl bg-surface text-text transition-colors hover:bg-surface-accent",
 
   /* ======================================================
      NAVIGATION

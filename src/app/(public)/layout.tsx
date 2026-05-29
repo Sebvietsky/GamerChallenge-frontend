@@ -6,8 +6,12 @@ import type { ReactNode } from "react";
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar />
+      {/* SIDEBAR DESKTOP */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
+      {/* MAIN CONTENT */}
       <div className="flex flex-1 flex-col">
         <Banner />
 
