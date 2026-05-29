@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 
-import { Menu, User, X } from "lucide-react";
+import { Menu, User} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
