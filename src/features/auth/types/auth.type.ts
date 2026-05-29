@@ -28,5 +28,5 @@ export type User = {
   email: string
   country: string
   bio?: string
-  avatar?: string
+  profilPicture?: string
 }
