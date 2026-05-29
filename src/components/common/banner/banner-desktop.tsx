@@ -6,19 +6,19 @@ import { User } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { getAvatar } from "@/features/auth/auth.utils";
 import { bannerStyles as styles } from "./banner.styles";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 export function BannerDesktop() {
   // TEMPORAIRE
-  const user = null;
+  const { user } = useAuth();
 
-  const avatarSrc = getAvatar(user?.image);
+  const avatarSrc = user?.profilPicture;
 
   return (
     <header className={styles.container}>
       <div className={styles.desktopContainer}>
-        <Link href={user ? "/dashboard" : "/login"}>
+        <Link href="/dashboard">
           <Avatar className={styles.avatarContainer}>
             <AvatarImage
               className={styles.avatar}
