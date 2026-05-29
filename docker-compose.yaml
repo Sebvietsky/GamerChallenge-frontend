@@ -6,7 +6,7 @@ services:
     container_name: gamer_challenges_front
 
     ports:
-      - "4000:3000"
+      - "3000:3000"
 
     volumes:
       - .:/app
