@@ -1,5 +1,9 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRegister } from "@/features/auth/hooks/useRegister";
+import { Controller } from "react-hook-form";
 import { commonStyles as common} from "@/styles/common-auth.styles";
 import { registerStyle as styles } from "@/styles/register.styles";
 import { Input } from "@/components/ui/input"
@@ -15,6 +19,8 @@ import {
 } from "@/components/ui/select"
 
 export default function RegisterPage() {
+  const { register, handleSubmit, control, errors, isSubmitting, error} = useRegister()
+  
   return (
     <main className={common.main}>
       {/* Header register */}
@@ -25,79 +31,104 @@ export default function RegisterPage() {
         <h1 className="text-2xl font-bold">Créer un compte</h1>
       </div>
       {/* Form */}
-      <form className={common.form} action="submit">
+      <form className={common.form} onSubmit={handleSubmit}>
+
+        {error && <p className="text-destructive text-sm">{error}</p>}
+
         <div className={common.labelContainer}>
           <label htmlFor="username">Nom d'utilisateur</label>
           <Input
           id="username"
-          name="username"
+          {...register("username")}
           autoComplete="username"
-          placeholder="Nom de compte"
-          required
+          placeholder="_-bestGamer-_"
           />
+          {errors.username && <p className="text-destructive text-xs">{errors.username.message}</p>}
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="email">Email</label>
           <Input
           id="email"
-          name="email"
           type="email"
+          {...register("email")}
           autoComplete="email"
-          placeholder="exemple@mail.com" 
-          required
+          placeholder="exemple@email.com" 
           />
+          {errors.email && <p className="text-destructive text-xs">{errors.email.message}</p>}
+
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="password">Mot de passe</label>
           <Input 
           autoComplete="new-password"
           id="password"
-          name="password"
+          {...register("password")}
           type="password"
-          required
           />
+          {errors.password && <p className="text-destructive text-xs">{errors.password.message}</p>}
+
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="confirm">Confirmation de mot de passe</label>
           <Input 
           id="confirm"
-          name="confirm"
+          {...register("confirm")}
           autoComplete="new-password"
           type="password"
-          required
           />
+          {errors.confirm && <p className="text-destructive text-xs">{errors.confirm.message}</p>}
+
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="country">Pays</label>
-          <Select>
-            <SelectTrigger>
-              <SelectValue placeholder="Choisissez votre pays" />
-            </SelectTrigger>
-            <SelectContent>
-              {countries.map((country) => (
+          <Controller 
+          name="country"
+          control={control}
+          defaultValue=""
+          render={({field}) => {
+          return(
+            <Select onValueChange={field.onChange} value={field.value}>
+              <SelectTrigger id="country">
+                <SelectValue placeholder="Choisissez votre pays" />
+              </SelectTrigger>
+              <SelectContent>
+                {countries.map((country) => (
                 // Code Country or Name Country
-                <SelectItem key={country.code} value={country.name}> 
-                  {country.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+                  <SelectItem key={country.code} value={country.code}> 
+                    {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )
+          }}
+          
+          />
+          {errors.country && <p className="text-destructive text-xs">{errors.country.message}</p>}
+
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="bio">Biographie</label>
-          <Textarea placeholder="Ecrivez votre biographie ici"/>
+          <Textarea id="bio" {...register("bio")} placeholder="Ecrivez votre biographie ici"/>
+          {errors.bio && <p className="text-destructive text-xs">{errors.bio.message}</p>}
+
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="profilPicture">Photo de profil</label>
           <Input
           id="profilPicture"
-          name="profilPicture"
           type="file"
           accept="image/*"
           className={styles.imageInput}
+          onChange={(e) => {
+            const file = e.target.files?.[0]
+            if(file) register("profilPicture")
+          }}
           />
+          
+
         </div>
-        <Button className={common.submitButton} type="submit">Créez votre compte</Button>
+        <Button className={common.submitButton} type="submit" disabled={isSubmitting}>{isSubmitting ? "Création..." : "Créer votre compte"}</Button>
       </form>
       {/* End Form */}
     </main>

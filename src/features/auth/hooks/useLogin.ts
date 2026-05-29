@@ -13,8 +13,10 @@ export function useLogin() {
     setLoading(true)
 
     const formData = new FormData(e.currentTarget)
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const email = formData.get("email")?.toString().trim() as string;
+    const password = formData.get("password")?.toString() as string;
+
+    const payload = {email, password}
 
     if(!email || !password) {
       setError("Veuillez remplir tous les champs")
@@ -29,7 +31,7 @@ export function useLogin() {
     }
 
     try {
-      const data = await login(email, password)
+      const data = await login(payload)
       return data
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue"
