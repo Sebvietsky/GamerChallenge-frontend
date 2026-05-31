@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { User } from "@/features/auth/types/auth.type";
-import "dotenv/config";
+import { User, LoginPayload } from "@/features/auth/types/auth.type";
+import { loginUser, logoutUser } from "@/features/auth/api/auth.api";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type AuthContextType = {
-  user: User | null
-  isAuthenticated: boolean
-  login: (user: User) => void
-  logout: () => void
-}
+  user: User | null;
+  isAuthenticated: boolean;
+  login: (payload: LoginPayload) => Promise<void>;
+  logout: () => Promise<void>;
+};
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
-  login: () => {},
-  logout: () => {},
-})
+  login: async () => {},
+  logout: async () => {},
+});
 
-export function AuthProvider({ children }: { children: ReactNode }){
-  const [user, setUser] = useState<User | null>(null)
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetch(`${API_URL}/auth/me`, {
@@ -29,24 +29,25 @@ export function AuthProvider({ children }: { children: ReactNode }){
     })
       .then((res) => (res.ok ? res.json() : null))
       .then((me) => me && setUser(me))
-      .catch(() => setUser(null))
-  }, [])
+      .catch(() => setUser(null));
+  }, []);
 
-  function login(user: User) {
-    setUser(user)
+  async function login(payload: LoginPayload) {
+    const { user } = await loginUser(payload);
+    setUser(user);
   }
 
   async function logout() {
-    await fetch(`${API_URL}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    })
-    setUser(null)
+    try {
+      await logoutUser();
+    } finally {
+      setUser(null);
+    }
   }
 
-  return React.createElement (
+  return React.createElement(
     AuthContext.Provider,
-    { value: { user, isAuthenticated: !!user, login, logout}},
-    children
-  )
+    { value: { user, isAuthenticated: !!user, login, logout } },
+    children,
+  );
 }

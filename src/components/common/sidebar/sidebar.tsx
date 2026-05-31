@@ -6,7 +6,9 @@ import Link from "next/link";
 
 import { usePathname } from "next/navigation";
 
-import { X } from "lucide-react";
+import { X, LogOut } from "lucide-react";
+
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 import { SheetClose } from "@/components/ui/sheet";
 
@@ -20,6 +22,7 @@ interface SidebarProps {
 
 export function Sidebar({ mobile = false }: SidebarProps) {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   return (
     <aside className={styles.sidebar}>
@@ -77,6 +80,11 @@ export function Sidebar({ mobile = false }: SidebarProps) {
           );
         })}
       </nav>
+
+      <button onClick={logout} className={styles.navItem}>
+        <LogOut size={18} />
+        <span>Déconnexion</span>
+      </button>
     </aside>
   );
 }
