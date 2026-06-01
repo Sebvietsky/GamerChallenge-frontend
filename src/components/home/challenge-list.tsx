@@ -6,7 +6,7 @@ import { homeStyles as styles } from "@/styles/global.styles";
 
 export function ChallengeList() {
   return (
-    <div className={styles.cardsGrid}>
+    <div className={styles.gridChallenges}>
       <ChallengeCard />
       <ChallengeCard />
       <ChallengeCard />

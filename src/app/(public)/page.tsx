@@ -1,6 +1,3 @@
-// COMPONENTS
-import { Banner } from "@/components/common/banner/banner";
-
 import { ChallengeList } from "@/components/home/challenge-list";
 
 // STYLES
