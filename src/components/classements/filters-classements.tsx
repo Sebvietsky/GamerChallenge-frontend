@@ -9,7 +9,7 @@ type FilterOption = {
   description: string;
 };
 
-export function FiltresClassements({
+export function FiltersClassements({
   options,
   active,
   onChange,

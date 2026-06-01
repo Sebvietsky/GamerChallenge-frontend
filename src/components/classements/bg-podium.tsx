@@ -1,4 +1,4 @@
-export function FondPodium() {
+export function BgPodium() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-[var(--surface-accent)]/20" />

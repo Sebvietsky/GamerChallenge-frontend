@@ -6,11 +6,11 @@ import {
   ClassementType,
   type ClassementChallenge,
   type ClassementParticipation,
-  type ClassementUtilisateur,
+  type ClassementUser,
   type PodiumItem,
 } from "@/components/classements/ClassementType";
 import { ClassementPodium } from "@/components/classements/classement-podium";
-import { FiltresClassements } from "@/components/classements/filtres-classements";
+import { FiltersClassements } from "@/components/classements/filters-classements";
 import { classementsStyles as styles } from "@/styles/classements.styles";
 
 const filterOptions = [
@@ -68,7 +68,7 @@ const challengeItems: ClassementChallenge[] = [
   },
 ];
 
-const utilisateurItems: ClassementUtilisateur[] = [
+const utilisateurItems: ClassementUser[] = [
   {
     rank: 1,
     username: "Mila la Créatrice",
@@ -202,7 +202,7 @@ export default function ClassementsPage() {
           </div>
         </header>
 
-        <FiltresClassements
+        <FiltersClassements
           options={filterOptions}
           active={activeFilter}
           onChange={setActiveFilter}

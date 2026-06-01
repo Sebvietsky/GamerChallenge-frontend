@@ -14,7 +14,7 @@ export type ClassementChallenge = {
   duration: string;
 };
 
-export type ClassementUtilisateur = {
+export type ClassementUser = {
   rank: number;
   username: string;
   avatar: string;

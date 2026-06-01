@@ -1,5 +1,5 @@
 import { classementsStyles as styles } from "@/styles/classements.styles";
-import { CartePodium } from "./carte-podium";
+import { CardPodium } from "./card-podium";
 import type { PodiumItem } from "./ClassementType";
 
 export function ClassementPodium({ items }: { items: PodiumItem[] }) {
@@ -7,10 +7,10 @@ export function ClassementPodium({ items }: { items: PodiumItem[] }) {
 
   return (
     <div className={styles.podiumArea}>
-      <CartePodium item={first} />
+      <CardPodium item={first} />
       <div className={styles.sideGrid}>
-        <CartePodium item={second} compact />
-        <CartePodium item={third} compact />
+        <CardPodium item={second} compact />
+        <CardPodium item={third} compact />
       </div>
     </div>
   );
