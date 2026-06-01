@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { loginUser } from "@/features/auth/api/auth.api"
-import { useAuth } from "@/features/auth/hooks/useAuth"
+import { useState } from "react";
+import { loginUser } from "@/features/auth/api/auth.api";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 export function useLogin() {
@@ -16,52 +16,54 @@ export function useLogin() {
     setError(null)
     setLoading(true)
 
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString().trim() as string;
     const password = formData.get("password")?.toString() as string;
 
-    const payload = {email, password}
+    const payload = { email, password };
 
-    if(!email || !password) {
-      setError("Veuillez remplir tous les champs")
-      setLoading(false)
-      return
+    if (!email || !password) {
+      setError("Veuillez remplir tous les champs");
+      setLoading(false);
+      return;
     }
 
-    if(!email.includes("@")) {
-      setError("Email invalide")
-      setLoading(false)
-      return
+    if (!email.includes("@")) {
+      setError("Email invalide");
+      setLoading(false);
+      return;
     }
 
     try {
-      const data = await loginUser(payload)
+      const data = await loginUser(payload);
 
       if (data && "user" in data && data.user) {
-        loginContext(data.user)
+        loginContext(data.user);
       } else {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL
+        const API_URL = process.env.NEXT_PUBLIC_API_URL;
         const profileResponse = await fetch(`${API_URL}/auth/refresh`, {
           method: "POST",
           credentials: "include",
-        })
+        });
 
         if (!profileResponse.ok) {
-          throw new Error("Connexion réussie, mais impossible de récupérer l'utilisateur")
+          throw new Error(
+            "Connexion réussie, mais impossible de récupérer l'utilisateur",
+          );
         }
 
-        const user = await profileResponse.json()
-        loginContext(user)
+        const user = await profileResponse.json();
+        loginContext(user);
       }
-      router.push("/")
+      router.push("/");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Erreur inconnue"
-      setError(message)
-      console.log(message)
+      const message = err instanceof Error ? err.message : "Erreur inconnue";
+      setError(message);
+      console.log(message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
-  return { handleSubmit, error, loading }
+  return { handleSubmit, error, loading };
 }
