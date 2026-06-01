@@ -1,13 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { login } from "@/features/auth/api/auth.api"
+import { loginUser } from "@/features/auth/api/auth.api"
+import { useAuth } from "@/features/auth/hooks/useAuth"
 
 export function useLogin() {
+  const { login: loginContext} = useAuth();
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>){
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>){
     e.preventDefault()
     setError(null)
     setLoading(true)
@@ -31,8 +33,24 @@ export function useLogin() {
     }
 
     try {
-      const data = await login(payload)
-      return data
+      const data = await loginUser(payload)
+
+      if (data && "user" in data && data.user) {
+        loginContext(data.user)
+      } else {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL
+        const profileResponse = await fetch(`${API_URL}/auth/refresh`, {
+          method: "POST",
+          credentials: "include",
+        })
+
+        if (!profileResponse.ok) {
+          throw new Error("Connexion réussie, mais impossible de récupérer l'utilisateur")
+        }
+
+        const user = await profileResponse.json()
+        loginContext(user)
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue"
       setError(message)

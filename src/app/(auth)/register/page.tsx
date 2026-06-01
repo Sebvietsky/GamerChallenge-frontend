@@ -113,16 +113,25 @@ export default function RegisterPage() {
           {errors.bio && <p className="text-destructive text-xs">{errors.bio.message}</p>}
 
         </div>
-        <div className={common.labelContainer}>
+        {/* <div className={common.labelContainer}>
           <label htmlFor="profilPicture">Photo de profil</label>
-          <Input
-            id="profilPicture"
-            type="file"
-            accept="image/*"
-            className={styles.imageInput}
-            {...register("profilPicture")}
-          />
-        </div>
+          <Controller
+  name="profilPicture"
+  control={control}
+  render={({ field: { onChange } }) => (
+    <Input
+      id="profilPicture"
+      type="file"
+      accept="image/*"
+      className={styles.imageInput}
+      onChange={(e) => {
+        const file = e.target.files?.[0]
+        onChange(file ?? null)
+      }}
+    />
+  )}
+/>
+        </div> */}
         <Button className={common.submitButton} type="submit" disabled={isSubmitting}>{isSubmitting ? "Création..." : "Créer votre compte"}</Button>
       </form>
       {/* End Form */}

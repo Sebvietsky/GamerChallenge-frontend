@@ -2,9 +2,8 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { User } from "@/features/auth/types/auth.type";
-import "dotenv/config";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type AuthContextType = {
   user: User | null
@@ -20,11 +19,12 @@ export const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 })
 
-export function AuthProvider({ children }: { children: ReactNode }){
+export function AuthProvider({ children }: { children: ReactNode }): React.ReactElement{
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    fetch(`${API_URL}/auth/me`, {
+    fetch(`${API_URL}/auth/refresh`, {
+      method: "POST",
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
@@ -44,9 +44,9 @@ export function AuthProvider({ children }: { children: ReactNode }){
     setUser(null)
   }
 
-  return React.createElement (
-    AuthContext.Provider,
-    { value: { user, isAuthenticated: !!user, login, logout}},
-    children
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   )
 }

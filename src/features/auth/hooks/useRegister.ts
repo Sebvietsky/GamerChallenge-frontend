@@ -31,7 +31,7 @@ const schema = z.object({
     .max(500, "500 caractères maximum")
     .optional(),
 
-  profilPicture: z.instanceof(File).optional(),
+  // profilPicture: z.any().optional(),
 
 }).refine(d => d.password === d.confirm, {
   message: "Les mots de passe ne correspondent pas",
@@ -51,8 +51,10 @@ export function useRegister() {
 
 
   async function onSubmit(data: RegisterForm) {
+    console.log("onSubmit appelé", data)
     setError(null)
     try {
+      console.log("Envoi vers API...")
       const response = await registerApi(data)
       login(response.user)
     } catch (err) {

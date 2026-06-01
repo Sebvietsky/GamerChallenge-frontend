@@ -6,7 +6,7 @@ export type RegisterPayload = {
   confirm: string
   country: string
   bio?: string
-  profilPicture?: File
+  // profilPicture?: File
 }
 
 // Données envoyées à l'API pour la connexion
@@ -17,7 +17,7 @@ export type LoginPayload = {
 
 // Ce que l'API renvoie après connexion/inscription
 export type AuthResponse = {
-  token: string
+  // token: string
   user: User
 }
 
