@@ -3,6 +3,8 @@
 import Image from "next/image"
 import { User } from "lucide-react";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { NavButton } from "@/components/dashboard/nav-button";
+import { dashboardLink } from "@/components/dashboard/nav-button-link";
 import { dashboardStyles as styles } from "@/styles/dashboard.styles";
 
 export default function DashboardPage() {
@@ -33,6 +35,13 @@ export default function DashboardPage() {
         ): (
           <p className={styles.username}>Username not found ⛔</p>
         )}
+        <nav>
+          {dashboardLink.map((link)=> {
+            return(
+              <NavButton key={link.path} {...link} />
+            )
+          })}
+        </nav>
         <div className={styles.bio}>
         <h2>Biographie</h2>
         {user?.bio ? (

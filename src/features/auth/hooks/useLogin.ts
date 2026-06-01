@@ -6,15 +6,15 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 export function useLogin() {
+  const { login: loginContext, logout: logoutContext} = useAuth();
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
-  const { login: loginContext } = useAuth();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>){
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString().trim() as string;

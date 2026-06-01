@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-
-import { Menu, User} from "lucide-react";
+import { Menu, User, UserPen, LogOut} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation"
+import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sheet,
@@ -16,7 +18,13 @@ import { bannerStyles as styles } from "./banner.styles";
 
 export function BannerMobile() {
   // TEMPORAIRE
-  const { user } = useAuth();
+  const router = useRouter();
+    const { user, isAuthenticated, logout } = useAuth();
+  
+    async function handleLogout() {
+      router.push("/")
+      await logout()
+    }
 
   const avatarSrc = user?.profilPicture;
 
@@ -39,19 +47,32 @@ export function BannerMobile() {
         </Sheet>
 
         {/* AVATAR */}
-        <Link href="/dashboard">
-          <Avatar className={styles.avatarContainer}>
-            <AvatarImage
-              className={styles.avatar}
-              src={avatarSrc}
-              alt="Avatar utilisateur"
-            />
+        {isAuthenticated ? (
+          <>
+          <Link href="/dashboard">
+            <Avatar className={styles.avatarContainer}>
+              <AvatarImage
+                className={styles.avatar}
+                src={avatarSrc}
+                alt="Avatar utilisateur"
+              />
 
-            <AvatarFallback className={styles.avatarFallback}>
-              <User className="h-5 w-5" />
-            </AvatarFallback>
-          </Avatar>
-        </Link>
+              <AvatarFallback className={styles.avatarFallback}>
+                <User className="h-5 w-5" />
+              </AvatarFallback>
+            </Avatar>
+          </Link>
+          <Button type="button" className="ml-2" onClick={handleLogout}>
+            <LogOut />Logout
+          </Button>
+          </>
+        ) : (
+          <div className="flex items-center gap-2">
+          <Link href="/login">
+          <Button className="px-4 py-6"><User/>Se connecter</Button>
+          </Link>
+          </div>
+        )}
       </div>
     </header>
   );

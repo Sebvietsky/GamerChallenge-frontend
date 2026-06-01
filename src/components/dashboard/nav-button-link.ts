@@ -1,5 +1,7 @@
 import { Heart, 
-  FileText 
+  FileText,
+  Pen,
+  Trophy
 
 } from "lucide-react";
 
@@ -14,16 +16,16 @@ export const dashboardLink = [
   {
     label: "myChallenges",
     path: `${path}challenges`,
-    icon: FileText
+    icon: Trophy
   },
   {
     label: "draft",
     path: `${path}draft`,
-    icon: ""
+    icon: Pen
   },
   {
     label: "participations",
     path: `${path}participations`,
-    icon: ""
+    icon: FileText
   }
 ]

@@ -11,21 +11,24 @@ type Props = {
 }
 
 export function ProtectedRoute({children, requiredRole}: Props) {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    // Ici redirige vers /login si n'est pas connecter
-    if(!isAuthenticated) {
+    if (loading) return
+
+    if (!isAuthenticated) {
       router.push("/login")
+      return
+    }
 
     if (requiredRole && user?.role !== requiredRole) {
       router.push("/unauthorized")
     }
-    }}, [isAuthenticated, user, router]
-  )
+  }, [isAuthenticated, user, loading, router, requiredRole])
 
-  if(!isAuthenticated) return null
+  if (loading) return null
+  if (!isAuthenticated) return null
   if (requiredRole && user?.role !== requiredRole) return null
 
   return <>{children}</>
