@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { User } from "@/features/auth/types/auth.type";
@@ -6,18 +6,18 @@ import { User } from "@/features/auth/types/auth.type";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type AuthContextType = {
-  user: User | null
-  isAuthenticated: boolean
-  login: (user: User) => void
-  logout: () => void
-}
+  user: User | null;
+  isAuthenticated: boolean;
+  login: (user: User) => void;
+  logout: () => void;
+};
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
   login: () => {},
   logout: () => {},
-})
+});
 
 export function AuthProvider({ children }: { children: ReactNode }): React.ReactElement{
   const [user, setUser] = useState<User | null>(null)
@@ -29,19 +29,19 @@ export function AuthProvider({ children }: { children: ReactNode }): React.React
     })
       .then((res) => (res.ok ? res.json() : null))
       .then((me) => me && setUser(me))
-      .catch(() => setUser(null))
-  }, [])
+      .catch(() => setUser(null));
+  }, []);
 
   function login(user: User) {
-    setUser(user)
+    setUser(user);
   }
 
   async function logout() {
     await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
       credentials: "include",
-    })
-    setUser(null)
+    });
+    setUser(null);
   }
 
   return (

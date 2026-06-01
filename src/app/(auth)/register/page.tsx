@@ -26,7 +26,14 @@ export default function RegisterPage() {
       {/* Header register */}
       <div className={common.container}>
         <Link href="/">
-        <Image className={common.logo} width={100} height={100} src="/images/logo.png" alt="Logo de Gamer Challenge" loading="eager"/>
+          <Image
+            className={common.logo}
+            width={100}
+            height={100}
+            src="/images/logo.png"
+            alt="Logo de Gamer Challenge"
+            loading="eager"
+          />
         </Link>
         <h1 className="text-2xl font-bold">Créer un compte</h1>
       </div>
@@ -43,7 +50,11 @@ export default function RegisterPage() {
           autoComplete="username"
           placeholder="_-bestGamer-_"
           />
-          {errors.username && <p className="text-destructive text-xs">{errors.username.message}</p>}
+          {errors.username && (
+            <p className="text-destructive text-xs">
+              {errors.username.message}
+            </p>
+          )}
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="email">Email</label>
@@ -54,8 +65,9 @@ export default function RegisterPage() {
           autoComplete="email"
           placeholder="exemple@email.com" 
           />
-          {errors.email && <p className="text-destructive text-xs">{errors.email.message}</p>}
-
+          {errors.email && (
+            <p className="text-destructive text-xs">{errors.email.message}</p>
+          )}
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="password">Mot de passe</label>
@@ -65,8 +77,11 @@ export default function RegisterPage() {
           {...register("password")}
           type="password"
           />
-          {errors.password && <p className="text-destructive text-xs">{errors.password.message}</p>}
-
+          {errors.password && (
+            <p className="text-destructive text-xs">
+              {errors.password.message}
+            </p>
+          )}
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="confirm">Confirmation de mot de passe</label>
@@ -76,8 +91,9 @@ export default function RegisterPage() {
           autoComplete="new-password"
           type="password"
           />
-          {errors.confirm && <p className="text-destructive text-xs">{errors.confirm.message}</p>}
-
+          {errors.confirm && (
+            <p className="text-destructive text-xs">{errors.confirm.message}</p>
+          )}
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="country">Pays</label>
@@ -104,17 +120,24 @@ export default function RegisterPage() {
           }}
           
           />
-          {errors.country && <p className="text-destructive text-xs">{errors.country.message}</p>}
-
+          {errors.country && (
+            <p className="text-destructive text-xs">{errors.country.message}</p>
+          )}
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="bio">Biographie</label>
-          <Textarea id="bio" {...register("bio")} placeholder="Ecrivez votre biographie ici"/>
-          {errors.bio && <p className="text-destructive text-xs">{errors.bio.message}</p>}
-
+          <Textarea
+            id="bio"
+            {...register("bio")}
+            placeholder="Ecrivez votre biographie ici"
+          />
+          {errors.bio && (
+            <p className="text-destructive text-xs">{errors.bio.message}</p>
+          )}
         </div>
         {/* <div className={common.labelContainer}>
           <label htmlFor="profilPicture">Photo de profil</label>
+
           <Controller
   name="profilPicture"
   control={control}
