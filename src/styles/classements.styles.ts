@@ -67,10 +67,10 @@ export const classementsStyles = {
   // PHOTO
 
   avatarRing:
-    "relative z-10 h-full w-full overflow-hidden rounded-full border-[10px] border-white bg-[var(--surface)] shadow-[0_18px_40px_-24px_rgba(15,23,42,0.35)]",
+    "relative z-10 h-full w-full overflow-hidden rounded-full bg-[var(--surface)] shadow-[0_18px_40px_-24px_rgba(15,23,42,0.35)]",
 
   avatarRingCompact:
-    "relative z-10 h-full w-full overflow-hidden rounded-full border-[8px] border-white bg-[var(--surface)] shadow-[0_12px_30px_-20px_rgba(15,23,42,0.32)]",
+    "relative z-10 h-full w-full overflow-hidden rounded-full bg-[var(--surface)] shadow-[0_12px_30px_-20px_rgba(15,23,42,0.32)]",
 
   avatar: "h-full w-full rounded-full object-cover",
 

@@ -7,6 +7,16 @@ import { Laurels } from "./laurels";
 import { Medals } from "./medals";
 import type { PodiumItem } from "./ClassementType";
 
+type PodiumVariant = "gold" | "silver" | "bronze" | "default";
+
+const rankToVariant = (rank: number): PodiumVariant => {
+  if (rank === 1) return "gold";
+  if (rank === 2) return "silver";
+  if (rank === 3) return "bronze";
+
+  return "default";
+};
+
 export function CardPodium({
   item,
   compact = false,
@@ -21,14 +31,13 @@ export function CardPodium({
         styles.podiumCard,
       )}
     >
-      <BgPodium />
+      <BgPodium variant={rankToVariant(item.rank)} />
       <div className={styles.podiumSection}>
         {item.rank === 1 ? (
           <div className={styles.crownWrapper}>
-            <Crown color={item.crownColor} />
+            <Crown />
           </div>
         ) : null}
-
         <div
           className={cn(styles.avatarWrap, compact && styles.avatarWrapCompact)}
         >
@@ -64,7 +73,6 @@ export function CardPodium({
             <div className={styles.rankBadge}>{item.rank}</div>
           )}
         </div>
-
         {item.tags.length > 0 ? (
           <div className={styles.tags}>
             {item.tags.map((tag) => (
@@ -74,12 +82,10 @@ export function CardPodium({
             ))}
           </div>
         ) : null}
-
         <h3 className={compact ? styles.cardTitleCompact : styles.cardTitle}>
           {item.title}
         </h3>
         <p className={styles.subtitle}>{item.subtitle}</p>
-
         <div className={compact ? styles.statsRowCompact : styles.statsRow}>
           {item.stats.map((stat) => (
             <div

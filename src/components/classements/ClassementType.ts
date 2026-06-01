@@ -38,5 +38,5 @@ export type PodiumItem = {
   image: string;
   tags: string[];
   stats: Array<{ value: string; label: string }>;
-  crownColor: "gold" | "silver" | "bronze";
+  crownColor: "gold";
 };
