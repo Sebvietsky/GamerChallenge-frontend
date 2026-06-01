@@ -9,7 +9,7 @@ interface ProtectedLayoutProps {
 
 export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
   return (
-    //TODO A décommenter <ProtectedRoute>
+    <ProtectedRoute>
       <div className="flex min-h-screen bg-background">
             <div className="hidden lg:block">
               <Sidebar />
@@ -20,6 +20,6 @@ export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
               <main className="flex-1 overflow-auto">{children}</main>
             </div>
           </div>
-    // </ProtectedRoute>
+    </ProtectedRoute>
   );
 }

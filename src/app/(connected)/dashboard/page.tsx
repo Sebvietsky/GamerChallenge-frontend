@@ -34,7 +34,7 @@ export default function DashboardPage() {
           <p className={styles.username}>Username not found ⛔</p>
         )}
         <div className={styles.bio}>
-        <h3>Biographie</h3>
+        <h2>Biographie</h2>
         {user?.bio ? (
             <p>{user.bio}</p>
         ): (

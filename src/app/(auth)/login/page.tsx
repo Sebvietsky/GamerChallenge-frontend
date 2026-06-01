@@ -19,7 +19,7 @@ export default function LoginPage() {
       <Link href="/">
         <Image className={common.logo} width={100} height={100} src="/images/logo.png" alt="Logo Gamer Challenge" loading="eager"/>
       </Link>
-      <h1 className={common.h1}>Connection</h1>
+      <h1 className={common.h1}>Connexion</h1>
       <p className={common.p}>Connectez-vous à votre compte</p>
     </div>
     {/* Form Login */}

@@ -51,10 +51,8 @@ export function useRegister() {
 
 
   async function onSubmit(data: RegisterForm) {
-    console.log("onSubmit appelé", data)
     setError(null)
     try {
-      console.log("Envoi vers API...")
       const response = await registerApi(data)
       login(response.user)
     } catch (err) {

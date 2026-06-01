@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRegister } from "@/features/auth/hooks/useRegister";
 import { Controller } from "react-hook-form";
 import { commonStyles as common} from "@/styles/common-auth.styles";
@@ -20,7 +21,8 @@ import {
 
 export default function RegisterPage() {
   const { register, handleSubmit, control, errors, isSubmitting, error} = useRegister()
-  
+  const router = useRouter();
+
   return (
     <main className={common.main}>
       {/* Header register */}
@@ -124,37 +126,6 @@ export default function RegisterPage() {
             <p className="text-destructive text-xs">{errors.country.message}</p>
           )}
         </div>
-        <div className={common.labelContainer}>
-          <label htmlFor="bio">Biographie</label>
-          <Textarea
-            id="bio"
-            {...register("bio")}
-            placeholder="Ecrivez votre biographie ici"
-          />
-          {errors.bio && (
-            <p className="text-destructive text-xs">{errors.bio.message}</p>
-          )}
-        </div>
-        {/* <div className={common.labelContainer}>
-          <label htmlFor="profilPicture">Photo de profil</label>
-
-          <Controller
-  name="profilPicture"
-  control={control}
-  render={({ field: { onChange } }) => (
-    <Input
-      id="profilPicture"
-      type="file"
-      accept="image/*"
-      className={styles.imageInput}
-      onChange={(e) => {
-        const file = e.target.files?.[0]
-        onChange(file ?? null)
-      }}
-    />
-  )}
-/>
-        </div> */}
         <Button className={common.submitButton} type="submit" disabled={isSubmitting}>{isSubmitting ? "Création..." : "Créer votre compte"}</Button>
       </form>
       {/* End Form */}

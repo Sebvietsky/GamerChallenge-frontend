@@ -8,7 +8,6 @@ import {
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export async function loginUser(payload: LoginPayload) {
-  //TODO A verifier route pour login
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -42,16 +41,7 @@ export async function register(
   formData.append("password", payload.password);
   formData.append("confirm", payload.confirm);
   formData.append("country", payload.country);
-  // Ajoute seulement si présent dans le payload
-  if (payload.bio) formData.append("bio", payload.bio);
-  // if (payload.profilPicture) formData.append("profilPicture", payload.profilPicture);
   const json = JSON.stringify(Object.fromEntries(formData.entries()));
-  // TODO console.log
-  for (const [key, value] of formData.entries()) {
-  console.log(key, value);
-}
-
-  console.log(json)
 
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
@@ -66,12 +56,6 @@ export async function register(
     const error = await response.json();
     console.log(error);
     throw new Error(JSON.stringify(error));
-    // const contentType = response.headers.get("content-type");
-    // if (contentType?.includes("application/json")) {
-    //   const error = await response.json()
-    //   throw new Error(error.message ?? messageFromStatus(response.status))
-    // }
-    // throw new Error(messageFromStatus(response.status))
   }
 
   return response.json();

@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { loginUser } from "@/features/auth/api/auth.api"
 import { useAuth } from "@/features/auth/hooks/useAuth"
+import { useRouter } from "next/navigation";
 
 export function useLogin() {
   const { login: loginContext} = useAuth();
@@ -10,6 +11,7 @@ export function useLogin() {
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>){
+    const router = useRouter();
     e.preventDefault()
     setError(null)
     setLoading(true)
@@ -51,6 +53,7 @@ export function useLogin() {
         const user = await profileResponse.json()
         loginContext(user)
       }
+      router.push("/")
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue"
       setError(message)
