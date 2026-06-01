@@ -7,5 +7,5 @@ export const commonStyles = {
   form: "flex flex-col gap-4",
   labelContainer: "flex flex-col gap-1.5",
   submitButton: "w-full mt-2",
-  link: "text-primary text hover:underline font-semibold"
+  link: "text-primary text-sm hover:underline font-semibold backdrop-blur-lg"
 }

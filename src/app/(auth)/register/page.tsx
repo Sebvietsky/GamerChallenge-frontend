@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useRegister } from "@/features/auth/hooks/useRegister";
 import { Controller } from "react-hook-form";
 import { commonStyles as common} from "@/styles/common-auth.styles";
@@ -21,7 +20,6 @@ import {
 
 export default function RegisterPage() {
   const { register, handleSubmit, control, errors, isSubmitting, error} = useRegister()
-  const router = useRouter();
 
   return (
     <main className={common.main}>

@@ -1,36 +1,59 @@
 "use client";
 
 import Link from "next/link";
-
-import { User } from "lucide-react";
+import { LogOut, User, UserPen } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { bannerStyles as styles } from "./banner.styles";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button";
 
 export function BannerDesktop() {
-  // TEMPORAIRE
-  const { user } = useAuth();
+  const router = useRouter();
+  const { user, isAuthenticated, logout} = useAuth();
+
+  async function handleLogout() {
+      await logout()
+      router.push("/")
+  }
 
   const avatarSrc = user?.profilPicture;
 
   return (
     <header className={styles.container}>
       <div className={styles.desktopContainer}>
-        <Link href="/dashboard">
-          <Avatar className={styles.avatarContainer}>
-            <AvatarImage
-              className={styles.avatar}
-              src={avatarSrc}
-              alt="Avatar utilisateur"
-            />
+        { isAuthenticated ? (
+          <>
+          <Link href="/dashboard">
+            <Avatar className={styles.avatarContainer}>
+              <AvatarImage
+                className={styles.avatar}
+                src={avatarSrc}
+                alt="Avatar utilisateur"
+              />
 
-            <AvatarFallback className={styles.avatarFallback}>
-              <User className="h-5 w-5" />
-            </AvatarFallback>
-          </Avatar>
-        </Link>
+              <AvatarFallback className={styles.avatarFallback}>
+                <User className="h-5 w-5" />
+              </AvatarFallback>
+            </Avatar>
+          </Link>
+          <Button type="button" className="ml-2" onClick={handleLogout}>
+          <LogOut />Se déconnecter
+          </Button>
+          </>
+
+        ):(
+          <div className="flex items-center gap-2">
+          <Link href="/login">
+          <Button className="px-4 py-6"><User/>Se connecter</Button>
+          </Link>
+          <Link href="/register">
+          <Button className="bg-surface text-text px-4 py-6 hover:bg-secondary/5 hover:ring-ring/80" ><UserPen/>Créer un compte</Button>
+          </Link>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -7,6 +7,19 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
+async function getErrorMessage(response: Response): Promise<string> {
+  const contentType = response.headers.get("content-type")
+  if (contentType?.includes("application/json")) {
+    try {
+      const error = await response.json()
+      return error?.message ?? messageFromStatus(response.status)
+    } catch {
+      return messageFromStatus(response.status)
+    }
+  }
+  return messageFromStatus(response.status)
+}
+
 export async function loginUser(payload: LoginPayload) {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
@@ -18,14 +31,7 @@ export async function loginUser(payload: LoginPayload) {
   });
 
   if (!response.ok) {
-    const contentType = response.headers.get("content-type");
-
-    if (contentType?.includes("application/json")) {
-      const error = await response.json();
-      throw new Error(error.message ?? "Erreur de connexion");
-    }
-
-    throw new Error(`Erreur ${response.status} : ${response.statusText}`);
+    throw new Error(await getErrorMessage(response))
   }
 
   return response.json();
@@ -53,9 +59,7 @@ export async function register(
   })
 
   if(!response.ok) {
-    const error = await response.json();
-    console.log(error);
-    throw new Error(JSON.stringify(error));
+    throw new Error(await getErrorMessage(response))
   }
 
   return response.json();

@@ -6,12 +6,12 @@ import { useAuth } from "@/features/auth/hooks/useAuth"
 import { useRouter } from "next/navigation";
 
 export function useLogin() {
-  const { login: loginContext} = useAuth();
+  const { login: loginContext, logout: logoutContext} = useAuth();
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const router = useRouter();
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>){
-    const router = useRouter();
     e.preventDefault()
     setError(null)
     setLoading(true)
