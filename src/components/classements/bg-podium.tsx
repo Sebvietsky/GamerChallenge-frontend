@@ -11,7 +11,7 @@ const variants = {
   },
 
   silver: {
-    glow: "bg-slate-300/8",
+    glow: "bg-slate-400/8",
     particles: "text-slate-400/70",
   },
 
