@@ -18,8 +18,8 @@ export const homeStyles = {
 
   cardsGrid: "w-full",
   cardContainer:"my-3 rounded-lg w-full h-100 lg:h-80 relative text-primary-foreground",
-  imageCard: "rounded-lg w-full h-full object-cover object-center",
-  container :"flex w-[75%] lg:w-[50%] rounded-lg h-full absolute top-0 right-0 items-center justify-between pr-8 bg-linear-to-l from-text/80 from-80% to-text/0 to-100%",
+  imageCard: "rounded-lg w-full h-full object-fit object-center",
+  container :"flex w-[90%] lg:w-[50%] rounded-lg h-full absolute top-0 right-0 items-center justify-between pr-8 bg-linear-to-l from-text/80 from-80% to-text/0 to-100%",
   detailContainer:"flex flex-col h-full justify-between px-4 py-8 lg:py-15 lg:pr-10",
   titleCard: "flex gap-2",
   challengeTitle: " text-2xl",
