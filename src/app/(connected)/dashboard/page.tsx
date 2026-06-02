@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Image from "next/image"
+import Image from "next/image";
 import { User } from "lucide-react";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAuth } from "@/features/hooks/useAuth";
 import { NavButton } from "@/components/dashboard/nav-button";
 import { dashboardLink } from "@/components/dashboard/nav-button-link";
 import { dashboardStyles as styles } from "@/styles/dashboard.styles";
@@ -31,24 +31,20 @@ export default function DashboardPage() {
           </div>
         )}
         {user?.username ? (
-          <p className={styles.username}>{user.username}{" "}{user.country}</p>
-        ): (
+          <p className={styles.username}>
+            {user.username} {user.country}
+          </p>
+        ) : (
           <p className={styles.username}>Username not found ⛔</p>
         )}
         <nav>
-          {dashboardLink.map((link)=> {
-            return(
-              <NavButton key={link.path} {...link} />
-            )
+          {dashboardLink.map((link) => {
+            return <NavButton key={link.path} {...link} />;
           })}
         </nav>
         <div className={styles.bio}>
-        <h2>Biographie</h2>
-        {user?.bio ? (
-            <p>{user.bio}</p>
-        ): (
-          <p>{"C'est un peu vide ici..."}</p>
-        )}
+          <h2>Biographie</h2>
+          {user?.bio ? <p>{user.bio}</p> : <p>{"C'est un peu vide ici..."}</p>}
         </div>
       </div>
     </div>

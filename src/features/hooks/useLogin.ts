@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { loginUser } from "@/features/auth/api/auth.api";
-import { useAuth } from "@/features/auth/hooks/useAuth";
+import { loginUser } from "@/features/api/auth.api";
+import { useAuth } from "@/features/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 export function useLogin() {
   const { login: loginContext } = useAuth();
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>){
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString().trim() as string;
@@ -35,9 +35,9 @@ export function useLogin() {
     }
 
     try {
-      const user = await loginUser(payload)
-      loginContext(user)
-      router.push("/")
+      const user = await loginUser(payload);
+      loginContext(user);
+      router.push("/");
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue";
       setError(message);

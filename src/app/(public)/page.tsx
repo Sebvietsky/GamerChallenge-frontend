@@ -1,9 +1,13 @@
+// COMPONENTS
 import { ChallengeList } from "@/components/home/challenge-list";
 
 // STYLES
 import { homeStyles as styles } from "@/components/home/home.styles";
+import { getChallenges } from "@/features/api/challenge.api";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const challenges = await getChallenges();
+
   return (
     <main className={styles.page}>
       <div className={styles.layout}>
@@ -13,7 +17,7 @@ export default function HomePage() {
             <div className={styles.showcaseContent}>
               <h1 className={styles.showcaseTitle}>
                 Crée des défis pour ton jeu de cœur et fais découvrir de
-                nouvelles manières d’y jouer à la communauté !
+                nouvelles manières d&apos;y jouer à la communauté !
               </h1>
 
               <p className={styles.showcaseDescription}>
@@ -32,7 +36,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* SHOWCASE GLOW */}
             <div className={styles.showcaseGlow} />
           </section>
 
@@ -48,9 +51,20 @@ export default function HomePage() {
                   Les défis les plus joués par la communauté.
                 </p>
               </div>
+
+              <div className={styles.sortContainer}>
+                <span className={styles.sortLabel}>Trier par</span>
+
+                <select className={styles.sortSelect}>
+                  <option value="votes">Votes</option>
+                  <option value="recent">Plus récents</option>
+                  <option value="participants">Participants</option>
+                  <option value="favorites">Favoris</option>
+                </select>
+              </div>
             </div>
 
-            <ChallengeList />
+            <ChallengeList challenges={challenges} />
           </section>
         </section>
       </div>

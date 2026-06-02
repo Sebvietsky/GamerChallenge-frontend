@@ -21,7 +21,7 @@ export const bannerStyles = {
   ====================================================== */
 
   container:
-    "w-full h-20 px-4 md:px-6 bg-background/80 backdrop-blur-xl border-b border-border/50",
+    "fixed top-0 right-0 left-0 lg:left-64 z-30 h-20 bg-background/80 backdrop-blur-xl border-b border-border/50 px-4 md:px-6",
 
   /* ======================================================
      MOBILE CONTAINER

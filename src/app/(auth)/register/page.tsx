@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRegister } from "@/features/auth/hooks/useRegister";
+import { useRegister } from "@/features/hooks/useRegister";
 import { Controller } from "react-hook-form";
-import { commonStyles as common} from "@/styles/common-auth.styles";
+import { commonStyles as common } from "@/styles/common-auth.styles";
 import { registerStyle as styles } from "@/styles/register.styles";
-import { Input } from "@/components/ui/input"
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { countries } from "@/lib/countries";
@@ -16,10 +16,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 export default function RegisterPage() {
-  const { register, handleSubmit, control, errors, isSubmitting, error} = useRegister()
+  const { register, handleSubmit, control, errors, isSubmitting, error } =
+    useRegister();
 
   return (
     <main className={common.main}>
@@ -39,16 +40,15 @@ export default function RegisterPage() {
       </div>
       {/* Form */}
       <form className={common.form} onSubmit={handleSubmit} noValidate>
-
         {error && <p className="text-destructive text-sm">{error}</p>}
 
         <div className={common.labelContainer}>
           <label htmlFor="username">{"Nom d'utilisateur"}</label>
           <Input
-          id="username"
-          {...register("username")}
-          autoComplete="username"
-          placeholder="_-bestGamer-_"
+            id="username"
+            {...register("username")}
+            autoComplete="username"
+            placeholder="_-bestGamer-_"
           />
           {errors.username && (
             <p className="text-destructive text-xs">
@@ -59,11 +59,11 @@ export default function RegisterPage() {
         <div className={common.labelContainer}>
           <label htmlFor="email">Email</label>
           <Input
-          id="email"
-          type="email"
-          {...register("email")}
-          autoComplete="email"
-          placeholder="exemple@email.com" 
+            id="email"
+            type="email"
+            {...register("email")}
+            autoComplete="email"
+            placeholder="exemple@email.com"
           />
           {errors.email && (
             <p className="text-destructive text-xs">{errors.email.message}</p>
@@ -71,11 +71,11 @@ export default function RegisterPage() {
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="password">Mot de passe</label>
-          <Input 
-          autoComplete="new-password"
-          id="password"
-          {...register("password")}
-          type="password"
+          <Input
+            autoComplete="new-password"
+            id="password"
+            {...register("password")}
+            type="password"
           />
           {errors.password && (
             <p className="text-destructive text-xs">
@@ -85,11 +85,11 @@ export default function RegisterPage() {
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="confirm">Confirmation de mot de passe</label>
-          <Input 
-          id="confirm"
-          {...register("confirm")}
-          autoComplete="new-password"
-          type="password"
+          <Input
+            id="confirm"
+            {...register("confirm")}
+            autoComplete="new-password"
+            type="password"
           />
           {errors.confirm && (
             <p className="text-destructive text-xs">{errors.confirm.message}</p>
@@ -97,34 +97,39 @@ export default function RegisterPage() {
         </div>
         <div className={common.labelContainer}>
           <label htmlFor="country">Pays</label>
-          <Controller 
-          name="country"
-          control={control}
-          defaultValue=""
-          render={({field}) => {
-          return(
-            <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger id="country">
-                <SelectValue placeholder="Choisissez votre pays" />
-              </SelectTrigger>
-              <SelectContent>
-                {countries.map((country) => (
-                // Code Country or Name Country
-                  <SelectItem key={country.code} value={country.code}> 
-                    {country.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )
-          }}
-          
+          <Controller
+            name="country"
+            control={control}
+            defaultValue=""
+            render={({ field }) => {
+              return (
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger id="country">
+                    <SelectValue placeholder="Choisissez votre pays" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {countries.map((country) => (
+                      // Code Country or Name Country
+                      <SelectItem key={country.code} value={country.code}>
+                        {country.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
           {errors.country && (
             <p className="text-destructive text-xs">{errors.country.message}</p>
           )}
         </div>
-        <Button className={common.submitButton} type="submit" disabled={isSubmitting}>{isSubmitting ? "Création..." : "Créer votre compte"}</Button>
+        <Button
+          className={common.submitButton}
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Création..." : "Créer votre compte"}
+        </Button>
       </form>
       {/* End Form */}
     </main>
