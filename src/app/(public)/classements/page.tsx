@@ -18,20 +18,16 @@ const filterOptions = [
     id: ClassementType.CHALLENGES,
     icon: Trophy,
     title: "Les challenges les plus appréciés",
-    description:
-      "Basé sur le nombre de participations et les votes de la communauté",
   },
   {
     id: ClassementType.UTILISATEURS,
     icon: Users,
     title: "Les utilisateurs les plus actifs",
-    description: "Activité globale, créations et participations",
   },
   {
     id: ClassementType.PARTICIPATIONS,
     icon: Sparkles,
     title: "Les participations les plus appréciées",
-    description: "Votes reçus par la communauté",
   },
 ] as const;
 
@@ -142,8 +138,7 @@ function buildPodiumItems(filter: ClassementType): PodiumItem[] {
         { value: formatNumber(item.votesGiven), label: "Votes donnés" },
         { value: `${item.challengesCreated} créations`, label: "Créations" },
       ],
-      crownColor:
-        item.rank === 1 ? "gold" : item.rank === 2 ? "silver" : "bronze",
+      crownColor: "gold" as const,
     }));
   }
 
@@ -162,8 +157,7 @@ function buildPodiumItems(filter: ClassementType): PodiumItem[] {
         },
         { value: "Premium", label: "Classement" },
       ],
-      crownColor:
-        item.rank === 1 ? "gold" : item.rank === 2 ? "silver" : "bronze",
+      crownColor: "gold" as const,
     }));
   }
 
@@ -178,8 +172,7 @@ function buildPodiumItems(filter: ClassementType): PodiumItem[] {
       { value: formatNumber(item.votes), label: "Votes" },
       { value: item.duration, label: "Durée" },
     ],
-    crownColor:
-      item.rank === 1 ? "gold" : item.rank === 2 ? "silver" : "bronze",
+    crownColor: "gold" as const,
   }));
 }
 
