@@ -22,7 +22,7 @@ export const sidebarLinks = [
 
   {
     label: "Les Classements",
-    href: "/leaderboard",
+    href: "/classements",
     icon: Trophy,
   },
 
