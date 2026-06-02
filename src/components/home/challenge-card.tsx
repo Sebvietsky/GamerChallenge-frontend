@@ -6,15 +6,14 @@ import { Users, Heart, ChevronRight } from "lucide-react";
 import { homeStyles as styles } from "@/styles/global.styles";
 import { Button } from "../ui/button";
 
-type ChallengeProps = {
-  name: string,
-  image: string
+import { Challenge } from "@/features/types/challenge.type";
 
+type ChallengeCardProps = {
+  challenge:
 }
 
-export function ChallengeCard() {
-  const game = {name: "Dragon's Dogma", tagColor: "#F5C842", tagColor2: "#92bf8d"}
-  const Challenge = {participations: 257, votes: 112}
+export function ChallengeCard({challenge}: ChallengeCardProps) {  
+  };
 
   return (
     <div className={styles.cardContainer}>
@@ -54,5 +53,4 @@ export function ChallengeCard() {
   );
 }
 
-
-<ChevronRight size={120} />
+<ChevronRight size={120} />;

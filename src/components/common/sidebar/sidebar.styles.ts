@@ -1,134 +1,80 @@
 export const sidebarStyles = {
   /* ======================================================
      SIDEBAR CONTAINER
-     ======================================================
-
-     - w-64 :
-       largeur fixe = 256px
-
-     - h-screen :
-       prend toute la hauteur de l'écran
-
-     - flex flex-col :
-       organise les éléments verticalement
-
-     - bg-surface :
-       couleur provenant du design system
-
-     - border-r :
-       ajoute une bordure à droite
-
-     - border-border/50 :
-       utilise le token border avec 50% d'opacité
   ====================================================== */
 
   sidebar:
-    "w-64 h-screen flex flex-col bg-background border-r border-border/50",
+    "fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border/50 bg-background",
 
   /* ======================================================
-     LOGO SECTION
-     ======================================================
-
-     Contient le logo en haut de la sidebar.
-
-     - flex :
-       active flexbox
-
-     - items-center :
-       centre verticalement
-
-     - justify-center :
-       centre horizontalement
-
-     - h-24 :
-       hauteur = 96px
-
-     - border-b :
-       bordure basse
-
-     Cette section agit comme le "header"
-     de la sidebar.
+     LOGO
   ====================================================== */
 
-  logo: "border-b border-border/50",
+  logo: "flex items-center justify-center border-b border-border/50 py-6",
 
   /* ======================================================
-   MOBILE HEADER
-   ====================================================== */
+     MOBILE HEADER
+  ====================================================== */
 
-  mobileHeader: "flex items-center justify-between px-4 py-6",
-
-  /* ======================================================
-   MOBILE CLOSE BUTTON
-   ====================================================== */
+  mobileHeader:
+    "flex items-center justify-between border-b border-border/50 px-4 py-6",
 
   mobileCloseButton:
     "flex h-11 w-11 items-center justify-center rounded-2xl bg-surface text-text transition-colors hover:bg-surface-accent",
 
   /* ======================================================
-     NAVIGATION
-     ======================================================
-
-     Conteneur des liens de navigation.
-
-     - flex-col :
-       liens empilés verticalement
-
-     - gap-2 :
-       espace entre les liens
-
-     - p-4 :
-       padding interne = 16px
+     TOP ACTIONS
   ====================================================== */
 
-  navigation: "text-bold flex flex-col gap-2 p-4",
+  topActions: "flex flex-col gap-4 p-4",
+
+  /* ======================================================
+     SEARCH
+  ====================================================== */
+
+  searchContainer: "relative",
+
+  searchIcon:
+    "absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted",
+
+  searchInput:
+    "h-12 w-full rounded-2xl border border-border/50 bg-surface pl-11 pr-14 text-sm outline-none placeholder:text-text-muted",
+
+  searchShortcut:
+    "absolute right-3 top-1/2 -translate-y-1/2 rounded-lg bg-surface-accent px-2 py-1 text-xs font-medium text-secondary",
+
+  /* ======================================================
+     CREATE CHALLENGE BUTTON
+  ====================================================== */
+
+  createChallengeButton: "w-full rounded-2xl py-6",
+
+  /* ======================================================
+     NAVIGATION
+  ====================================================== */
+
+  navigation: "flex flex-1 flex-col gap-2 p-4",
 
   /* ======================================================
      NAV ITEM
-     ======================================================
-
-     Style d'un lien non actif.
-
-     - flex items-center :
-       aligne icône + texte horizontalement
-
-     - gap-3 :
-       espace entre icône et texte
-
-     - px-4 py-3 :
-       padding horizontal + vertical
-
-     - rounded-2xl :
-       coins très arrondis modernes
-
-     - text-text-muted :
-       couleur texte secondaire
-
-     - hover:bg-surface-accent :
-       fond au hover
-
-     - transition-colors :
-       animation couleur fluide
   ====================================================== */
 
   navItem:
-    "flex items-center gap-3 px-4 py-3 rounded-2xl text-text-muted hover:bg-surface-accent transition-colors duration-200",
+    "flex items-center gap-3 rounded-2xl px-4 py-3 text-text-muted transition-colors duration-200 hover:bg-surface-accent",
 
   /* ======================================================
      NAV ITEM ACTIVE
-     ======================================================
-
-     Style du lien actuellement actif.
-
-     Différence principale :
-     - fond violet clair
-     - texte accentué
-     - font-medium
-
-     Cela permet de montrer visuellement
-     la page actuelle.
   ====================================================== */
 
   navItemActive:
-    "flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-accent text-secondary font-medium",
+    "flex items-center gap-3 rounded-2xl bg-surface-accent px-4 py-3 font-medium text-secondary",
+
+  /* ======================================================
+     BOTTOM ACTIONS
+  ====================================================== */
+
+  bottomActions: "flex items-center justify-center gap-4 p-4",
+
+  bottomAction:
+    "flex h-12 w-12 items-center justify-center rounded-2xl border border-border/50 bg-surface text-secondary transition-colors duration-200 hover:bg-surface-accent",
 };

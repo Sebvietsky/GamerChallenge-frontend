@@ -1,27 +1,25 @@
 import "dotenv/config";
+import { API_URL } from "@/lib/api";
 import {
   LoginPayload,
   RegisterPayload,
   AuthResponse,
-  User
 } from "../types/auth.type";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
-
 async function getErrorMessage(response: Response): Promise<string> {
-  const contentType = response.headers.get("content-type")
+  const contentType = response.headers.get("content-type");
   if (contentType?.includes("application/json")) {
     try {
-      const error = await response.json()
-      return error?.message ?? messageFromStatus(response.status)
+      const error = await response.json();
+      return error?.message ?? messageFromStatus(response.status);
     } catch {
-      return messageFromStatus(response.status)
+      return messageFromStatus(response.status);
     }
   }
-  return messageFromStatus(response.status)
+  return messageFromStatus(response.status);
 }
 
-export async function loginUser(payload: LoginPayload){
+export async function loginUser(payload: LoginPayload) {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -31,16 +29,16 @@ export async function loginUser(payload: LoginPayload){
     body: JSON.stringify(payload),
   });
 
-  console.log(response)
+  console.log(response);
 
   if (!response.ok) {
-    throw new Error(await getErrorMessage(response))
+    throw new Error(await getErrorMessage(response));
   }
 
   const user = await fetch(`${API_URL}/auth/me`, {
     method: "GET",
-    credentials: "include"
-  })
+    credentials: "include",
+  });
 
   return user.json();
 }
@@ -60,14 +58,14 @@ export async function register(
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     credentials: "include",
     body: json,
-  })
+  });
 
-  if(!response.ok) {
-    throw new Error(await getErrorMessage(response))
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
   }
 
   return response.json();

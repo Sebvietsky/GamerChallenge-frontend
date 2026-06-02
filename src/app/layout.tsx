@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { AuthProvider } from "@/features/auth/context/AuthContext";
+import { AuthProvider } from "@/features/context/AuthContext";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { SearchProvider } from "@/features/context/Search.Context";
 
 const frauncesHeading = Fraunces({
   subsets: ["latin"],
@@ -42,7 +43,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          {children} 
+          <SearchProvider>{children}</SearchProvider>
         </AuthProvider>
       </body>
     </html>
