@@ -1,17 +1,32 @@
+"use client"
+
 import Image from "next/image"
+import Link from "next/link"
 import { Users, Heart, ChevronRight } from "lucide-react";
 import { homeStyles as styles } from "@/styles/global.styles";
 import { Button } from "../ui/button";
 
+type ChallengeProps = {
+  name: string,
+  image: string
+
+}
+
 export function ChallengeCard() {
   const game = {name: "Dragon's Dogma", tagColor: "#F5C842", tagColor2: "#92bf8d"}
-  const challenge = {participations: 257, votes: 112}
-  const color = "brand-gold"
+  const Challenge = {participations: 257, votes: 112}
 
   return (
     <div className={styles.cardContainer}>
       {/* TODO à verifier les nom envoyer par le bakc pour l'affichage des valeurs */}
-    <Image src="/images/urDragon.webp" width={1000} height={1000} alt={`Image du jeu ${game.name}`} loading="lazy" className={styles.imageCard} ></Image>
+    <Image 
+      src={game.image || "/images/image-not-found.png"} 
+      width={1000} 
+      height={1000} 
+      alt={`Image du jeu ${game.name}`} 
+      loading="lazy" 
+      className={styles.imageCard} 
+/>
     <div className={styles.container}>
       <div className={styles.detailContainer}>
         <div id="tag" className={styles.titleCard}>
@@ -21,16 +36,18 @@ export function ChallengeCard() {
         </div>
           <h3 className={styles.challengeTitle}>Tue le Ur'dragon en moins de 5 secondes</h3>
         <div className={styles.statsContainer}>
-          <p className={styles.stats}><Users />{challenge.participations}</p>
-          <p className={styles.stats}><Heart />{challenge.votes}</p>
+          <p className={styles.stats}><Users />{Challenge.participations}</p>
+          <p className={styles.stats}><Heart />{Challenge.votes}</p>
         </div>
       </div>
-        <Button 
-          size="icon" 
-          className="h-13 w-13 rounded-full bg-brand-secondary-light"
-        >
-          <ChevronRight className="size-10 text-brand-secondary" />
-        </Button>
+        <Link href="/challenges/1">
+          <Button
+            size="icon"
+            className="h-13 w-13 rounded-full bg-brand-secondary-light"
+          >
+            <ChevronRight className="size-10 text-brand-secondary" />
+          </Button>
+        </Link>
         
     </div>
     </div>
