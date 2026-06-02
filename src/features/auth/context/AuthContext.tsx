@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { useRouter } from "next/navigation"
 import { User } from "@/features/auth/types/auth.type";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -11,6 +10,7 @@ type AuthContextType = {
   user: User | null;
   isAuthenticated: boolean;
   loading: boolean;
+  isLoggingOut: boolean;
   login: (user: User) => void;
   logout: () => Promise<void>;
 };
@@ -19,6 +19,7 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
   loading: true,
+  isLoggingOut: false,
   login: () => {},
   logout: async () => {},
 });
@@ -26,11 +27,12 @@ export const AuthContext = createContext<AuthContextType>({
 export function AuthProvider({ children }: { children: ReactNode }): React.ReactElement{
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   useEffect(() => {
     setLoading(true)
-    fetch(`${API_URL}/auth/refresh`, {
-      method: "POST",
+    fetch(`${API_URL}/auth/me`, {
+      method: "GET",
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
@@ -44,15 +46,25 @@ export function AuthProvider({ children }: { children: ReactNode }): React.React
   }
 
   async function logout() {
-    await fetch(`${API_URL}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-    setUser(null);
+    setIsLoggingOut(true)
+    try {
+      const response = await fetch(`${API_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      throw error
+    } finally {
+      setUser(null);
+      setIsLoggingOut(false)
+      if (typeof window !== "undefined" && window.location.pathname !== "/") {
+        window.location.replace("/")
+      }
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, isLoggingOut, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

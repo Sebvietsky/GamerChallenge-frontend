@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Menu, User, UserPen, LogOut} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation"
 import { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -18,11 +17,9 @@ import { bannerStyles as styles } from "./banner.styles";
 
 export function BannerMobile() {
   // TEMPORAIRE
-  const router = useRouter();
     const { user, isAuthenticated, logout } = useAuth();
   
     async function handleLogout() {
-      router.push("/")
       await logout()
     }
 

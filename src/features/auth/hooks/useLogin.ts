@@ -6,7 +6,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth"
 import { useRouter } from "next/navigation";
 
 export function useLogin() {
-  const { login: loginContext, logout: logoutContext} = useAuth();
+  const { login: loginContext } = useAuth();
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const router = useRouter();
@@ -35,24 +35,8 @@ export function useLogin() {
     }
 
     try {
-      const data = await loginUser(payload)
-
-      if (data && "user" in data && data.user) {
-        loginContext(data.user)
-      } else {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL
-        const profileResponse = await fetch(`${API_URL}/auth/refresh`, {
-          method: "POST",
-          credentials: "include",
-        })
-
-        if (!profileResponse.ok) {
-          throw new Error("Connexion réussie, mais impossible de récupérer l'utilisateur")
-        }
-
-        const user = await profileResponse.json()
-        loginContext(user)
-      }
+      const user = await loginUser(payload)
+      loginContext(user)
       router.push("/")
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue"

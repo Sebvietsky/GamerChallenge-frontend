@@ -3,6 +3,7 @@ import {
   LoginPayload,
   RegisterPayload,
   AuthResponse,
+  User
 } from "../types/auth.type";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -20,7 +21,7 @@ async function getErrorMessage(response: Response): Promise<string> {
   return messageFromStatus(response.status)
 }
 
-export async function loginUser(payload: LoginPayload) {
+export async function loginUser(payload: LoginPayload){
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     headers: {
@@ -30,11 +31,18 @@ export async function loginUser(payload: LoginPayload) {
     body: JSON.stringify(payload),
   });
 
+  console.log(response)
+
   if (!response.ok) {
     throw new Error(await getErrorMessage(response))
   }
 
-  return response.json();
+  const user = await fetch(`${API_URL}/auth/me`, {
+    method: "GET",
+    credentials: "include"
+  })
+
+  return user.json();
 }
 
 export async function register(
