@@ -55,29 +55,6 @@ export default function HomePage() {
 
             <ChallengeList />
           </section>
-
-          {/* COMMUNITY CTA */}
-          <section className={styles.communitySection}>
-            <div>
-              <h2 className={styles.communityTitle}>
-                Tu connais ton jeu par cœur ?
-              </h2>
-
-              <p className={styles.communityDescription}>
-                Imagine le défi que personne n’a encore osé.
-              </p>
-            </div>
-
-            <div className={styles.showcaseActions}>
-              <button className={styles.primaryButton}>
-                Créer un challenge
-              </button>
-
-              <button className={styles.lightButton}>
-                Comment ça marche ?
-              </button>
-            </div>
-          </section>
         </section>
       </div>
     </main>
