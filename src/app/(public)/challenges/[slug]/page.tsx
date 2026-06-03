@@ -1,11 +1,18 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ParticipationCard } from "@/components/common/participation/ParticipationCard";
+import { formatNumber } from "@/lib/utils";
 
 import { challengeDetail as styles } from "@/styles/challenge-detail";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users, Heart, Video, Lightbulb, Trophy, Star, ChevronRight, User } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { Users, Heart, Video, Lightbulb, Trophy, Star, User } from "lucide-react";
 
 interface ChallengeDetailPageProps {
   params: { slug: string };
@@ -46,83 +53,100 @@ export default function ChallengeDetailPage({
 
   return (
     <div className={styles.main}>
-      {/* <div className={styles.challengeDesc}> */}
-      <section className="lg:flex">
-        {/* className={styles.detailContainer} */}
-        <div className="flex flex-col w-full gap-4">
-          <div className="h-40 object-cover object-center">
-            <Image className="rounded-lg w-full h-full object-fit object-center" src={data.image || "/images/image-not-found.png"} width={1000} height={1000} alt="Image du jeu"/>
+      {/* SECTION haut de page : Image, titre,...  */}
+      <section className={styles.sectionDetail}>
+        <div className={styles.detailContainer}>
+          <div className={styles.imageContainer}>
+            <Image className={styles.imageTag} src={data.image || "/images/image-not-found.png"} width={1000} height={1000} alt="Image du jeu"/>
           </div>
-          {/* className={styles.tagContainer} */}
-          <div className="flex gap-2 text-sm font-semibold">
-            <p className="rounded-lg bg-brand-info px-4 py-1.5">Speedrun</p>
-            <p className="rounded-lg bg-brand-info px-4 py-1.5">Elden Ring</p>
+          <div className={styles.contentContainer}>
+            <div className={styles.tagContainer}>
+              <p className={styles.tag}>Speedrun</p>
+              <p className={styles.tag}>Elden Ring</p>
+            </div>
+            <h1 className={styles.title}>{data.name} - {data.title}</h1>
+            <div className={styles.dataContainer}>
+              <p className={styles.dataStat}><Users className={styles.icon} />{" "}{formatNumber(data.participations)}{" "}{data.participations > 1 ?("participants"):("participant")}</p>
+              <p className={styles.dataStat}><Heart className={styles.icon} />{" "}{formatNumber(data.votes)}{" "}{data.votes > 1 ?(" votes"):(" vote")} </p>
+            </div>
+            <p className={styles.description}>Terminez le jeu Elden Ring en battant tout les boss principaux sans subir le moindre dégât. Une prouesse de maitrise, de patiance et de stratégie.</p>
           </div>
-          <h1 className="text-2xl font-semibold">{data.name} - {data.title}</h1>
-          {/* className={styles.dataContainer} */}
-          <div className="flex gap-4 text-text-muted">
-            <p className="flex items-center"><Users className="mr-2" />{" "}{formatNumber(data.participations)}{" "}{data.participations > 1 ?("participants"):("participant")}</p>
-            <p className="flex items-center"><Heart className="mr-2" />{" "}{formatNumber(data.votes)}{" "}{data.votes > 1 ?(" votes"):(" vote")} </p>
-          </div>
-          <p className="w-full text-text-muted">Terminez le jeu Elden Ring en battant tout les boss principaux sans subir le moindre dégât. Une prouesse de maitrise, de patiance et de stratégie.</p>
         </div>
-        <div className="flex my-2 gap-1.5 justify-end px-8">
-          <Button className="w-8 h-8 rounded-full" >
+        <div className={styles.buttonContainer}>
+          <Button className={styles.iconButton} >
             <Heart />
           </Button>
-          <Button className="w-8 h-8 rounded-full">
+          <Button className={styles.iconButton}>
             <Star />
           </Button>
         </div>
+        {/* SECTION Vidéo, Créé par and Indice */}
       </section>
-      <section className="">
-        {/* className={styles.videoContainer} */}
-        <div className="h-fit w-full border rounded-lg bg-surface p-4 mb-4">
-          <h2 className="flex mb-2 "><Video />{' '}Démonstration</h2>
+      <section className={styles.sectionGrid}>
+        <div className={styles.videoContainer}>
+          <h2 className={styles.videoTitle}><Video />{' '}Démonstration</h2>
           {/* TODO changer par nos vidéo de démonstration */}
-          <iframe className="w-full h-50 object-fit" src="https://www.youtube.com/embed/Djtsw5k_DNc" title="ELDEN RING NIGHTREIGN – REVEAL GAMEPLAY TRAILER" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+          <iframe className={styles.iframe} src="https://www.youtube.com/embed/Djtsw5k_DNc" title="ELDEN RING NIGHTREIGN – REVEAL GAMEPLAY TRAILER" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
         </div>
-        <div className="border rounded-lg bg-surface p-4 mb-4">
-          <h2 className="flex"><Lightbulb />Indices{" "}<ChevronRight /></h2>
+        <div className={styles.hintsContainer}>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="indices">
+              <AccordionTrigger>
+                <Lightbulb />Indices
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul>
+                  <li>Indice 1</li>
+                  <li>Indice 2</li>
+                  <li>Indice 3</li>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
-        <div className="border rounded-lg bg-surface p-4">
-          <h2 className="mb-2 text-xl font-semibold">Créé par</h2>
-          <div className="flex gap-4">
-            <Avatar className="w-15 h-15">
+        <div className={styles.creatorContainer}>
+          <h2 className={styles.creatorTitle}>Créé par</h2>
+          <div className={styles.creatorContent}>
+            <Avatar className={styles.avatar}>
               <AvatarImage src={data.avatar} alt="Image de profil du Créateur du chalenge"/>
               <AvatarFallback>
                 <User />
               </AvatarFallback>
             </Avatar>
-            <div className="flex flex-col">
-              <p className="font-heading font-semibold text-lg">Nom d'utilisateur</p>
-              <p className="text-text-muted text-sm mb-2">Créateur de {data.created > 1 ? ("challenges") : ("challenge")}</p>
-              <p className="flex items-center mb-1"><Trophy className="h-4 w-4 mr-2" />{formatNumber(data.created)}{" "}{data.created > 1 ? ("challenges créés") : ("challenge créé")} </p>
-              <p className="flex items-center"><Users className="h-4 w-4 mr-2" />{formatNumber(data.participations)}{" "}{data.participations > 1 ? ("participants") : ("participant")} </p>
+            <div className={styles.creatorInfo}>
+              <p className={styles.creatorName}>Nom d'utilisateur</p>
+              <p className={styles.creatorRole}>Créateur de {data.created > 1 ? ("challenges") : ("challenge")}</p>
+              <p className={styles.creatorStat}><Trophy className={styles.creatorStatIcon} />{formatNumber(data.created)}{" "}{data.created > 1 ? ("challenges créés") : ("challenge créé")} </p>
+              <p className={styles.creatorStat}><Users className={styles.creatorStatIcon} />{formatNumber(data.participations)}{" "}{data.participations > 1 ? ("participants") : ("participant")} </p>
             </div>
           </div>
         </div>
       </section>
-      <section className="border bg-surface p-4 rounded-lg">
-        <div className="not-last:relative flex justify-between items-center not-last:after:absolute not-last:after:bottom-10 after:left-0 after:bg-text-muted after:w-[90%] after:h-px">
-          <h2 className="font-semibold text-sm">Participations ({formatNumber(data.participations)})</h2>
-          <div className="flex gap-1 items-center">
-            <Button className="rounded-sm bg-secondary text-secondary-foreground">Nouveautés</Button>
-            <Button className="rounded-sm bg-surface text-text border-test-muted">Popularités</Button>
+      {/* SECTION Participation */}
+      <section className={styles.participationSection}>
+        <div className={styles.participationHeader}>
+          <h2 className={styles.participationTitle}>Participations ({formatNumber(data.participations)})</h2>
+          <div className={styles.filterContainer}>
+            <Button className={styles.filterButton}>Nouveautés</Button>
+            <Button className={styles.filterButtonAlt}>Popularités</Button>
           </div>
         </div>
-        <ul>
-          <ParticipationCard />
-          <ParticipationCard />
-          <ParticipationCard />
+        <ul className={styles.participationList}>
+          <ParticipationCard className={styles.participationCard}/>
+          <ParticipationCard className={styles.participationCard}/>
+          <ParticipationCard className={styles.participationCard}/>
         </ul>
       </section>
-      <section className="flex flex-col items-center">
-        <div>
-          <h3 className="font-semibold">Prêt à relever le défi ?</h3>
-          <p className="text-text-soft text-xs mb-1">Partagez votre meilleure performance et affronter la communauté !</p>
+      <section className={styles.ctaSection}>
+        <div className={styles.ctaContainer}>
+          <h3 className={styles.ctaTitle}>Prêt à relever le défi ?</h3>
+          <p className={styles.ctaSubtitle}>Partagez votre meilleure performance et affronter la communauté !</p>
         </div>
-        <Button className="w-full rounded-sm">Participer au challenge</Button>
+        <div className="w-full lg:w-[80%]">
+          <Link href="/participate">
+            <Button className={styles.ctaButton}>Participer au challenge</Button>
+          </Link>
+        </div>
       </section>
       
     </div>

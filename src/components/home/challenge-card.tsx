@@ -8,12 +8,7 @@ import { Button } from "../ui/button";
 
 import { Challenge } from "@/features/types/challenge.type";
 
-type ChallengeCardProps = {
-  challenge:
-}
-
-export function ChallengeCard({challenge}: ChallengeCardProps) {  
-  };
+export function ChallengeCard({challenge}: Challenge) {  
 
   return (
     <div className={styles.cardContainer}>
@@ -52,5 +47,3 @@ export function ChallengeCard({challenge}: ChallengeCardProps) {
     </div>
   );
 }
-
-<ChevronRight size={120} />;
