@@ -3,7 +3,7 @@ export const challengeDetail = {
   // Section haut de page
   sectionDetail: "lg:flex",
   detailContainer: "flex flex-col lg:flex-row w-full gap-4",
-  imageContainer: "h-40 lg:h-100 object-cover object-center",
+  imageContainer: "h-100 lg:h-100 object-cover object-center",
   imageTag: "rounded-lg w-full h-full object-fit object-center",
   contentContainer: "flex flex-col gap-4 lg:gap-8 lg:justify-center",
   tagContainer: "flex gap-2 text-sm font-semibold",
@@ -33,11 +33,11 @@ export const challengeDetail = {
   creatorStatIcon: "h-4 w-4 mr-2",
   // Section participations
   participationSection: "border bg-surface p-4 rounded-lg",
-  participationHeader: "relative flex justify-between lg:justify-start gap-25 items-center after:absolute after:-translate-x-1/2 after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-[95%] after:w-[90%] after:h-px mb-2",
+  participationHeader: "relative flex justify-between lg:justify-start gap-25 items-center after:absolute after:-translate-x-1/2 after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-[95%] after:w-[90%] after:h-px pb-2 mb-2",
   participationTitle: "font-semibold text-sm",
   filterContainer: "flex gap-1 items-center",
-  filterButton: "rounded-sm bg-secondary text-secondary-foreground",
-  filterButtonAlt: "rounded-sm bg-surface text-text border-test-muted",
+  // filterButton: "rounded-sm bg-secondary text-secondary-foreground",
+  // filterButtonAlt: "rounded-sm bg-surface text-text border-test-muted",
   participationList: "flex flex-col items-center w-full",
   participationCard: "relative flex items-center justify-between w-full lg:w-[95%] px-2 after:absolute after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-full after:w-[90%] after:-translate-x-1/2 after:h-px mb-2",
   // Section CTA

@@ -12,6 +12,7 @@ export interface Challenge {
     studio: string | null;
     platform: string | null;
     coverUrl: string;
+    screenshots: string[];
     categories: string[];
   };
 
@@ -38,4 +39,29 @@ export interface Challenge {
     favoritedBy: number;
     votes: number;
   };
+}
+
+export interface Participation {
+  challenge: {
+    game: {
+      coverUrl: {url: string};
+    }
+  }
+  id: number;
+  video: {url: string};
+  title: string;
+  slug: string;
+  description?: string;
+  status: string;
+  rejectedReason?: string;
+  visibility: boolean;
+  createdAt: string;
+  user: {
+    country: string;
+    profilePicture: {url: string}
+    username: string;
+  }
+  _count: {
+    votes: number;
+  }
 }

@@ -41,7 +41,6 @@ export function useLogin() {
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue";
       setError(message);
-      console.log(message);
     } finally {
       setLoading(false);
     }
