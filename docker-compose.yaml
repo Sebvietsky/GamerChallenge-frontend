@@ -18,3 +18,10 @@ services:
       WATCHPACK_POLLING_INTERVAL: 1000
 
     restart: unless-stopped
+
+    networks:
+      - gamer_network # Réseau partagé avec le backend pour que les Server Components puissent joindre l'API
+
+networks:
+  gamer_network:
+    external: true # Réseau créé manuellement via "docker network create gamer_network" — external: true empêche Compose de le recréer avec un préfixe différent
