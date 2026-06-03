@@ -64,7 +64,7 @@ export const homeStyles = {
   sortLabel: "text-text-muted text-sm font-medium",
 
   sortSelect:
-    "soft-border bg-surface hover:bg-surface-accent h-11 rounded-xl px-4 text-sm text-text outline-none transition-colors focus:ring-2 focus:ring-secondary/30",
+    "soft-border h-11 min-w-[120px] rounded-xl bg-surface text-text font-medium",
 
   /* =========================================================
   CTA SECTION

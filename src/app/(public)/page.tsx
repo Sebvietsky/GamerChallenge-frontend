@@ -3,6 +3,13 @@ import { ChallengeList } from "@/components/home/challenge-list";
 
 // STYLES
 import { homeStyles as styles } from "@/components/home/home.styles";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { getChallenges } from "@/features/api/challenge.api";
 
 export default async function HomePage() {
@@ -55,12 +62,17 @@ export default async function HomePage() {
               <div className={styles.sortContainer}>
                 <span className={styles.sortLabel}>Trier par</span>
 
-                <select className={styles.sortSelect}>
-                  <option value="votes">Votes</option>
-                  <option value="recent">Plus récents</option>
-                  <option value="participants">Participants</option>
-                  <option value="favorites">Favoris</option>
-                </select>
+                <Select defaultValue="votes">
+                  <SelectTrigger className={styles.sortSelect}>
+                    <SelectValue />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    <SelectItem value="votes">Aimés</SelectItem>
+                    <SelectItem value="recent">Plus récents</SelectItem>
+                    <SelectItem value="participants">Participations</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
