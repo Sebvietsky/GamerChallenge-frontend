@@ -1,8 +1,8 @@
 import type { Challenge } from "@/features/types/challenge.type";
-import { API_URL } from "@/lib/api";
+import { API_SERVER_URL } from "@/lib/api";
 
 export async function getChallenges(): Promise<Challenge[]> {
-  const response = await fetch(`${API_URL}/challenges`, {
+  const response = await fetch(`${API_SERVER_URL}/challenges`, {
     credentials: "include",
     cache: "no-store",
   });
@@ -18,7 +18,7 @@ export async function getChallenges(): Promise<Challenge[]> {
 export async function getChallengeBySlug(
   slug: string,
 ): Promise<Challenge | null> {
-  const response = await fetch(`${API_URL}/challenges/${slug}`, {
+  const response = await fetch(`${API_SERVER_URL}/challenges/${slug}`, {
     credentials: "include",
     cache: "no-store",
   });
