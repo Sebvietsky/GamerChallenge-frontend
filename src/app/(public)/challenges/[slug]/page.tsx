@@ -15,7 +15,7 @@ import {
 import { Users, Heart, Video, Lightbulb, Trophy, Star, User } from "lucide-react";
 
 interface ChallengeDetailPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 type ChallengeDetail = {
@@ -28,10 +28,10 @@ type ChallengeDetail = {
   created: number;
 };
 
-export default function ChallengeDetailPage({
+export default async function ChallengeDetailPage({
   params,
 }: ChallengeDetailPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const mockChallenge: ChallengeDetail = {
     slug,
     image: "/images/image-not-found.png",
