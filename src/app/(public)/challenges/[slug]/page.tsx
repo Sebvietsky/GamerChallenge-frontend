@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ParticipationCard } from "@/components/common/participation/ParticipationCard";
+import { Participation } from "@/components/common/participation/Participation";
 import { formatNumber } from "@/lib/utils";
-
+import type { Participation as ParticipationType } from "@/features/types/challenge.type";
 import { challengeDetail as styles } from "@/styles/challenge-detail";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,43 +13,24 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Users, Heart, Video, Lightbulb, Trophy, Star, User } from "lucide-react";
+import { getChallengeBySlug, getParticipationsByChallenge } from "@/features/api/challenge.api";
+
+
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-type ChallengeDetail = {
-  slug: string;
-  image?: string;
-  name: string;
-  title: string;
-  participations: number;
-  votes: number;
-  created: number;
-};
-
 export default async function ChallengeDetailPage({
-  params,
+  params
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
-  const mockChallenge: ChallengeDetail = {
-    slug,
-    image: "/images/image-not-found.png",
-    name: "Elden Ring",
-    title: "No Hit Boss Run",
-    participations: 1560,
-    votes: 1010,
-    created: 11,
-  };
+  const data = await getChallengeBySlug(slug)
+  const participations = await getParticipationsByChallenge(slug)
 
-  const data: ChallengeDetail = mockChallenge;
-
-  const formatNumber = (num: number): string => {
-    if (num >= 1000) {
-      return (num / 1000).toFixed(1) + "K";
-    }
-    return num.toString();
-  };
+  if(!data) {
+    return null
+  }
 
   return (
     <div className={styles.main}>
@@ -57,19 +38,19 @@ export default async function ChallengeDetailPage({
       <section className={styles.sectionDetail}>
         <div className={styles.detailContainer}>
           <div className={styles.imageContainer}>
-            <Image className={styles.imageTag} src={data.image || "/images/image-not-found.png"} width={1000} height={1000} alt="Image du jeu"/>
+            <Image className={styles.imageTag} src={data.game.coverUrl || "/images/image-not-found.png"} width={1000} height={1000} alt="Image du jeu"/>
           </div>
           <div className={styles.contentContainer}>
             <div className={styles.tagContainer}>
-              <p className={styles.tag}>Speedrun</p>
-              <p className={styles.tag}>Elden Ring</p>
+              <p className={styles.tag} style={{backgroundColor: data.challengeCategory.colorCode}}>{data.challengeCategory.name}</p>
+              <p className={styles.tag} style={{backgroundColor: data.difficulty.colorCode}}>{data.game.name}</p>
             </div>
-            <h1 className={styles.title}>{data.name} - {data.title}</h1>
+            <h1 className={styles.title}>{data.game.name} - {data.title}</h1>
             <div className={styles.dataContainer}>
-              <p className={styles.dataStat}><Users className={styles.icon} />{" "}{formatNumber(data.participations)}{" "}{data.participations > 1 ?("participants"):("participant")}</p>
-              <p className={styles.dataStat}><Heart className={styles.icon} />{" "}{formatNumber(data.votes)}{" "}{data.votes > 1 ?(" votes"):(" vote")} </p>
+              <p className={styles.dataStat}><Users className={styles.icon} />{" "}{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ?("participants"):("participant")}</p>
+              <p className={styles.dataStat}><Heart className={styles.icon} />{" "}{formatNumber(data._count.votes)}{" "}{data._count.votes > 1 ?(" votes"):(" vote")} </p>
             </div>
-            <p className={styles.description}>Terminez le jeu Elden Ring en battant tout les boss principaux sans subir le moindre dégât. Une prouesse de maitrise, de patiance et de stratégie.</p>
+            <p className={styles.description}>{data.difficulty.name}{" "}Terminez le jeu Elden Ring en battant tout les boss principaux sans subir le moindre dégât. Une prouesse de maitrise, de patiance et de stratégie.</p>
           </div>
         </div>
         <div className={styles.buttonContainer}>
@@ -108,35 +89,22 @@ export default async function ChallengeDetailPage({
           <h2 className={styles.creatorTitle}>Créé par</h2>
           <div className={styles.creatorContent}>
             <Avatar className={styles.avatar}>
-              <AvatarImage src={data.avatar} alt="Image de profil du Créateur du chalenge"/>
+              <AvatarImage src={data.user?.profilePicture} alt="Image de profil du Créateur du chalenge"/>
               <AvatarFallback>
                 <User />
               </AvatarFallback>
             </Avatar>
             <div className={styles.creatorInfo}>
-              <p className={styles.creatorName}>Nom d'utilisateur</p>
-              <p className={styles.creatorRole}>Créateur de {data.created > 1 ? ("challenges") : ("challenge")}</p>
-              <p className={styles.creatorStat}><Trophy className={styles.creatorStatIcon} />{formatNumber(data.created)}{" "}{data.created > 1 ? ("challenges créés") : ("challenge créé")} </p>
-              <p className={styles.creatorStat}><Users className={styles.creatorStatIcon} />{formatNumber(data.participations)}{" "}{data.participations > 1 ? ("participants") : ("participant")} </p>
+              <p className={styles.creatorName}>{data.user.username}</p>
+              <p className={styles.creatorRole}>Créateur de {data._count.participations > 1 ? ("challenges") : ("challenge")}</p>
+              <p className={styles.creatorStat}><Trophy className={styles.creatorStatIcon} />{"!Todo"}{formatNumber(data._count.favoritedBy)}{" "}{data._count.favoritedBy > 1 ? ("challenges créés") : ("challenge créé")} </p>
+              <p className={styles.creatorStat}><Users className={styles.creatorStatIcon} />{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ? ("participants") : ("participant")} </p>
             </div>
           </div>
         </div>
       </section>
       {/* SECTION Participation */}
-      <section className={styles.participationSection}>
-        <div className={styles.participationHeader}>
-          <h2 className={styles.participationTitle}>Participations ({formatNumber(data.participations)})</h2>
-          <div className={styles.filterContainer}>
-            <Button className={styles.filterButton}>Nouveautés</Button>
-            <Button className={styles.filterButtonAlt}>Popularités</Button>
-          </div>
-        </div>
-        <ul className={styles.participationList}>
-          <ParticipationCard className={styles.participationCard}/>
-          <ParticipationCard className={styles.participationCard}/>
-          <ParticipationCard className={styles.participationCard}/>
-        </ul>
-      </section>
+      <Participation participations={participations ?? []}/>
       <section className={styles.ctaSection}>
         <div className={styles.ctaContainer}>
           <h3 className={styles.ctaTitle}>Prêt à relever le défi ?</h3>

@@ -3,23 +3,25 @@ import { formatNumber } from "@/lib/utils"
 
 import { participationCardStyles as styles } from "./ParticipationCard-styles"
 import { Heart, MessageSquare } from "lucide-react"
+import { Participation } from "@/features/types/challenge.type"
 
 interface ParticipationCardProps {
   className?: string
+  data: Participation
 }
 
-export function ParticipationCard({className}: ParticipationCardProps){
+export function ParticipationCard({className, data}: ParticipationCardProps){
   return(
     <li className={className}>
       <div className={styles.infoContainer}>
-        <Image src="/images/image-not-found.png" width={100} height={100} alt="Image de participations"/>
+        <Image src={data.challenge.game.coverUrl} width={100} height={100} alt="Image de participations"/>
         <div>
-          <h3 className="font-semibold">Title Participation</h3>
-          <p className="text-text-soft">username Participant</p>
+          <h3 className="font-semibold">{data.title}</h3>
+          <p className="text-text-soft">{data.user.username}</p>
         </div>
       </div>
       <div className="*:flex *:items-center *:gap-1">
-        <p><Heart /> {formatNumber(1200)}</p>
+        <p><Heart /> {formatNumber(data._count.votes)}</p>
       </div>
     </li>
   )
