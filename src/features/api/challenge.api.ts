@@ -1,6 +1,14 @@
 import type { Challenge } from "@/features/types/challenge.type";
 import { API_SERVER_URL } from "@/lib/api";
 
+interface PaginatedResponse {
+  data: Challenge[];
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
 export async function getChallenges(): Promise<Challenge[]> {
   const response = await fetch(`${API_SERVER_URL}/challenges`, {
     credentials: "include",
@@ -11,8 +19,8 @@ export async function getChallenges(): Promise<Challenge[]> {
     throw new Error("Impossible de récupérer les challenges");
   }
 
-  const data: Challenge[] = await response.json();
-  return data;
+  const json: PaginatedResponse = await response.json();
+  return json.data;
 }
 
 export async function getChallengeBySlug(

@@ -8,16 +8,20 @@ import { Button } from "../ui/button";
 
 import { Challenge } from "@/features/types/challenge.type";
 
-export function ChallengeCard({challenge}: Challenge) {  
+interface ChallengeProps {
+  challenge: Challenge;
+}
 
+export function ChallengeCard({challenge}: ChallengeProps) {  
+console.log(challenge)
   return (
     <div className={styles.cardContainer}>
       {/* TODO à verifier les nom envoyer par le bakc pour l'affichage des valeurs */}
     <Image 
-      src={game.image || "/images/image-not-found.png"} 
+      src={challenge.game.coverUrl || "/images/image-not-found.png"} 
       width={1000} 
       height={1000} 
-      alt={`Image du jeu ${game.name}`} 
+      alt={`Image du jeu ${challenge.game.name}`} 
       loading="lazy" 
       className={styles.imageCard} 
 />
@@ -25,13 +29,13 @@ export function ChallengeCard({challenge}: Challenge) {
       <div className={styles.detailContainer}>
         <div id="tag" className={styles.titleCard}>
           {/* style={} sera pour integrer la couleur envoyer par le back les nom seront surement à modifier à l'integration du back */}
-          <p className={styles.tag} style={{backgroundColor: game.tagColor2}}>speedrun</p>
-          <h3 className={styles.tag} style={{backgroundColor: game.tagColor}}>{game.name}</h3>
+          <p className={styles.tag} style={{backgroundColor: challenge.challengeCategory.colorCode}}>{challenge.challengeCategory.name}</p>
+          <h3 className={styles.tag} style={{backgroundColor: challenge.difficulty.colorCode}}>{challenge.game.name}</h3>
         </div>
-          <h3 className={styles.challengeTitle}>Tue le Ur'dragon en moins de 5 secondes</h3>
+          <h3 className={styles.challengeTitle}>{challenge.title}</h3>
         <div className={styles.statsContainer}>
-          <p className={styles.stats}><Users />{Challenge.participations}</p>
-          <p className={styles.stats}><Heart />{Challenge.votes}</p>
+          <p className={styles.stats}><Users />{challenge._count?.participations}</p>
+          <p className={styles.stats}><Heart />{challenge._count?.votes}</p>
         </div>
       </div>
         <Link href="/challenges/1">

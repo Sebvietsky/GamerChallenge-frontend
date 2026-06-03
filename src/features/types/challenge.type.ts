@@ -4,26 +4,27 @@ export interface Challenge {
   slug: string;
 
   closesAt: string | null;
-
+  createdAt: string;
   status: string;
 
   game: {
     name: string;
     studio: string | null;
     platform: string | null;
-    coverUrl: string | null;
+    coverUrl: string;
+    categories: string[];
   };
 
   challengeCategory: {
     id: number;
     name: string;
-    colorCode: string | null;
+    colorCode: string;
   };
 
   difficulty: {
     id: number;
     name: string;
-    colorCode: string | null;
+    colorCode: string;
   };
 
   user: {
