@@ -1,5 +1,2 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-if(!API_URL) {
-  throw new Error("NEXT_PUBLIC_API_URL is not define")
-}
+export const API_SERVER_URL = process.env.API_SERVER_URL ?? process.env.NEXT_PUBLIC_API_URL;
