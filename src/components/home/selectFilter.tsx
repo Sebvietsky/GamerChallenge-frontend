@@ -2,6 +2,7 @@
 
 // STYLES
 import { homeStyles as styles } from "@/components/home/home.styles";
+import type { HomeChallengeOrderBy } from "@/features/hooks/useHome";
 
 import {
   Select,
@@ -11,18 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type ChallengeSort = "votes" | "createdAt" | "participations";
-
 interface Props {
-  value: ChallengeSort;
-  onChange: (value: ChallengeSort) => void;
+  value: HomeChallengeOrderBy;
+  onChange: (value: HomeChallengeOrderBy) => void;
 }
 
 export function SelectFilter({ value, onChange }: Props) {
   return (
     <Select
       value={value}
-      onValueChange={(value) => onChange(value as ChallengeSort)}
+      onValueChange={(value) => onChange(value as HomeChallengeOrderBy)}
     >
       <SelectTrigger className={styles.sortSelect}>
         <SelectValue />

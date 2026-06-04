@@ -17,7 +17,7 @@ export function ChallengeCard({ challenge }: ChallengeProps) {
     <div className={styles.cardContainer}>
       {/* TODO à verifier les nom envoyer par le bakc pour l'affichage des valeurs */}
       <Image
-        src={challenge.game.coverUrl || "/images/image-not-found.png"}
+        src={challenge.game.bannerUrl || "/images/image-not-found.png"}
         fill
         alt={`Image du jeu ${challenge.game.name}`}
         loading="lazy"
