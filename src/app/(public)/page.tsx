@@ -11,9 +11,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getChallenges } from "@/features/api/challenge.api";
+import { queryParams } from "@/features/types/challenge.type";
 
-export default async function HomePage() {
-  const challenges = await getChallenges();
+export default async function HomePage({searchParams,
+
+}: {
+  searchParams: Promise<queryParams>
+}) {
+  const { page, limit, sort, orderBy, since} = await searchParams;
+  
+  const challenges = await getChallenges({page: Number(page ?? 1),limit: Number(limit ?? 3), sort: sort ?? "desc", orderBy: orderBy ?? "votes", since: since ?? undefined});
 
   return (
     <main className={styles.page}>

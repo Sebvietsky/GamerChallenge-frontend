@@ -13,14 +13,12 @@ interface ChallengeProps {
 }
 
 export function ChallengeCard({ challenge }: ChallengeProps) {
-  // console.log(challenge);
   return (
     <div className={styles.cardContainer}>
       {/* TODO à verifier les nom envoyer par le bakc pour l'affichage des valeurs */}
       <Image
         src={challenge.game.coverUrl || "/images/image-not-found.png"}
-        width={100}
-        height={100}
+        fill
         alt={`Image du jeu ${challenge.game.name}`}
         loading="lazy"
         className={styles.imageCard}

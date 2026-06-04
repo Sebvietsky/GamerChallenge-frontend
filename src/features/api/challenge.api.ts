@@ -1,4 +1,4 @@
-import type { Challenge, Participation } from "@/features/types/challenge.type";
+import type { Challenge, Participation, queryParams } from "@/features/types/challenge.type";
 import { API_SERVER_URL } from "@/lib/api";
 
 interface PaginatedResponse {
@@ -9,8 +9,15 @@ interface PaginatedResponse {
   totalPages: number;
 }
 
-export async function getChallenges(): Promise<Challenge[]> {
-  const response = await fetch(`${API_SERVER_URL}/challenges`, {
+export async function getChallenges({ page=1, limit = 20, orderBy = "votes", sort = "desc", since= undefined}: queryParams): Promise<Challenge[]> {
+    const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+    orderBy,
+    sort,
+  });
+  
+  const response = await fetch(`${API_SERVER_URL}/challenges?${params}`, {
     credentials: "include",
     cache: "no-store",
   });

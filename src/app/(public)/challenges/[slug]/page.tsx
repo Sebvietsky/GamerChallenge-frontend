@@ -89,7 +89,7 @@ export default async function ChallengeDetailPage({
           <h2 className={styles.creatorTitle}>Créé par</h2>
           <div className={styles.creatorContent}>
             <Avatar className={styles.avatar}>
-              <AvatarImage src={data.user?.profilePicture} alt="Image de profil du Créateur du chalenge"/>
+              <AvatarImage src={data.user.profilePicture || undefined} alt="Image de profil du Créateur du chalenge"/>
               <AvatarFallback>
                 <User />
               </AvatarFallback>
@@ -104,7 +104,7 @@ export default async function ChallengeDetailPage({
         </div>
       </section>
       {/* SECTION Participation */}
-      <Participation participations={participations ?? []}/>
+      <Participation challenge={data} participations={participations ?? []}/>
       <section className={styles.ctaSection}>
         <div className={styles.ctaContainer}>
           <h3 className={styles.ctaTitle}>Prêt à relever le défi ?</h3>
