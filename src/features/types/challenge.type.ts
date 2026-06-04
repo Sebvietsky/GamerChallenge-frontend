@@ -2,7 +2,7 @@ export interface Challenge {
   id: number;
   title: string;
   slug: string;
-
+  description: string
   closesAt: string | null;
   createdAt: string;
   status: string;
@@ -42,12 +42,12 @@ export interface Challenge {
 }
 
 export interface Participation {
+  id: number;
   challenge: {
     game: {
-      coverUrl: {url: string};
+      coverUrl: string;
     }
   }
-  id: number;
   video: {url: string};
   title: string;
   slug: string;
@@ -64,4 +64,12 @@ export interface Participation {
   _count: {
     votes: number;
   }
+}
+
+export interface queryParams {
+  page?: number;
+  limit?: number;
+  orderBy?: "createdAt" | "title" | "closesAt" | "status" | "participations" | "votes" | undefined;
+  sort?: "asc" | "desc";
+  since?: "1w" | "1m" | "3m" | "6m" | "1y" | undefined ;
 }

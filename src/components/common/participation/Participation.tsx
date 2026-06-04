@@ -4,16 +4,18 @@ import { useState } from "react";
 import { formatNumber } from "@/lib/utils";
 import { ParticipationCard } from "./ParticipationCard";
 import { challengeDetail as styles } from "@/styles/challenge-detail";
-import type { Participation } from "@/features/types/challenge.type";
+import type { Challenge, Participation } from "@/features/types/challenge.type";
 import { Button } from "@/components/ui/button";
 
 type SortType = "newest" | "popular"
 
 interface ParticipationProps {
   participations: Participation[] | null;
+  challenge: Challenge
 }
 
-export function Participation({participations}: ParticipationProps){
+export function Participation({participations, challenge}: ParticipationProps){
+  console.log(challenge)
   const [sort, setSort] = useState<SortType>("newest");
   if (!participations) return null;
   const sorted = [...participations].sort((a, b) => {
@@ -38,7 +40,7 @@ export function Participation({participations}: ParticipationProps){
         </div>
       <ul className={styles.participationList}>
         {sorted.map((p) =>(
-          <ParticipationCard key={p.id} data={p} className={styles.participationCard}/>
+          <ParticipationCard key={p.id ?? p.title} data={p} challenge={challenge} className={styles.participationCard}/>
         ))}
         {/* <ParticipationCard className={styles.participationCard}/>
         <ParticipationCard className={styles.participationCard}/>

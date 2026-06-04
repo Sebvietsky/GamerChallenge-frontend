@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 import { Users, Heart, ChevronRight } from "lucide-react";
 import { homeStyles as styles } from "@/styles/global.styles";
 import { Button } from "../ui/button";
@@ -12,30 +12,46 @@ interface ChallengeProps {
   challenge: Challenge;
 }
 
-export function ChallengeCard({challenge}: ChallengeProps) {  
+export function ChallengeCard({ challenge }: ChallengeProps) {
   return (
     <div className={styles.cardContainer}>
       {/* TODO à verifier les nom envoyer par le bakc pour l'affichage des valeurs */}
-    <Image 
-      src={ "/images/scus1s.webp" ||challenge.game.coverUrl || "/images/image-not-found.png"} 
-      fill
-      alt={`Image du jeu ${challenge.game.name}`} 
-      loading="lazy" 
-      className={styles.imageCard} 
-/>
-    <div className={styles.container}>
-      <div className={styles.detailContainer}>
-        <div id="tag" className={styles.titleCard}>
-          {/* style={} sera pour integrer la couleur envoyer par le back les nom seront surement à modifier à l'integration du back */}
-          <p className={styles.tag} style={{backgroundColor: challenge.challengeCategory.colorCode}}>{challenge.challengeCategory.name}</p>
-          <h3 className={styles.tag} style={{backgroundColor: challenge.difficulty.colorCode}}>{challenge.game.name}</h3>
-        </div>
+      <Image
+        src={challenge.game.coverUrl || "/images/image-not-found.png"}
+        fill
+        alt={`Image du jeu ${challenge.game.name}`}
+        loading="lazy"
+        className={styles.imageCard}
+      />
+      <div className={styles.container}>
+        <div className={styles.detailContainer}>
+          <div id="tag" className={styles.titleCard}>
+            {/* style={} sera pour integrer la couleur envoyer par le back les nom seront surement à modifier à l'integration du back */}
+            <p
+              className={styles.tag}
+              style={{ backgroundColor: challenge.challengeCategory.colorCode }}
+            >
+              {challenge.challengeCategory.name}
+            </p>
+            <h3
+              className={styles.tag}
+              style={{ backgroundColor: challenge.difficulty.colorCode }}
+            >
+              {challenge.game.name}
+            </h3>
+          </div>
           <h3 className={styles.challengeTitle}>{challenge.title}</h3>
-        <div className={styles.statsContainer}>
-          <p className={styles.stats}><Users />{challenge._count?.participations}</p>
-          <p className={styles.stats}><Heart />{challenge._count?.votes}</p>
+          <div className={styles.statsContainer}>
+            <p className={styles.stats}>
+              <Users />
+              {challenge._count?.participations}
+            </p>
+            <p className={styles.stats}>
+              <Heart />
+              {challenge._count?.votes}
+            </p>
+          </div>
         </div>
-      </div>
         <Link href={`challenges/${challenge.slug}`}>
           <Button
             size="icon"
@@ -44,8 +60,7 @@ export function ChallengeCard({challenge}: ChallengeProps) {
             <ChevronRight className="size-10 text-brand-secondary" />
           </Button>
         </Link>
-        
-    </div>
+      </div>
     </div>
   );
 }
