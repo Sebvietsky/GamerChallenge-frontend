@@ -16,13 +16,17 @@ export const challengeDetail = {
   buttonContainer: "flex my-2 gap-1.5 justify-end px-8",
   iconButton: "w-8 h-8 rounded-full",
   // Section vidéo et autres
-  sectionGrid: "lg:grid lg:grid-cols-[1fr_400px] lg:grid-rows-[auto_1fr] gap-4 mb-4",
-  videoContainer: "lg:col-span-1 lg:row-span-3 lg:h-fit border rounded-lg bg-surface p-4 mb-4 lg:mb-0",
+  sectionGrid:
+    "lg:grid lg:grid-cols-[1fr_400px] lg:grid-rows-[auto_1fr] gap-4 mb-4",
+  videoContainer:
+    "lg:col-span-1 lg:row-span-3 lg:h-fit border rounded-lg bg-surface p-4 mb-4 lg:mb-0",
   videoTitle: "flex mb-2",
   iframe: "w-full aspect-video rounded-sm object-cover",
-  hintsContainer: "flex justify-between lg:col-span-2 lg:row-start-4 lg:row-span-1 border rounded-lg bg-surface px-4 mb-4 lg:mb0",
+  hintsContainer:
+    "flex justify-between lg:col-span-2 lg:row-start-4 lg:row-span-1 border rounded-lg bg-surface px-4 mb-4 lg:mb0",
   hintsTitle: "flex ",
-  creatorContainer: "lg:col-span-1 lg:row-span-1 lg:row-start-1 lg:col-start-2 border rounded-lg bg-surface p-4 mb-4 lg:mb-0",
+  creatorContainer:
+    "lg:col-span-1 lg:row-span-1 lg:row-start-1 lg:col-start-2 border rounded-lg bg-surface p-4 mb-4 lg:mb-0",
   creatorTitle: "mb-2 text-xl font-semibold",
   creatorContent: "flex gap-4",
   avatar: "w-15 h-15",
@@ -33,17 +37,19 @@ export const challengeDetail = {
   creatorStatIcon: "h-4 w-4 mr-2",
   // Section participations
   participationSection: "border bg-surface p-4 rounded-lg",
-  participationHeader: "relative flex justify-between lg:justify-start gap-25 items-center after:absolute after:-translate-x-1/2 after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-[95%] after:w-[90%] after:h-px pb-2 mb-2",
+  participationHeader:
+    "relative flex justify-between lg:justify-start gap-25 items-center after:absolute after:-translate-x-1/2 after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-[95%] after:w-[90%] after:h-px mb-2",
   participationTitle: "font-semibold text-sm",
   filterContainer: "flex gap-1 items-center",
   // filterButton: "rounded-sm bg-secondary text-secondary-foreground",
   // filterButtonAlt: "rounded-sm bg-surface text-text border-test-muted",
   participationList: "flex flex-col items-center w-full",
-  participationCard: "relative flex items-center justify-between w-full lg:w-[95%] px-2 after:absolute after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-full after:w-[90%] after:-translate-x-1/2 after:h-px mb-2",
+  participationCard:
+    "relative flex items-center justify-between w-full lg:w-[95%] px-2 after:absolute after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-full after:w-[90%] after:-translate-x-1/2 after:h-px mb-2",
   // Section CTA
   ctaSection: "flex flex-col gap-2 lg:gap-4 items-center",
   ctaContainer: "",
   ctaTitle: "font-semibold",
   ctaSubtitle: "text-text-soft text-xs mb-1",
   ctaButton: " w-full rounded-sm py-6",
-} 
+};

@@ -52,15 +52,15 @@ export function ChallengeCard({ challenge }: ChallengeProps) {
             </p>
           </div>
         </div>
-        <Link href={`challenges/${challenge.slug}`}>
-          <Button
-            size="icon"
-            className="h-13 w-13 rounded-full bg-brand-secondary-light"
-          >
-            <ChevronRight className="size-10 text-brand-secondary" />
-          </Button>
-        </Link>
       </div>
+      <Link href={`challenges/${challenge.slug}`}>
+        <Button
+          size="icon"
+          className="h-13 w-13 rounded-full bg-brand-secondary-light"
+        >
+          <ChevronRight className="size-10 text-brand-secondary" />
+        </Button>
+      </Link>
     </div>
   );
 }
