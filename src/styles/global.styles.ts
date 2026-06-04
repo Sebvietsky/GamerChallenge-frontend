@@ -29,26 +29,27 @@ export const homeStyles = {
   // Carte challenge
 
   cardContainer:
-    "my-3 relative h-100 w-full rounded-lg text-primary-foreground lg:h-80",
+    "my-3 relative flex flex-col lg:flex-row justify-center w-full rounded-lg overflow-hidden text-primary-foreground h-fit lg:h-80 lg:bg-linear-to-r bg-linear-to-t from-primary lg:from-30% from-10% to-secondary to-100%",
 
   imageCard:
-    "rounded-lg w-full h-full object-cover object-center contrast-105 saturate-110",
+    "h-full w-auto rounded-t-lg lg:rounded-none lg:rounded-l-lg object-cover flex-shrink-0",
 
   container:
-    "absolute top-0 right-0 flex h-full w-full items-center justify-between rounded-lg bg-linear-to-l from-text/80 from-80% to-text/0 to-100% pr-8 lg:w-[50%]",
+    "flex-1 flex items-center justify-between pr-8",
 
   detailContainer:
-    "flex h-full flex-col justify-between px-4 py-24 lg:py-18 lg:pr-10",
+    "flex h-full gap-4 flex-col justify-around pl-6 p-4",
 
   // Informations challenge
 
   titleCard: "flex gap-2",
 
   challengeTitle: "text-2xl",
+  gameTitle: "text-lg",
 
   statsContainer: "flex gap-2",
 
   stats: "flex gap-1",
 
-  tag: "self-center rounded px-1 py-0.5 font-sans text-xs text-text lg:text-lg",
+  tag: "self-center shadow-xl/30 rounded px-1 py-0.5 font-sans text-xs text-surface lg:text-lg",
 };

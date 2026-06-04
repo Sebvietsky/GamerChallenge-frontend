@@ -17,7 +17,7 @@ type HomeSortBy = "votes" | "createdAt" | "participations";
 
 export async function getHomeChallenges({
   sortBy = "votes",
-  since,
+  since = undefined,
   limit = 3,
 }: {
   sortBy?: HomeSortBy;
@@ -59,6 +59,8 @@ export async function getChallenges({
     orderBy,
     sort,
   });
+
+  if(since) params.set("since", since);
 
   const response = await fetch(`${API_BASE_URL}/challenges?${params}`, {
     credentials: "include",

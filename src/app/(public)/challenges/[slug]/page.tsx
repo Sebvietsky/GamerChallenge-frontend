@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Participation } from "@/components/common/participation/Participation";
-import { formatNumber } from "@/lib/utils";
+import { formatNumber, getTextColor } from "@/lib/utils";
 import { challengeDetail as styles } from "@/styles/challenge-detail";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,7 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Users, Heart, Video, Lightbulb, Trophy, Star, User } from "lucide-react";
+import { Users, Heart, Video, Lightbulb, Trophy, User } from "lucide-react";
 import { getChallengeBySlug, getParticipationsByChallenge } from "@/features/api/challenge.api";
 import { ButtonLike } from "@/components/common/challenge-detail/ButtonLike";
 
@@ -42,8 +42,8 @@ export default async function ChallengeDetailPage({
           </div>
           <div className={styles.contentContainer}>
             <div className={styles.tagContainer}>
-              <p className={styles.tag} style={{backgroundColor: data.challengeCategory.colorCode}}>{data.challengeCategory.name}</p>
-              <p className={styles.tag} style={{backgroundColor: data.difficulty.colorCode}}>{data.game.name}</p>
+              <p className={styles.tag} style={{backgroundColor: data.challengeCategory.colorCode,color: getTextColor(data.challengeCategory.colorCode)}}>{data.challengeCategory.name}</p>
+              <p className={styles.tag} style={{backgroundColor: data.difficulty.colorCode, color: getTextColor(data.difficulty.colorCode)}}>{data.game.name}</p>
             </div>
             <h1 className={styles.title}>{data.game.name} - {data.title}</h1>
             <div className={styles.dataContainer}>

@@ -5,9 +5,7 @@ import Link from "next/link";
 import { useRegister } from "@/features/hooks/useRegister";
 import { Controller } from "react-hook-form";
 import { commonStyles as common } from "@/styles/common-auth.styles";
-import { registerStyle as styles } from "@/styles/register.styles";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { countries } from "@/lib/countries";
 import {

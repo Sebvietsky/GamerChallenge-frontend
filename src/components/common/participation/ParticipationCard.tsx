@@ -3,7 +3,7 @@ import Link from "next/link"
 import { formatNumber } from "@/lib/utils"
 
 import { participationCardStyles as styles } from "./ParticipationCard-styles"
-import { Heart, MessageSquare } from "lucide-react"
+import { Heart } from "lucide-react"
 import { Challenge, Participation } from "@/features/types/challenge.type"
 
 interface ParticipationCardProps {

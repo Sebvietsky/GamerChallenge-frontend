@@ -33,7 +33,6 @@ export function AuthProvider({
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     fetch(`${API_URL}/auth/me`, {
       method: "GET",
       credentials: "include",

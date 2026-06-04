@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { ProtectedRoute } from "@/components/common/ProtectedRoute/ProtectedRoute";
 
 interface unauthorizedLayoutProps {
   children: ReactNode;
