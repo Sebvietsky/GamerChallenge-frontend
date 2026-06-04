@@ -68,7 +68,7 @@ export default async function HomePage() {
                   </SelectTrigger>
 
                   <SelectContent>
-                    <SelectItem value="votes">Aimés</SelectItem>
+                    <SelectItem value="votes">Tendances</SelectItem>
                     <SelectItem value="recent">Plus récents</SelectItem>
                     <SelectItem value="participants">Participations</SelectItem>
                   </SelectContent>
