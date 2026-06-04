@@ -16,7 +16,7 @@ export function BannerDesktop() {
     await logout();
   }
 
-  const avatarSrc = user?.profilPicture;
+  const avatarSrc = user?.profilePicture;
 
   return (
     <header className={styles.container}>
@@ -27,7 +27,7 @@ export function BannerDesktop() {
               <Avatar className={styles.avatarContainer}>
                 <AvatarImage
                   className={styles.avatar}
-                  src={avatarSrc}
+                  src={avatarSrc ||undefined}
                   alt="Avatar utilisateur"
                 />
 

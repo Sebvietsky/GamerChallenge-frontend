@@ -21,7 +21,6 @@ export default async function HomePage({searchParams,
   const { page, limit, sort, orderBy, since} = await searchParams;
   
   const challenges = await getChallenges({page: Number(page ?? 1),limit: Number(limit ?? 3), sort: sort ?? "desc", orderBy: orderBy ?? "votes", since: since ?? undefined});
-  console.log(challenges)
   return (
     <main className={styles.page}>
       <div className={styles.layout}>

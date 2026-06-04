@@ -42,6 +42,7 @@ const schema = z
 type RegisterForm = z.infer<typeof schema>;
 
 export function useRegister() {
+  const router = useRouter();
   const { login } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
@@ -61,6 +62,8 @@ export function useRegister() {
       login(response.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur inconnue");
+    } finally {
+      router.push("/")
     }
   }
 

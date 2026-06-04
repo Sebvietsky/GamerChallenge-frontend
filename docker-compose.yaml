@@ -16,8 +16,6 @@ services:
       NODE_ENV: development
       WATCHPACK_POLLING: true
       WATCHPACK_POLLING_INTERVAL: 1000
-      API_SERVER_URL: http://gamer_challenge_api:3002/api
-      NEXT_PUBLIC_API_URL: http://localhost:3002/api
       
     restart: unless-stopped
 

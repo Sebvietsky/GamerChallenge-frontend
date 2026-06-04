@@ -6,13 +6,16 @@ export interface Challenge {
   closesAt: string | null;
   createdAt: string;
   status: string;
+  demo?: string;
+  hints: string;
+  goals: string;
 
   game: {
     name: string;
     studio: string | null;
     platform: string | null;
     coverUrl: string;
-    screenshots: string[];
+    bannerUrl: string;
     categories: string[];
   };
 
