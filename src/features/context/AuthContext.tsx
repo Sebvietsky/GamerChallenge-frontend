@@ -39,7 +39,7 @@ export function AuthProvider({
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
-      .then((me) => me && setUser(me))
+      .then((me) => me && setUser(me.userWithoutPassword ?? me))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
