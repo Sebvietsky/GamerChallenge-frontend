@@ -16,7 +16,7 @@ services:
       NODE_ENV: development
       WATCHPACK_POLLING: true
       WATCHPACK_POLLING_INTERVAL: 1000
-      
+
     restart: unless-stopped
 
     networks:
