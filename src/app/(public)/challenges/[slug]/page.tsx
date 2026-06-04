@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Participation } from "@/components/common/participation/Participation";
 import { formatNumber } from "@/lib/utils";
-import type { Participation as ParticipationType } from "@/features/types/challenge.type";
 import { challengeDetail as styles } from "@/styles/challenge-detail";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,6 +13,7 @@ import {
 } from "@/components/ui/accordion"
 import { Users, Heart, Video, Lightbulb, Trophy, Star, User } from "lucide-react";
 import { getChallengeBySlug, getParticipationsByChallenge } from "@/features/api/challenge.api";
+import { ButtonLike } from "@/components/common/challenge-detail/ButtonLike";
 
 
 
@@ -38,7 +38,7 @@ export default async function ChallengeDetailPage({
       <section className={styles.sectionDetail}>
         <div className={styles.detailContainer}>
           <div className={styles.imageContainer}>
-            <Image className={styles.imageTag} src={data.game.coverUrl || "/images/image-not-found.png"} width={1000} height={1000} alt="Image du jeu"/>
+            <Image className={styles.imageTag} src={data.game.coverUrl || "/images/image-not-found.png"} width={10000} height={10000} alt="Image du jeu"/>
           </div>
           <div className={styles.contentContainer}>
             <div className={styles.tagContainer}>
@@ -50,23 +50,19 @@ export default async function ChallengeDetailPage({
               <p className={styles.dataStat}><Users className={styles.icon} />{" "}{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ?("participants"):("participant")}</p>
               <p className={styles.dataStat}><Heart className={styles.icon} />{" "}{formatNumber(data._count.votes)}{" "}{data._count.votes > 1 ?(" votes"):(" vote")} </p>
             </div>
-            <p className={styles.description}>{data.difficulty.name}{" "}Terminez le jeu Elden Ring en battant tout les boss principaux sans subir le moindre dégât. Une prouesse de maitrise, de patiance et de stratégie.</p>
+            <p className={styles.description}>{data.goals}</p>
           </div>
         </div>
-        <div className={styles.buttonContainer}>
-          <Button className={styles.iconButton} >
-            <Heart />
-          </Button>
-          <Button className={styles.iconButton}>
-            <Star />
-          </Button>
-        </div>
+        <ButtonLike />
         {/* SECTION Vidéo, Créé par and Indice */}
       </section>
       <section className={styles.sectionGrid}>
         <div className={styles.videoContainer}>
           <h2 className={styles.videoTitle}><Video />{' '}Démonstration</h2>
           {/* TODO changer par nos vidéo de démonstration */}
+          {/* <video className="styles.iframe" controls>
+            <source src={data.demo}/>
+          </video> */}
           <iframe className={styles.iframe} src="https://www.youtube.com/embed/Djtsw5k_DNc" title="ELDEN RING NIGHTREIGN – REVEAL GAMEPLAY TRAILER" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
         </div>
         <div className={styles.hintsContainer}>

@@ -37,7 +37,7 @@ export function useLogin() {
     try {
       const user = await loginUser(payload);
       loginContext(user);
-      router.push("/");
+      router.back();
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue";
       setError(message);

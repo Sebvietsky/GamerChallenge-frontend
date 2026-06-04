@@ -9,7 +9,7 @@ import { dashboardStyles as styles } from "@/styles/dashboard.styles";
 
 export default function DashboardPage() {
   const { user } = useAuth();
-
+  console.log(user)
   return (
     <div className="space-y-8 p-8">
       <div>
@@ -17,9 +17,9 @@ export default function DashboardPage() {
         <p className="text-slate-600">Welcome to your dashboard</p>
       </div>
       <div className={styles.profil}>
-        {user?.profilPicture ? (
+        {user?.profilePicture ? (
           <Image
-            src={user.profilPicture}
+            src={user.profilePicture}
             alt="Photo de profil"
             width={80}
             height={80}
