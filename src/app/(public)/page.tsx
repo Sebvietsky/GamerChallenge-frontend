@@ -6,7 +6,7 @@ type SearchParams = {
 };
 
 type HomePageProps = {
-  searchParams: Promise<SearchParams>;
+  searchParams: SearchParams;
 };
 
 export default function HomePage({ searchParams }: HomePageProps) {

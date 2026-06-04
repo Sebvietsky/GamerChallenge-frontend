@@ -20,7 +20,7 @@ export function useChallenges({page = 1, limit = 20, orderBy = "votes", sort = "
     }
 
     loadChallenges();
-  }, []);
+  }, [page, limit, orderBy, sort, since]);
 
   return { challenges, loading, page, limit, orderBy, sort, since };
 }

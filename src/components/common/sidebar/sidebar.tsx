@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { CircleHelp, Moon, Search, Settings, X } from "lucide-react";
+import { CircleHelp, Search, Settings, X } from "lucide-react";
 
 import { SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { sidebarStyles as styles } from "./sidebar.styles";
 
 import { useSearch } from "@/features/hooks/useSearch";
 import { SearchContextType } from "@/features/types/search.type";
+import { ToogleDark } from "../toggle-darkmode";
 
 interface SidebarProps {
   mobile?: boolean;
@@ -22,6 +23,8 @@ interface SidebarProps {
 export function Sidebar({ mobile = false }: SidebarProps) {
   const pathname = usePathname();
   const { search, setSearch } = useSearch() as SearchContextType;
+
+  
 
   return (
     <aside className={styles.sidebar}>
@@ -103,9 +106,7 @@ export function Sidebar({ mobile = false }: SidebarProps) {
 
       {/* BOTTOM ACTIONS */}
       <div className={styles.bottomActions}>
-        <button className={styles.bottomAction}>
-          <Moon size={20} />
-        </button>
+        <ToogleDark />
         <button className={styles.bottomAction}>
           <Settings size={20} />
         </button>
