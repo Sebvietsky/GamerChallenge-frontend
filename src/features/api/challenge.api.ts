@@ -33,13 +33,9 @@ export async function getHomeChallenges({
   sortBy = "votes",
   since = undefined,
   limit = 3,
-}: {
-  sortBy?: HomeSortBy;
-  since?: "1w" | "1m" | "3m" | "6m" | "1y";
-  limit?: number;
-}): Promise<Challenge[]> {
+}: queryParams): Promise<Challenge[]> {
   const params = new URLSearchParams({
-    sortBy,
+    orderBy,
     limit: String(limit),
   });
   if (since) {
@@ -73,6 +69,9 @@ export async function getChallenges({
     orderBy,
     sort,
   });
+  if (since) {
+    params.set("since", since);
+  }
 
   if(since) params.set("since", since);
 

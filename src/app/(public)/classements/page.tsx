@@ -1,17 +1,22 @@
 "use client";
 
 import { ArrowRight, Sparkles, Trophy, Users } from "lucide-react";
-import { useState } from "react";
-import {
-  ClassementType,
-  type ClassementChallenge,
-  type ClassementParticipation,
-  type ClassementUser,
-  type PodiumItem,
-} from "@/components/classements/ClassementType";
+
 import { ClassementPodium } from "@/components/classements/classement-podium";
 import { FiltersClassements } from "@/components/classements/filters-classements";
+
+import { useClassements } from "@/features/hooks/useClassements";
+
+import {
+  mapChallenges,
+  mapParticipations,
+  mapUsers,
+} from "@/lib/classement.mapper";
+
+import { buildPodiumItems } from "@/lib/classement.utils";
+
 import { classementsStyles as styles } from "@/styles/classements.styles";
+import { ClassementType } from "@/features/types/classements.type";
 
 const filterOptions = [
   {
@@ -31,174 +36,61 @@ const filterOptions = [
   },
 ] as const;
 
-const challengeItems: ClassementChallenge[] = [
-  {
-    rank: 1,
-    title: "Rainbow Road sans toucher le sol",
-    game: "Mario Kart",
-    image:
-      "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=800&q=80",
-    participations: 2400,
-    votes: 320,
-    duration: "3j 14h",
-  },
-  {
-    rank: 2,
-    title: "Une saison sans dormir",
-    game: "Stardew Valley",
-    image:
-      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
-    participations: 1800,
-    votes: 210,
-    duration: "5j",
-  },
-  {
-    rank: 3,
-    title: "Pantheon of Hallowfest no-hit",
-    game: "Hollow Knight",
-    image:
-      "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80",
-    participations: 1800,
-    votes: 156,
-    duration: "2j",
-  },
-];
-
-const utilisateurItems: ClassementUser[] = [
-  {
-    rank: 1,
-    username: "Mila la Créatrice",
-    avatar:
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
-    participations: 3100,
-    challengesCreated: 24,
-    votesGiven: 410,
-  },
-  {
-    rank: 2,
-    username: "Noah le Stratège",
-    avatar:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
-    participations: 2600,
-    challengesCreated: 18,
-    votesGiven: 285,
-  },
-  {
-    rank: 3,
-    username: "Sara la Speedrunneuse",
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
-    participations: 2100,
-    challengesCreated: 14,
-    votesGiven: 190,
-  },
-];
-
-const participationItems: ClassementParticipation[] = [
-  {
-    rank: 1,
-    challengeTitle: "Rainbow Road sans toucher le sol",
-    username: "Mila la Créatrice",
-    screenshot:
-      "https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?auto=format&fit=crop&w=800&q=80",
-    votes: 375,
-  },
-  {
-    rank: 2,
-    challengeTitle: "Marathon no-death",
-    username: "Noah le Stratège",
-    screenshot:
-      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-    votes: 250,
-  },
-  {
-    rank: 3,
-    challengeTitle: "Mode furtif extrême",
-    username: "Sara la Speedrunneuse",
-    screenshot:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
-    votes: 205,
-  },
-];
-
-function formatNumber(value: number) {
-  return value >= 1000 ? `${(value / 1000).toFixed(1)}k` : String(value);
-}
-
-function buildPodiumItems(filter: ClassementType): PodiumItem[] {
-  if (filter === ClassementType.UTILISATEURS) {
-    return utilisateurItems.map((item) => ({
-      rank: item.rank,
-      title: item.username,
-      subtitle: `Actif · ${item.challengesCreated} créations`,
-      image: item.avatar,
-      tags: ["Utilisateur", "Actif"],
-      stats: [
-        { value: formatNumber(item.participations), label: "Participations" },
-        { value: formatNumber(item.votesGiven), label: "Votes donnés" },
-        { value: `${item.challengesCreated} créations`, label: "Créations" },
-      ],
-      crownColor: "gold" as const,
-    }));
-  }
-
-  if (filter === ClassementType.PARTICIPATIONS) {
-    return participationItems.map((item) => ({
-      rank: item.rank,
-      title: item.challengeTitle,
-      subtitle: `Par ${item.username}`,
-      image: item.screenshot,
-      tags: ["Participation", item.username],
-      stats: [
-        { value: formatNumber(item.votes), label: "Votes" },
-        {
-          value: `${item.rank === 1 ? "Top" : item.rank} ✔`,
-          label: "Position",
-        },
-        { value: "Premium", label: "Classement" },
-      ],
-      crownColor: "gold" as const,
-    }));
-  }
-
-  return challengeItems.map((item) => ({
-    rank: item.rank,
-    title: item.title,
-    subtitle: item.game,
-    image: item.image,
-    tags: [item.game, item.rank === 1 ? "Top" : "Challenge"],
-    stats: [
-      { value: formatNumber(item.participations), label: "Participations" },
-      { value: formatNumber(item.votes), label: "Votes" },
-      { value: item.duration, label: "Durée" },
-    ],
-    crownColor: "gold" as const,
-  }));
-}
-
 export default function ClassementsPage() {
-  const [activeFilter, setActiveFilter] = useState<ClassementType>(
-    ClassementType.CHALLENGES,
-  );
-  const podiumItems = buildPodiumItems(activeFilter);
+  // ==================================================
+  // RÉCUPÉRATION DES DONNÉES
+  // ==================================================
+  const { filter, setFilter, users, challenges, participations, isLoading } =
+    useClassements();
 
+  // ==================================================
+  // MAPPING
+  // ==================================================
+  const utilisateurItems = mapUsers(users);
+
+  const challengeItems = mapChallenges(challenges);
+
+  const participationItems = mapParticipations(participations);
+
+  // ==================================================
+  // CONSTRUCTION DU PODIUM
+  // ==================================================
+  const podiumItems = buildPodiumItems(
+    filter,
+    utilisateurItems,
+    challengeItems,
+    participationItems,
+  );
+
+  // ==================================================
+  // LOADING
+  // ==================================================
+  if (isLoading) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.container}>
+          <p>Chargement...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ==================================================
+  // RENDER
+  // ==================================================
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <header className={styles.header}>
           <div>
             <h1 className={styles.sectionTitle}>Les Classements</h1>
-            <p className={styles.description}>
-              Découvrez les résultats de la communauté selon différents
-              critères.
-            </p>
           </div>
         </header>
 
         <FiltersClassements
           options={filterOptions}
-          active={activeFilter}
-          onChange={setActiveFilter}
+          active={filter}
+          onChange={setFilter}
         />
 
         <ClassementPodium items={podiumItems} />

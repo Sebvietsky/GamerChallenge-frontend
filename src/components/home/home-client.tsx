@@ -8,20 +8,15 @@ import { SelectFilter } from "@/components/home/selectFilter";
 import { homeStyles as styles } from "@/components/home/home.styles";
 
 // HOOKS
-import { useHome, type ChallengeSort } from "@/features/hooks/useHome";
+import { useHome } from "@/features/hooks/useHome";
+import type { queryParams } from "@/features/types/challenge.type";
 
 interface HomeClientProps {
-  searchParams: {
-    sortBy?: ChallengeSort;
-    since?: "1w" | "1m" | "3m" | "6m" | "1y";
-  };
+  queryParams: queryParams;
 }
 
-export default function HomeClient({ searchParams }: HomeClientProps) {
-  const { challenges, filter, setFilter, isLoading } = useHome(
-    searchParams.sortBy ?? "votes",
-    searchParams.since,
-  );
+export default function HomeClient({ queryParams }: HomeClientProps) {
+  const { challenges, filter, setFilter, isLoading } = useHome(queryParams);
 
   return (
     <main className={styles.page}>
@@ -58,13 +53,7 @@ export default function HomeClient({ searchParams }: HomeClientProps) {
           <section className={styles.challengeSection}>
             <div className={styles.sectionHeader}>
               <div>
-                <h2 className={styles.sectionTitle}>
-                  Top challenges populaires
-                </h2>
-
-                <p className={styles.sectionDescription}>
-                  Les défis les plus joués par la communauté.
-                </p>
+                <h2 className={styles.sectionTitle}>Top challenges</h2>
               </div>
 
               <div className={styles.sortContainer}>
