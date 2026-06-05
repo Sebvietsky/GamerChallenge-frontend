@@ -10,85 +10,113 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { useState } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { challengeCategories } from "@/lib/challenge-category";
 import { getTextColor } from "@/lib/utils";
 import { useCreateChallenge } from "@/features/hooks/useCreateChallenge";
 
 export function CreateChallenge() {
-  const {form, errors, categoryId, toggleCategory, onSubmit} = useCreateChallenge();
-  const { register, watch, setValue } = from;
-  const [difficultyId, setDifficultyId] = useState<string>("");
-  const [challengeCategoryId, setChallengeCategoryId] = useState<string>("");
-  const [descriptionCount, setDescriptionCount] = useState("");
-  const [hintsCount, setHintsCount] = useState("");
+  const { form, errors, categoryId, toggleCategory, onSubmit } =
+    useCreateChallenge();
+  const { register, watch, setValue } = form;
+  const description = watch("description") ?? "";
+  const goals = watch("goals") ?? "";
+  const hints = watch("hints") ?? "";
+
   const MAX = 500;
+
   return (
-    <form action="">
+    <form onSubmit={onSubmit}>
       <label htmlFor="title">Titre</label>
-      <Input id="title" />
+      <Input {...register("title")} name="title" id="title" />
+      {errors.title && <p>{errors.title.message}</p>}
 
       <label htmlFor="igbdId">Jeu</label>
       <Input />
+      {errors.igbdId && <p>{errors.igbdId.message}</p>}
 
       <label htmlFor="description">Description</label>
       <Textarea
-        value={descriptionCount}
-        onChange={(e) => setDescriptionCount(e.target.value)}
+        {...register("description")}
         maxLength={MAX}
         id="description"
+        name="description"
       />
       <p>
-        {descriptionCount === "" ? "0" : descriptionCount.length}/{MAX}
+        {description.length}/{MAX}
       </p>
+      {errors.description && <p>{errors.description.message}</p>}
+
+      <label htmlFor="goals">Objectif</label>
+      <Textarea
+        {...register("goals")}
+        maxLength={MAX}
+        id="goals"
+        name="goals"
+      />
+      <p>
+        {goals.length}/{MAX}
+      </p>
+      {errors.goals && <p>{errors.goals.message}</p>}
 
       <label htmlFor="difficultyId">Difficulté</label>
-      <Select onValueChange={setDifficultyId}>
-        <SelectTrigger>
-          <SelectValue placeholder="Choisissez la difficulté" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="1">Facile</SelectItem>
-          <SelectItem value="2">Moyen</SelectItem>
-          <SelectItem value="3">Difficile</SelectItem>
-          <SelectItem value="4">Expert</SelectItem>
-          <SelectItem value="5">Légendaire</SelectItem>
-        </SelectContent>
-      </Select>
-
+      <Controller
+        control={form.control}
+        name="difficultyId"
+        render={({ field }) => (
+          <Select onValueChange={field.onChange} value={field.value}>
+            <SelectTrigger>
+              <SelectValue placeholder="Choisissez la difficulté" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">Facile</SelectItem>
+              <SelectItem value="2">Moyen</SelectItem>
+              <SelectItem value="3">Difficile</SelectItem>
+              <SelectItem value="4">Expert</SelectItem>
+              <SelectItem value="5">Légendaire</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
+      />
+      {errors.difficultyId && <p>{errors.difficultyId.message}</p>}
       <label htmlFor="challengeCategoryId">Catégorie</label>
       <div>
         {challengeCategories.map((c) => {
           return (
             <Button
+              aria-label={`Bouton de selection pour la catégories ${c.name}`}
               key={c.id}
               type="button"
-              onClick={() => toggleCategory(c.id)}
+              onClick={() => toggleCategory(String(c.id))}
               style={{
                 backgroundColor: c.colorCode,
                 color: getTextColor(c.colorCode),
-                // opacity: categoryId.includes(c.id) ? 1 : 0.4,
+                opacity: categoryId.includes(String(c.id)) ? 1 : 0.4,
               }}
+              // variant={categoryId.includes(String(c.id)) ? "filterBouton" : "filterButtonAlt"}
             >
               {c.name}
             </Button>
           );
         })}
       </div>
-      <label htmlFor="goals">Goals?</label>
-      <Input></Input>
+      {errors.categoryId && <p>{errors.categoryId.message}</p>}
+
       <label htmlFor="hints">Indices</label>
       <Textarea
-        value={hintsCount}
-        onChange={(e) => setHintsCount(e.target.value)}
+        {...register("hints")}
         maxLength={MAX}
         id="hints"
+        name="hints"
       />
       <p>
-        {hintsCount === "" ? "0" : hintsCount.length}/{MAX}
+        {hints.length}/{MAX}
       </p>
+      {errors.hints && <p>{errors.hints.message}</p>}
+
       <p>⚠️ À Faire ⚠️ Démonstration - label demo</p>
+      <Button type="submit">Créer ton challenge</Button>
     </form>
   );
 }
