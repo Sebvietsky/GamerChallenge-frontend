@@ -33,6 +33,10 @@ export function AuthProvider({
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
+    fetch(`${API_URL}/auth/refresh`, {
+      method: "POST",
+      credentials: "include"
+    })
     fetch(`${API_URL}/auth/me`, {
       method: "GET",
       credentials: "include",
@@ -44,7 +48,6 @@ export function AuthProvider({
   }, []);
 
   function login(user: User) {
-    console.log(user)
     setUser(user);
   }
 

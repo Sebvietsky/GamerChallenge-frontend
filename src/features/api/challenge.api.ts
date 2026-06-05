@@ -5,6 +5,7 @@ import type {
 } from "@/features/types/challenge.type";
 import { API_BASE_URL } from "@/lib/api";
 import { includes } from "zod/v4-mini";
+import { createChallengePayload } from "../types/createSchema";
 
 interface PaginatedResponse {
   data: Challenge[];
@@ -13,8 +14,6 @@ interface PaginatedResponse {
   total: number;
   totalPages: number;
 }
-
-type HomeSortBy = "votes" | "createdAt" | "participations";
 
 async function getErrorMessage(response: Response): Promise<string> {
   const contentType = response.headers.get("content-type");
@@ -30,7 +29,7 @@ async function getErrorMessage(response: Response): Promise<string> {
 }
 
 export async function getHomeChallenges({
-  sortBy = "votes",
+  orderBy = "votes",
   since = undefined,
   limit = 3,
 }: queryParams): Promise<Challenge[]> {
@@ -152,10 +151,24 @@ const createToggleService = (endpoint: "likes" | "favorites") => ({
 export const likeToggle = createToggleService("likes");
 export const favoriteToggle = createToggleService("favorites");
 
-export async function createChallenge () {
+export async function createChallenge (payload: createChallengePayload) {
   
+  // title: string,
+  // igbdId?: string,
+  // description: string,
+  // goals: string,
+  // difficultyId: string,
+  // categoryId: string[],
+  // hints: string,
+
   const formData = new FormData();
   // TODO Ajouter form fields
+  formData.append("title", payload.title)
+  formData.append("description", payload.description)
+  formData.append("goals", payload.goals)
+  formData.append("difficultyId", payload.difficultyId)
+  formData.append("hints", payload.hints)
+
   const json = JSON.stringify(Object.fromEntries(formData.entries()));
   
   const response = await fetch(`${API_BASE_URL}/challenges`, {
