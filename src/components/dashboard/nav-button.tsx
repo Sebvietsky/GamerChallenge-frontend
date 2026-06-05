@@ -1,10 +1,11 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
+import { LucideIcon } from "lucide-react"
 
 type Props = {
   label: string,
   path: string,
-  icon: any
+  icon: LucideIcon
 }
 
 export function NavButton({ label, path, icon: Icon }: Props) {

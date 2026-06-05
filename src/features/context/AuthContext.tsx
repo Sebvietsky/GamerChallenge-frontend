@@ -38,12 +38,13 @@ export function AuthProvider({
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
-      .then((me) => me && setUser(me.userWithoutPassword ?? me))
+      .then((me) => me && setUser(me))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
 
   function login(user: User) {
+    console.log(user)
     setUser(user);
   }
 

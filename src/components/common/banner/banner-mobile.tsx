@@ -24,7 +24,7 @@ export function BannerMobile() {
     await logout();
   }
 
-  const avatarSrc = user?.profilePicture;
+  const avatarSrc = user?.userWithoutPassword.profilePicture;
 
   return (
     <header className={styles.container}>
