@@ -4,7 +4,6 @@ import type {
   queryParams,
 } from "@/features/types/challenge.type";
 import { API_BASE_URL } from "@/lib/api";
-import { includes } from "zod/v4-mini";
 
 interface PaginatedResponse {
   data: Challenge[];
@@ -13,8 +12,6 @@ interface PaginatedResponse {
   total: number;
   totalPages: number;
 }
-
-type HomeSortBy = "votes" | "createdAt" | "participations";
 
 async function getErrorMessage(response: Response): Promise<string> {
   const contentType = response.headers.get("content-type");
@@ -30,12 +27,12 @@ async function getErrorMessage(response: Response): Promise<string> {
 }
 
 export async function getHomeChallenges({
-  sortBy = "votes",
+  orderBy = "votes",
   since = undefined,
   limit = 3,
 }: queryParams): Promise<Challenge[]> {
   const params = new URLSearchParams({
-    orderBy,
+    sortBy: orderBy,
     limit: String(limit),
   });
   if (since) {
@@ -73,7 +70,7 @@ export async function getChallenges({
     params.set("since", since);
   }
 
-  if(since) params.set("since", since);
+  if (since) params.set("since", since);
 
   const response = await fetch(`${API_BASE_URL}/challenges?${params}`, {
     credentials: "include",
@@ -152,26 +149,24 @@ const createToggleService = (endpoint: "likes" | "favorites") => ({
 export const likeToggle = createToggleService("likes");
 export const favoriteToggle = createToggleService("favorites");
 
-export async function createChallenge () {
-  
+export async function createChallenge() {
   const formData = new FormData();
   // TODO Ajouter form fields
   const json = JSON.stringify(Object.fromEntries(formData.entries()));
-  
+
   const response = await fetch(`${API_BASE_URL}/challenges`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     credentials: "include",
     cache: "no-cache",
-    body: json
+    body: json,
+  });
 
-  })
+  if (!response.ok) throw new Error(await getErrorMessage(response));
 
-  if(!response.ok) throw new Error(await getErrorMessage(response))
-
-    return response.json()
+  return response.json();
 }
 
 function messageFromStatus(status: number): string {
