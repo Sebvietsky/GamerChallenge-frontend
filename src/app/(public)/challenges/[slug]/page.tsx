@@ -119,7 +119,7 @@ export default async function ChallengeDetailPage({
           <p className={styles.ctaSubtitle}>Partagez votre meilleure performance et affronter la communauté !</p>
         </div>
         <div className="w-full lg:w-[80%]">
-          <Link href="/participate">
+          <Link href={`/participate?slug=${slug}`}>
             <Button className={styles.ctaButton}>Participer au challenge</Button>
           </Link>
         </div>

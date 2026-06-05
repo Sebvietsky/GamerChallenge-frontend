@@ -6,10 +6,15 @@ import { z } from "zod";
 
 const createChallengeSchema = z.object({
   title: z.string().min(3, "Minimum 3 caractères"),
-  goals: z.string().min(10, "Minimum 10 caractères").max(500, "Maximum 500 caractères"),
-  categoryId: z.array(z.string()).min(1, "Choisir une catégorie"),
-  difficultyId: z.string().min(1, "Choisir une difficulté"),
-  igbdId: z.string().min(1, "Choisir un jeu"),
+  description: z.string().min(10, "Minimum 10 caractères").max(500),
+  goals: z.string().max(500).optional(),
+  hints: z.string().max(500).optional(),
+  demo: z.string().url("URL invalide").optional(),
+  closesAt: z.string().optional(), // ou z.date() si tu envoies une date
+  status: z.string().min(1, "Choisir un statut"),
+  gameId: z.number().min(1, "Choisir un jeu"),          // 👈 number pas string
+  challengeCategoryId: z.array(z.number()).min(1, "Choisir une catégorie"), // 👈 idem
+  difficultyId: z.number().min(1, "Choisir une difficulté"),  
 });
 
 type CreateChallengeFormValues = z.infer<typeof createChallengeSchema>;
@@ -19,21 +24,23 @@ export const useCreateChallenge = () => {
     resolver: zodResolver(createChallengeSchema),
     defaultValues: {
       title: "",
+      gameId: 1,
+      description: "",
       goals: "",
-      categoryId: [],
-      difficultyId: "",
-      igbdId: "",
+      difficultyId: 1,
+      challengeCategoryId: [],
+      hints: "",
     },
   });
 
   const { watch, setValue, formState: { errors}} = form;
-  const categoryId = watch("categoryId")
+  const categoryId = watch("challengeCategoryId")
 
   const toggleCategory = (id: string) => {
     if (categoryId.includes(id)) {
-      setValue("categoryId", categoryId.filter(c => c !== id));
+      setValue("challengeCategoryId", categoryId.filter(c => c !== id));
     } else {
-      setValue("categoryId", [...categoryId, id]);
+      setValue("challengeCategoryId", [...categoryId, id]);
     }
   }
   const onSubmit = async (values: CreateChallengeFormValues) => {
