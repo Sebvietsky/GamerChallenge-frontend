@@ -17,7 +17,7 @@ export default function ProtectedLayout({ children }: ProtectedLayoutProps) {
       
             <div className="flex flex-1 flex-col">
             <Banner />
-              <main className="flex-1 overflow-auto">{children}</main>
+              <main className="flex-1 lg:ml-64 pt-20">{children}</main>
             </div>
           </div>
     </ProtectedRoute>
