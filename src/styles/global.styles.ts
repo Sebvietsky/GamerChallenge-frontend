@@ -27,18 +27,16 @@ export const homeStyles = {
   cardsGrid: "w-full",
 
   // Carte challenge
-
+  // BG de la card plus claire
   cardContainer:
     "my-3 relative flex flex-col lg:flex-row justify-center w-full rounded-lg overflow-hidden text-primary-foreground h-fit lg:h-80 lg:bg-linear-to-r bg-linear-to-t from-primary lg:from-30% from-10% to-secondary to-100%",
 
   imageCard:
     "h-full w-auto rounded-t-lg lg:rounded-none lg:rounded-l-lg object-cover flex-shrink-0",
 
-  container:
-    "flex-1 flex items-center justify-between pr-8",
+  container: "flex-1 flex items-center justify-between pr-8",
 
-  detailContainer:
-    "flex h-full gap-4 flex-col justify-around pl-6 p-4",
+  detailContainer: "flex h-full gap-4 flex-col justify-around pl-6 p-4",
 
   // Informations challenge
 

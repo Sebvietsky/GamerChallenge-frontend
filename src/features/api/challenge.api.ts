@@ -4,7 +4,6 @@ import type {
   queryParams,
 } from "@/features/types/challenge.type";
 import { API_BASE_URL } from "@/lib/api";
-import { includes } from "zod/v4-mini";
 import { createChallengePayload } from "../types/createSchema";
 
 interface PaginatedResponse {
@@ -34,7 +33,7 @@ export async function getHomeChallenges({
   limit = 3,
 }: queryParams): Promise<Challenge[]> {
   const params = new URLSearchParams({
-    orderBy,
+    sortBy: orderBy,
     limit: String(limit),
   });
   if (since) {
@@ -72,7 +71,7 @@ export async function getChallenges({
     params.set("since", since);
   }
 
-  if(since) params.set("since", since);
+  if (since) params.set("since", since);
 
   const response = await fetch(`${API_BASE_URL}/challenges?${params}`, {
     credentials: "include",
@@ -170,21 +169,20 @@ export async function createChallenge (payload: createChallengePayload) {
   formData.append("hints", payload.hints)
 
   const json = JSON.stringify(Object.fromEntries(formData.entries()));
-  
+
   const response = await fetch(`${API_BASE_URL}/challenges`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     credentials: "include",
     cache: "no-cache",
-    body: json
+    body: json,
+  });
 
-  })
+  if (!response.ok) throw new Error(await getErrorMessage(response));
 
-  if(!response.ok) throw new Error(await getErrorMessage(response))
-
-    return response.json()
+  return response.json();
 }
 
 function messageFromStatus(status: number): string {

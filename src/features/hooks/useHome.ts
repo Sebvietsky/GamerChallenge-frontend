@@ -31,9 +31,7 @@ export function useHome({
 }: queryParams = {}) {
   const initialOrderBy = isHomeChallengeOrderBy(orderBy) ? orderBy : "votes";
 
-  const [filter, setFilter] = useState<HomeChallengeOrderBy>(
-    initialOrderBy,
-  );
+  const [filter, setFilter] = useState<HomeChallengeOrderBy>(initialOrderBy);
 
   const [challenges, setChallenges] = useState<Challenge[]>([]);
 
@@ -43,7 +41,6 @@ export function useHome({
     async function loadChallenges() {
       try {
         setIsLoading(true);
-
         const data = await getHomeChallenges({
           orderBy: filter,
           since,
@@ -57,14 +54,14 @@ export function useHome({
         setIsLoading(false);
       }
     }
-
     loadChallenges();
-  }, [filter, limit, since]);
+  }, [orderBy, filter, limit, since]);
 
   return {
     challenges,
     filter,
     setFilter,
     isLoading,
+    orderBy,
   };
 }

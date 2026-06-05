@@ -45,5 +45,6 @@ export function mapParticipations(
     screenshot:
       participation.challenge?.game?.coverUrl ?? "/default-participation.jpg",
     votes: participation._count?.votes ?? 0,
+    challengeDifficulty: participation.challenge?.difficulty?.name ?? 0,
   }));
 }

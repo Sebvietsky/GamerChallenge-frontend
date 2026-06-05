@@ -1,7 +1,6 @@
 "use client";
 
 import { Heart, Star } from "lucide-react";
-import { challengeDetail as styles } from "@/styles/challenge-detail";
 import { Button } from "@/components/ui/button";
 import { useToggle } from "@/features/hooks/useToggle";
 import { favoriteToggle, likeToggle } from "@/features/api/challenge.api";
@@ -12,7 +11,11 @@ interface ButtonProps {
   initialCount: number;
 }
 
-export const LikeButton = ({ slug, initialLiked, initialCount }: ButtonProps) => {
+export const LikeButton = ({
+  slug,
+  initialLiked,
+  initialCount,
+}: ButtonProps) => {
   const { isLiked, toggleLike, isPending } = useToggle({
     service: likeToggle,
     slug,
@@ -31,7 +34,11 @@ export const LikeButton = ({ slug, initialLiked, initialCount }: ButtonProps) =>
   );
 };
 
-export const FavoriteButton = ({ slug, initialLiked, initialCount }: ButtonProps) => {
+export const FavoriteButton = ({
+  slug,
+  initialLiked,
+  initialCount,
+}: ButtonProps) => {
   const { isLiked, toggleLike, isPending } = useToggle({
     service: favoriteToggle,
     slug,
@@ -49,19 +56,3 @@ export const FavoriteButton = ({ slug, initialLiked, initialCount }: ButtonProps
     </Button>
   );
 };
-
-// export function ButtonLike() {
-//   const [like, setLike] = useState(false);
-//   const [favorite, setFavorite] = useState(false);
-
-//   return (
-//     <div className={styles.buttonContainer}>
-//       <Button onClick={() => {setLike(!like)}} variant={!isLiked ? "iconButtonToggle" : "iconButton"}>
-//         <Heart />
-//       </Button>
-//       <Button onClick={() => {setFavorite(!favorite)}} variant={!isLiked ? "iconButtonToggle" : "iconButton"}>
-//         <Star />
-//       </Button>
-//     </div>
-//   );
-// }
