@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/accordion"
 import { Users, Heart, Video, Lightbulb, Trophy, User } from "lucide-react";
 import { getChallengeBySlug, getParticipationsByChallenge } from "@/features/api/challenge.api";
-import { ButtonLike } from "@/components/common/challenge-detail/ButtonLike";
+import { LikeButton, FavoriteButton } from "@/components/common/challenge-detail/ButtonLike";
 
 
 
@@ -26,6 +26,7 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug)
+  const like = {isLiked: false}
   const participations = await getParticipationsByChallenge(slug)
 
   if(!data) {
@@ -53,7 +54,18 @@ export default async function ChallengeDetailPage({
             <p className={styles.description}>{data.goals}</p>
           </div>
         </div>
-        <ButtonLike />
+        <div className={styles.buttonContainer}>
+        <LikeButton 
+          slug={slug}
+          initialLiked={like.isLiked}
+          initialCount={data._count.votes}
+        />
+        <FavoriteButton 
+          slug={slug}
+          initialLiked={like.isLiked}
+          initialCount={data._count.favoritedBy}
+        />
+        </div>
         {/* SECTION Vidéo, Créé par and Indice */}
       </section>
       <section className={styles.sectionGrid}>

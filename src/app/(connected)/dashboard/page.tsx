@@ -17,9 +17,9 @@ export default function DashboardPage() {
         <p className="text-slate-600">Welcome to your dashboard</p>
       </div>
       <div className={styles.profil}>
-        {user?.profilePicture ? (
+        {user?.userWithoutPassword.profilePicture ? (
           <Image
-            src={user.profilePicture}
+            src={user.userWithoutPassword.profilePicture}
             alt="Photo de profil"
             width={80}
             height={80}
@@ -30,9 +30,9 @@ export default function DashboardPage() {
             <User className="w-30 h-30 text-muted-foreground" />
           </div>
         )}
-        {user?.username ? (
+        {user?.userWithoutPassword.username ? (
           <p className={styles.username}>
-            {user.username} {user.country}
+            {user.userWithoutPassword.username} {user.userWithoutPassword.country}
           </p>
         ) : (
           <p className={styles.username}>Username not found ⛔</p>
@@ -44,7 +44,7 @@ export default function DashboardPage() {
         </nav>
         <div className={styles.bio}>
           <h2>Biographie</h2>
-          {user?.bio ? <p>{user.bio}</p> : <p>{"C'est un peu vide ici..."}</p>}
+          {user?.userWithoutPassword.bio ? <p>{user.userWithoutPassword.bio}</p> : <p>{"C'est un peu vide ici..."}</p>}
         </div>
       </div>
     </div>

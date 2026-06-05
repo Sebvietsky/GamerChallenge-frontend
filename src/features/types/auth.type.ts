@@ -23,15 +23,17 @@ export type AuthResponse = {
 
 // L'utilisateur connecté
 export type User = {
-  id: number;
-  username: string;
-  email: string;
-  role: "admin" | "member" | "moderator";
-  status: "active" | "inactive" | "banned";
-  bio: string | null;
-  country: string | null;
-  profilePicture: string | null;
-  visibility: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+  userWithoutPassword: {
+    id: number;
+    username: string;
+    email: string;
+    role: "admin" | "member" | "moderator";
+    status: "active" | "inactive" | "banned";
+    bio: string | null;
+    country: string | null;
+    profilePicture: string | null;
+    visibility: boolean;
+    createdAt: string;
+    updatedAt: string;
+    }
+  }
