@@ -1,18 +1,20 @@
 "use client";
 
 import Image from "next/image";
-
 import Link from "next/link";
-
 import { usePathname } from "next/navigation";
 
-import { X } from "lucide-react";
+import { CircleHelp, Search, Settings, X } from "lucide-react";
 
 import { SheetClose } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 import { sidebarLinks } from "./sidebar.link";
-
 import { sidebarStyles as styles } from "./sidebar.styles";
+
+import { useSearch } from "@/features/hooks/useSearch";
+import { SearchContextType } from "@/features/types/search.type";
+import { ToogleDark } from "../toggle-darkmode";
 
 interface SidebarProps {
   mobile?: boolean;
@@ -20,6 +22,9 @@ interface SidebarProps {
 
 export function Sidebar({ mobile = false }: SidebarProps) {
   const pathname = usePathname();
+  const { search, setSearch } = useSearch() as SearchContextType;
+
+  
 
   return (
     <aside className={styles.sidebar}>
@@ -57,6 +62,27 @@ export function Sidebar({ mobile = false }: SidebarProps) {
         </div>
       )}
 
+      {/* SEARCHBAR */}
+      <div className={styles.topActions}>
+        <div className={styles.searchContainer}>
+          <Search className={styles.searchIcon} />
+          <input
+            type="text"
+            placeholder="Rechercher..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className={styles.searchInput}
+          />
+        </div>
+
+        {/* BUTTON CREATE CHALLENGE */}
+        <Link href="/create-challenge">
+          <Button className={styles.createChallengeButton}>
+            Créer un challenge
+          </Button>
+        </Link>
+      </div>
+
       {/* NAVIGATION */}
       <nav className={styles.navigation}>
         {sidebarLinks.map((link) => {
@@ -77,6 +103,17 @@ export function Sidebar({ mobile = false }: SidebarProps) {
           );
         })}
       </nav>
+
+      {/* BOTTOM ACTIONS */}
+      <div className={styles.bottomActions}>
+        <ToogleDark />
+        <button className={styles.bottomAction}>
+          <Settings size={20} />
+        </button>
+        <button className={styles.bottomAction}>
+          <CircleHelp size={20} />
+        </button>
+      </div>
     </aside>
   );
 }

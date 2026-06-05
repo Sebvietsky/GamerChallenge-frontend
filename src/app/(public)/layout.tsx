@@ -6,16 +6,16 @@ import type { ReactNode } from "react";
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-background">
-      {/* SIDEBAR DESKTOP */}
+      {/* Sidebar desktop */}
       <div className="hidden lg:block">
         <Sidebar />
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* Content */}
       <div className="flex flex-1 flex-col">
         <Banner />
 
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 lg:ml-64 pt-20">{children}</main>
       </div>
     </div>
   );

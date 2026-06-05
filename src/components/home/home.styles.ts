@@ -7,7 +7,7 @@ export const homeStyles = {
 
   layout: "flex gap-4",
 
-  main: "gaming-card flex-1 rounded-[32px] p-4 md:p-6",
+  main: "gaming-card flex-1 rounded-[32px] p-4 md:p-6 relative",
 
   /* =========================================================
   SHOWCASE
@@ -49,11 +49,22 @@ export const homeStyles = {
   challengeSection: "mt-10 flex flex-col gap-6",
 
   sectionHeader:
-    "flex flex-col gap-3 md:flex-row md:items-center md:justify-between",
+    "flex flex-col gap-4 md:flex-row md:items-end md:justify-between",
 
   sectionTitle: "text-text text-2xl font-bold md:text-3xl",
 
   sectionDescription: "text-text-muted mt-1 text-sm",
+
+  /* =========================================================
+  SORT
+  ========================================================= */
+
+  sortContainer: "flex items-center gap-3 self-start md:self-auto",
+
+  sortLabel: "text-text-muted text-sm font-medium",
+
+  sortSelect:
+    "soft-border h-11 min-w-[120px] rounded-xl bg-surface text-text font-medium",
 
   /* =========================================================
   CTA SECTION
@@ -64,5 +75,5 @@ export const homeStyles = {
 
   communityTitle: "text-text text-2xl font-bold md:text-3xl",
 
-  communityDescription: "text-text-muted mt-2 text-sm md:text-base",
+  communityDescription: "text-text-muted mt-2 max-w-2xl text-sm md:text-base",
 };

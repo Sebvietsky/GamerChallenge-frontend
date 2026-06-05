@@ -5,8 +5,8 @@ export type RegisterPayload = {
   password: string
   confirm: string
   country: string
-  bio?: string
-  profilPicture?: File
+  // bio?: string
+  // profilPicture?: File
 }
 
 // Données envoyées à l'API pour la connexion
@@ -17,17 +17,23 @@ export type LoginPayload = {
 
 // Ce que l'API renvoie après connexion/inscription
 export type AuthResponse = {
-  token: string
+  // token: string
   user: User
 }
 
 // L'utilisateur connecté
 export type User = {
-  id: string
-  username: string
-  email: string
-  country: string
-  bio?: string
-  profilPicture?: string
-  role: "admin" | "user" | "moderator"
-}
+  userWithoutPassword: {
+    id: number;
+    username: string;
+    email: string;
+    role: "admin" | "member" | "moderator";
+    status: "active" | "inactive" | "banned";
+    bio: string | null;
+    country: string | null;
+    profilePicture: string | null;
+    visibility: boolean;
+    createdAt: string;
+    updatedAt: string;
+    }
+  }

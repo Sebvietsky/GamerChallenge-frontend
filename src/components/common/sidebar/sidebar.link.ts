@@ -1,10 +1,10 @@
 import {
   Gamepad2,
-  Heart,
   Home,
   MessageCircle,
   Trophy,
   FileText,
+  Star,
 } from "lucide-react";
 
 export const sidebarLinks = [
@@ -22,7 +22,7 @@ export const sidebarLinks = [
 
   {
     label: "Les Classements",
-    href: "/leaderboard",
+    href: "/classements",
     icon: Trophy,
   },
 
@@ -41,6 +41,6 @@ export const sidebarLinks = [
   {
     label: "Mes Favoris",
     href: "/dashboard/favorites",
-    icon: Heart,
+    icon: Star,
   },
 ];
