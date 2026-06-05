@@ -34,7 +34,7 @@ export function CreateChallenge() {
 
       <label htmlFor="igbdId">Jeu</label>
       <Input />
-      {errors.igbdId && <p>{errors.igbdId.message}</p>}
+      {errors.gameId && <p>{errors.gameId.message}</p>}
 
       <label htmlFor="description">Description</label>
       <Textarea
@@ -65,7 +65,10 @@ export function CreateChallenge() {
         control={form.control}
         name="difficultyId"
         render={({ field }) => (
-          <Select onValueChange={field.onChange} value={field.value}>
+          <Select
+            onValueChange={(value) => field.onChange(Number(value))}
+            value={field.value != null ? String(field.value) : ""}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Choisissez la difficulté" />
             </SelectTrigger>
@@ -88,20 +91,20 @@ export function CreateChallenge() {
               aria-label={`Bouton de selection pour la catégories ${c.name}`}
               key={c.id}
               type="button"
-              onClick={() => toggleCategory(String(c.id))}
+              onClick={() => toggleCategory((c.id))}
               style={{
                 backgroundColor: c.colorCode,
                 color: getTextColor(c.colorCode),
-                opacity: categoryId.includes(String(c.id)) ? 1 : 0.4,
+                opacity: categoryId.includes((c.id)) ? 1 : 0.4,
               }}
-              // variant={categoryId.includes(String(c.id)) ? "filterBouton" : "filterButtonAlt"}
+              // variant={categoryId.includes(c.id) ? "filterBouton" : "filterButtonAlt"}
             >
               {c.name}
             </Button>
           );
         })}
       </div>
-      {errors.categoryId && <p>{errors.categoryId.message}</p>}
+      {errors.challengeCategoryId && <p>{errors.challengeCategoryId.message}</p>}
 
       <label htmlFor="hints">Indices</label>
       <Textarea

@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from "react";
 
 export function useClassements() {
-  const [filter, setFilter] = useState<ClassementType>("users");
+  const [filter, setFilter] = useState<ClassementType>(ClassementType.UTILISATEURS)
   const [users, setUsers] = useState<MostActiveUser[]>([]);
   const [challenges, setChallenges] = useState<MostPlayedChallenge[]>([]);
   const [participations, setParticipations] = useState<

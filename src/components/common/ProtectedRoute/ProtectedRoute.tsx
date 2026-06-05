@@ -22,14 +22,14 @@ export function ProtectedRoute({ children, requiredRole }: Props) {
       return;
     }
 
-    if (requiredRole && user?.role !== requiredRole) {
+    if (requiredRole && user?.userWithoutPassword.role !== requiredRole) {
       router.push("/unauthorized");
     }
   }, [isAuthenticated, user, loading, isLoggingOut, router, requiredRole]);
 
   if (loading || isLoggingOut) return null;
   if (!isAuthenticated) return null;
-  if (requiredRole && user?.role !== requiredRole) return null;
+  if (requiredRole && user?.userWithoutPassword.role !== requiredRole) return null;
 
   return <>{children}</>;
 }

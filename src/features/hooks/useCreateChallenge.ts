@@ -36,7 +36,7 @@ export const useCreateChallenge = () => {
   const { watch, setValue, formState: { errors}} = form;
   const categoryId = watch("challengeCategoryId")
 
-  const toggleCategory = (id: string) => {
+  const toggleCategory = (id: number) => {
     if (categoryId.includes(id)) {
       setValue("challengeCategoryId", categoryId.filter(c => c !== id));
     } else {
@@ -45,7 +45,15 @@ export const useCreateChallenge = () => {
   }
   const onSubmit = async (values: CreateChallengeFormValues) => {
     try {
-      await createChallenge(values)
+      await createChallenge({
+        ...values,
+        gameId: String(values.gameId),
+        difficultyId: String(values.difficultyId),
+        goals: values.goals ?? "",
+        hints: values.hints ?? "",
+        demo: values.demo ?? "",
+        closesAt: values.closesAt ?? "",
+      });
       console.log(values);
     } catch (error) {
       console.error(error);
