@@ -1,4 +1,8 @@
-export type ClassementType = "challenges" | "participations" | "users";
+export enum ClassementType {
+  CHALLENGES = "challenges",
+  UTILISATEURS = "users",
+  PARTICIPATIONS = "participations",
+}
 
 export interface PodiumStat {
   label: string;
@@ -11,8 +15,37 @@ export interface PodiumItem {
   title: string;
   subtitle: string;
   crownColor: "gold" | "silver" | "bronze";
+  laurelsColor: "gold" | "silver" | "bronze";
   tags: string[];
   stats: PodiumStat[];
+}
+
+export interface ClassementChallenge {
+  rank: number;
+  title: string;
+  game: string;
+  image: string;
+  participations: number;
+  votes: number;
+  challengeDifficulty: string;
+}
+
+export interface ClassementUser {
+  rank: number;
+  username: string;
+  avatar: string;
+  participations: number;
+  challengesCreated: number;
+  votesGiven: number;
+}
+
+export interface ClassementParticipation {
+  rank: number;
+  challengeTitle: string;
+  username: string;
+  screenshot: string;
+  votes: number;
+  challengeDifficulty: string;
 }
 
 export interface MostActiveUser {
@@ -29,16 +62,39 @@ export interface MostPlayedChallenge {
   id: number;
   title: string;
   slug: string;
-  votesCount: number;
-  participationsCount: number;
+  game: {
+    name: string;
+    coverUrl: string | null;
+  };
+  _count: {
+    participations: number;
+    votes: number;
+  };
+  difficulty: {
+    name: string;
+  };
 }
 
 export interface MostAppreciatedParticipation {
-  id: number;
-  description: string;
-  votesCount: number;
-  challengeTitle: string;
-  authorUsername: string;
+  title: string;
+  user: {
+    username: string;
+    profilePicture: string | null;
+  };
+
+  challenge: {
+    title: string;
+    game: {
+      coverUrl: string | null;
+    };
+    difficulty: {
+      name: string;
+    };
+  };
+
+  _count: {
+    votes: number;
+  };
 }
 
 export interface PaginatedResponse<T> {

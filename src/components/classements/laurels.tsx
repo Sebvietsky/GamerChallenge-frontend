@@ -4,6 +4,7 @@ const fillColorMap = {
   gold: "#F6C82F",
   silver: "#D6D6D6",
   bronze: "#D97706",
+  default: "#F6C82F",
 } as const;
 
 function renderLaurelSvg(mirror = false, color: string) {
@@ -88,7 +89,7 @@ export function Laurels({
   variant = "gold",
 }: {
   className?: string;
-  variant?: "gold" | "silver" | "bronze";
+  variant?: "gold" | "silver" | "bronze" | "default";
 }) {
   const color = fillColorMap[variant];
 

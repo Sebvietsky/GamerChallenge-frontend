@@ -53,13 +53,7 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
           <section className={styles.challengeSection}>
             <div className={styles.sectionHeader}>
               <div>
-                <h2 className={styles.sectionTitle}>
-                  Top challenges populaires
-                </h2>
-
-                <p className={styles.sectionDescription}>
-                  Les défis les plus joués par la communauté.
-                </p>
+                <h2 className={styles.sectionTitle}>Top challenges</h2>
               </div>
 
               <div className={styles.sortContainer}>

@@ -1,12 +1,11 @@
 import { type LucideIcon } from "lucide-react";
 import { classementsStyles as styles } from "@/styles/classements.styles";
-import { ClassementType } from "./ClassementType";
+import { ClassementType } from "@/features/types/classements.type";
 
 type FilterOption = {
   id: ClassementType;
   icon: LucideIcon;
   title: string;
-  description: string;
 };
 
 export function FiltersClassements({
@@ -37,7 +36,6 @@ export function FiltersClassements({
               <Icon className="size-5" />
             </span>
             <div className={styles.filterTitle}>{option.title}</div>
-            <p className={styles.filterSubtitle}>{option.description}</p>
           </button>
         );
       })}

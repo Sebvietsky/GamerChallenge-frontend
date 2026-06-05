@@ -4,7 +4,13 @@ import Link from "next/link";
 import { Menu, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { useAuth } from "@/features/hooks/useAuth";
 
 import { Sidebar } from "@/components/common/sidebar/sidebar";
@@ -34,6 +40,10 @@ export function BannerMobile() {
             showCloseButton={false}
             className={styles.mobileSidebar}
           >
+            <SheetHeader>
+              <SheetTitle> Navigation </SheetTitle>
+            </SheetHeader>
+
             <Sidebar mobile />
           </SheetContent>
         </Sheet>

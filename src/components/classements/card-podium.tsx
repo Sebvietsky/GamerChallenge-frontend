@@ -5,7 +5,7 @@ import { Crown } from "./crown";
 import { BgPodium } from "./bg-podium";
 import { Laurels } from "./laurels";
 import { Medals } from "./medals";
-import type { PodiumItem } from "./ClassementType";
+import type { PodiumItem } from "@/features/types/classements.type";
 
 type PodiumVariant = "gold" | "silver" | "bronze" | "default";
 
@@ -42,7 +42,7 @@ export function CardPodium({
           className={cn(styles.avatarWrap, compact && styles.avatarWrapCompact)}
         >
           <Laurels
-            variant={item.crownColor}
+            variant={rankToVariant(item.rank)}
             className={compact ? styles.laurelsCompact : styles.laurels}
           />
           <div

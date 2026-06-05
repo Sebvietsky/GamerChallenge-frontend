@@ -1,6 +1,6 @@
 import { classementsStyles as styles } from "@/styles/classements.styles";
 import { CardPodium } from "./card-podium";
-import type { PodiumItem } from "./ClassementType";
+import type { PodiumItem } from "@/features/types/classements.type";
 
 interface Props {
   items: PodiumItem[];
