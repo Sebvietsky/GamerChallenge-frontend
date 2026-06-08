@@ -105,12 +105,12 @@ export function Sidebar({ mobile = false }: SidebarProps) {
       {/* BOTTOM ACTIONS */}
       <div className={styles.bottomActions}>
         <ToggleDark />
-        <button className={styles.bottomAction}>
+        <Link href="/about" className={styles.bottomAction}>
           <Settings size={20} />
-        </button>
-        <button className={styles.bottomAction}>
+        </Link>
+        <Link href="/legal" className={styles.bottomAction}>
           <CircleHelp size={20} />
-        </button>
+        </Link>
       </div>
     </aside>
   );
