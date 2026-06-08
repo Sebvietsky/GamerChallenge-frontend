@@ -60,6 +60,7 @@ export async function getChallenges({
   orderBy = "votes",
   sort = "desc",
   since = undefined,
+  search = "",
 }: queryParams): Promise<Challenge[]> {
   const params = new URLSearchParams({
     page: String(page),
@@ -69,6 +70,10 @@ export async function getChallenges({
   });
   if (since) {
     params.set("since", since);
+  }
+
+  if (search.trim()) {
+    params.set("search", search);
   }
 
   if (since) params.set("since", since);
@@ -150,8 +155,7 @@ const createToggleService = (endpoint: "likes" | "favorites") => ({
 export const likeToggle = createToggleService("likes");
 export const favoriteToggle = createToggleService("favorites");
 
-export async function createChallenge (payload: createChallengePayload) {
-  
+export async function createChallenge(payload: createChallengePayload) {
   // title: string,
   // igbdId?: string,
   // description: string,
@@ -162,11 +166,11 @@ export async function createChallenge (payload: createChallengePayload) {
 
   const formData = new FormData();
   // TODO Ajouter form fields
-  formData.append("title", payload.title)
-  formData.append("description", payload.description)
-  formData.append("goals", payload.goals)
-  formData.append("difficultyId", payload.difficultyId)
-  formData.append("hints", payload.hints)
+  formData.append("title", payload.title);
+  formData.append("description", payload.description);
+  formData.append("goals", payload.goals);
+  formData.append("difficultyId", payload.difficultyId);
+  formData.append("hints", payload.hints);
 
   const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
