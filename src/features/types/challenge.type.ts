@@ -72,15 +72,22 @@ export interface Participation {
 export interface queryParams {
   page?: number;
   limit?: number;
-  orderBy?:
-    | "createdAt"
-    | "title"
-    | "closesAt"
-    | "status"
-    | "participations"
-    | "votes"
-    | undefined;
+  orderBy?: OrderBy | undefined;
   sort?: "asc" | "desc";
   since?: "1w" | "1m" | "3m" | "6m" | "1y" | undefined;
   search?: string;
+}
+
+export enum OrderBy {
+  createdAt = "createdAt",
+  title = "title",
+  closesAt = "closesAt",
+  status = "status",
+  participations = "participations",
+  votes = "votes",
+}
+
+export enum Sort {
+  asc = "asc",
+  desc = "desc",
 }

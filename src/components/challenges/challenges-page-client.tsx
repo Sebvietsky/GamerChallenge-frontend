@@ -8,7 +8,8 @@ import { getChallenges } from "@/features/api/challenge.api";
 import { useDebounce } from "@/features/hooks/useDebounce";
 import { useSearch } from "@/features/hooks/useSearch";
 
-import type { Challenge } from "@/features/types/challenge.type";
+import { OrderBy, Sort, type Challenge } from "@/features/types/challenge.type";
+import { Button } from "../ui/button";
 
 export function ChallengesPageClient() {
   const { search } = useSearch();
@@ -19,6 +20,10 @@ export function ChallengesPageClient() {
 
   const [loading, setLoading] = useState(true);
 
+  const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.createdAt);
+
+  const [sort, setSort] = useState<Sort>(Sort.asc);
+
   useEffect(() => {
     async function loadChallenges() {
       setLoading(true);
@@ -26,8 +31,8 @@ export function ChallengesPageClient() {
       const data = await getChallenges({
         page: 1,
         limit: 50,
-        orderBy: "createdAt",
-        sort: "asc",
+        orderBy,
+        sort,
         search: debouncedSearch,
       });
 
@@ -36,11 +41,57 @@ export function ChallengesPageClient() {
     }
 
     loadChallenges();
-  }, [debouncedSearch]);
+  }, [debouncedSearch, orderBy, sort]);
 
   if (loading) {
     return <p>Chargement...</p>;
   }
 
-  return <ChallengeList challenges={challenges} />;
+  return (
+    <>
+      <Button
+        onClick={() => {
+          if (orderBy === OrderBy.votes) {
+            if (sort === Sort.asc) {
+              setSort(Sort.desc);
+            } else {
+              setSort(Sort.asc);
+            }
+          }
+          setOrderBy(OrderBy.votes);
+        }}
+      >
+        {`Popularité ${sort === Sort.asc && orderBy === OrderBy.votes ? ">" : "<"}`}
+      </Button>
+      <Button
+        onClick={() => {
+          if (orderBy === OrderBy.createdAt) {
+            if (sort === Sort.asc) {
+              setSort(Sort.desc);
+            } else {
+              setSort(Sort.asc);
+            }
+          }
+          setOrderBy(OrderBy.createdAt);
+        }}
+      >
+        {`Récents ${sort === Sort.asc && orderBy === OrderBy.createdAt ? ">" : "<"}`}
+      </Button>
+      <Button
+        onClick={() => {
+          if (orderBy === OrderBy.title) {
+            if (sort === Sort.asc) {
+              setSort(Sort.desc);
+            } else {
+              setSort(Sort.asc);
+            }
+          }
+          setOrderBy(OrderBy.title);
+        }}
+      >
+        {`Alphabétique ${sort === Sort.asc && orderBy === OrderBy.title ? ">" : "<"}`}
+      </Button>
+      <ChallengeList challenges={challenges} />
+    </>
+  );
 }
