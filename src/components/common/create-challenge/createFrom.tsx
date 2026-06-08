@@ -9,17 +9,17 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { challengeCategories } from "@/lib/challenge-category";
-import { getTextColor } from "@/lib/utils";
 import { useCreateChallenge } from "@/features/hooks/useCreateChallenge";
+import { GameSearchInput } from "@/components/GameSeachInput";
+import { createFormStyles as styles } from "@/styles/create-form";
+import { cn } from "@/lib/utils";
 
 export function CreateChallenge() {
-  const { form, errors, categoryId, toggleCategory, onSubmit } =
-    useCreateChallenge();
-  const { register, watch, setValue } = form;
+  const { form, onSubmit } = useCreateChallenge();
+  const { register, watch, formState: {errors} } = form;
   const description = watch("description") ?? "";
   const goals = watch("goals") ?? "";
   const hints = watch("hints") ?? "";
@@ -27,96 +27,130 @@ export function CreateChallenge() {
   const MAX = 500;
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor="title">Titre</label>
-      <Input {...register("title")} name="title" id="title" />
-      {errors.title && <p>{errors.title.message}</p>}
+    <form onSubmit={onSubmit} className={styles["cc-form"]}>
+      <label htmlFor="title" className={`${styles["cc-label"]} ${styles["cc-label--title"]}`}>Titre</label>
+      <Input {...register("title")} name="title" id="title" className={`${styles["cc-input"]} ${styles["cc-input--title"]}`}/>
+      {errors.title && <p className={`${styles["cc-error"]} ${styles["cc-error--title"]}`}>{errors.title.message}</p>}
 
-      <label htmlFor="igbdId">Jeu</label>
-      <Input />
-      {errors.igbdId && <p>{errors.igbdId.message}</p>}
+      <label htmlFor="igdbId" className={`${styles["cc-label"]} ${styles["cc-label--igdbId"]}`}>Jeu</label>
+      <div className={`${styles["cc-field"]} ${styles["cc-field--igdbId"]}`}>
+        <Controller
+          name="igdbId"
+          control={form.control}
+          render={({ field }) => (
+            <GameSearchInput value={field.value} onChange={field.onChange} />
+          )}
+        />
+      </div>
+      {errors.igdbId && (
+        <p className={`${styles["cc-error"]} ${styles["cc-error--igdbId"]}`}>{errors.igdbId.message}</p>
+      )}
 
-      <label htmlFor="description">Description</label>
+      <label htmlFor="description" className={`${styles["cc-label"]} ${styles["cc-label--description"]}`}>Description</label>
       <Textarea
         {...register("description")}
+        className={cn(styles["cc-textarea"], styles["cc-textarea--description"])}
         maxLength={MAX}
         id="description"
         name="description"
       />
-      <p>
+      <p className={`${styles["cc-counter"]} ${styles["cc-counter--description"]}`}>
         {description.length}/{MAX}
       </p>
-      {errors.description && <p>{errors.description.message}</p>}
+      {errors.description && <p className={`${styles["cc-error"]} ${styles["cc-error--description"]}`}>{errors.description.message}</p>}
 
-      <label htmlFor="goals">Objectif</label>
+      <label htmlFor="goals" className={`${styles["cc-label"]} ${styles["cc-label--goals"]}`}>Objectif</label>
       <Textarea
         {...register("goals")}
+        className={cn(styles["cc-textarea"], styles["cc-textarea--goals"])}
         maxLength={MAX}
         id="goals"
         name="goals"
       />
-      <p>
+      <p className={`${styles["cc-counter"]} ${styles["cc-counter--goals"]}`}>
         {goals.length}/{MAX}
       </p>
-      {errors.goals && <p>{errors.goals.message}</p>}
+      {errors.goals && <p className={`${styles["cc-error"]} ${styles["cc-error--goals"]}`}>{errors.goals.message}</p>}
 
-      <label htmlFor="difficultyId">Difficulté</label>
-      <Controller
-        control={form.control}
-        name="difficultyId"
-        render={({ field }) => (
-          <Select onValueChange={field.onChange} value={field.value}>
-            <SelectTrigger>
-              <SelectValue placeholder="Choisissez la difficulté" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">Facile</SelectItem>
-              <SelectItem value="2">Moyen</SelectItem>
-              <SelectItem value="3">Difficile</SelectItem>
-              <SelectItem value="4">Expert</SelectItem>
-              <SelectItem value="5">Légendaire</SelectItem>
-            </SelectContent>
-          </Select>
-        )}
-      />
-      {errors.difficultyId && <p>{errors.difficultyId.message}</p>}
-      <label htmlFor="challengeCategoryId">Catégorie</label>
-      <div>
-        {challengeCategories.map((c) => {
-          return (
-            <Button
-              aria-label={`Bouton de selection pour la catégories ${c.name}`}
-              key={c.id}
-              type="button"
-              onClick={() => toggleCategory(String(c.id))}
-              style={{
-                backgroundColor: c.colorCode,
-                color: getTextColor(c.colorCode),
-                opacity: categoryId.includes(String(c.id)) ? 1 : 0.4,
-              }}
-              // variant={categoryId.includes(String(c.id)) ? "filterBouton" : "filterButtonAlt"}
+      <label htmlFor="difficultyId" className={`${styles["cc-label"]} ${styles["cc-label--difficulty"]}`}>Difficulté</label>
+      <div className={`${styles["cc-field"]} ${styles["cc-field--difficulty"]}`}>
+        <Controller
+          control={form.control}
+          name="difficultyId"
+          render={({ field }) => (
+            <Select
+              onValueChange={(value) => field.onChange(Number(value))}
+              value={field.value != null ? String(field.value) : undefined}
             >
-              {c.name}
-            </Button>
-          );
-        })}
+              <SelectTrigger className={`${styles["cc-select-trigger"]} ${styles["cc-select-trigger--difficulty"]}`}>
+                <SelectValue placeholder="Choisissez la difficulté" />
+              </SelectTrigger>
+              <SelectContent className={`${styles["cc-select-content"]} ${styles["cc-select-content--difficulty"]}`}>
+                <SelectItem value="1" className={`${styles["cc-select-item"]}`}>Facile</SelectItem>
+                <SelectItem value="2" className={`${styles["cc-select-item"]}`}>Moyen</SelectItem>
+                <SelectItem value="3" className={`${styles["cc-select-item"]}`}>Difficile</SelectItem>
+                <SelectItem value="4" className={`${styles["cc-select-item"]}`}>Expert</SelectItem>
+                <SelectItem value="5" className={`${styles["cc-select-item"]}`}>Légendaire</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
       </div>
-      {errors.categoryId && <p>{errors.categoryId.message}</p>}
+      {errors.difficultyId && <p className={`${styles["cc-error"]} ${styles["cc-error--difficulty"]}`}>{errors.difficultyId.message}</p>}
 
-      <label htmlFor="hints">Indices</label>
+      <div className={`${styles["cc-field-group"]} ${styles["cc-field-group--category"]} flex flex-col gap-2`}>
+        <label htmlFor="challengeCategoryId" className={`${styles["cc-label"]} ${styles["cc-label--category"]}`}>Catégorie</label>
+        <Controller
+          name="challengeCategoryId"
+          control={form.control}
+          render={({ field }) => (
+            <Select
+              onValueChange={(value) => field.onChange(Number(value))}
+              value={field.value ? String(field.value) : undefined}
+            >
+              <SelectTrigger id="challengeCategoryId" className={`${styles["cc-select-trigger"]} ${styles["cc-select-trigger--category"]}`}>
+                <SelectValue placeholder="Choisissez une catégorie" />
+              </SelectTrigger>
+              <SelectContent className={`${styles["cc-select-content"]} ${styles["cc-select-content--category"]}`}>
+                {challengeCategories.map((c) => (
+                  <SelectItem key={c.id} value={String(c.id)} className={`${styles["cc-select-item"]} ${styles["cc-select-item--category"]}`}>
+                    <span className="flex items-center gap-2">
+                      <span
+                        className="inline-block w-3 h-3 rounded-full"
+                        style={{ backgroundColor: c.colorCode }}
+                        />
+                        {c.id}
+                        {" - "}
+                      {c.name}
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
+        {errors.challengeCategoryId && (
+          <p className={`${styles["cc-error"]} ${styles["cc-error--category"]}`}>
+            {errors.challengeCategoryId.message}
+          </p>
+        )}
+      </div>
+
+      <label htmlFor="hints" className={`${styles["cc-label"]} ${styles["cc-label--hints"]}`}>Indices</label>
       <Textarea
         {...register("hints")}
         maxLength={MAX}
+        className={cn(styles["cc-textarea"], styles["cc-textarea--hints"])}
         id="hints"
         name="hints"
       />
-      <p>
+      <p className={`${styles["cc-counter"]} ${styles["cc-counter--hints"]}`}>
         {hints.length}/{MAX}
       </p>
-      {errors.hints && <p>{errors.hints.message}</p>}
+      {errors.hints && <p className={`${styles["cc-error"]} ${styles["cc-error--hints"]}`}>{errors.hints.message}</p>}
 
-      <p>⚠️ À Faire ⚠️ Démonstration - label demo</p>
-      <Button type="submit">Créer ton challenge</Button>
+      {/* <p>⚠️ À Faire ⚠️ Démonstration - label demo</p> */}
+      <Button type="submit" className={`${styles["cc-button"]} ${styles["cc-button--submit"]}`}>Créer ton challenge</Button>
     </form>
   );
 }

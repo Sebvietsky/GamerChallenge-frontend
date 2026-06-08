@@ -27,7 +27,7 @@ export type User = {
     id: number;
     username: string;
     email: string;
-    role: "admin" | "member" | "moderator";
+    role: "admin" | "member" | "moderator" | undefined;
     status: "active" | "inactive" | "banned";
     bio: string | null;
     country: string | null;

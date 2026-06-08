@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/features/context/AuthContext";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -43,11 +44,14 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider>
-          <AuthProvider>
-            <SearchProvider>{children}</SearchProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <SearchProvider>
+              {children}
+              <Toaster />
+            </SearchProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 const schema = z
   .object({
@@ -59,8 +60,10 @@ export function useRegister() {
     setError(null);
     try {
       const response = await registerApi(data);
+      toast.success("Création de compte réaliser avec succés !")
       login(response.user);
     } catch (err) {
+      toast.error("Erreur lors de la création de compte")
       setError(err instanceof Error ? err.message : "Erreur inconnue");
     } finally {
       router.push("/")

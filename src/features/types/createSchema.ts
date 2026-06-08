@@ -1,9 +1,12 @@
 export interface createChallengePayload {
   title: string,
-  gameId?: string,
+  igdbId: number,
   description: string,
-  goals: string,
-  difficultyId: string,
-  categoryId: string[],
-  hints: string,
+  demo?: string,
+  goals?: string,
+  difficultyId: number,
+  challengeCategoryId: number,
+  hints?: string,
+  status?: string,
+  closesAt?: Date,
 }
