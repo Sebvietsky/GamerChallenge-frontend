@@ -3,7 +3,8 @@ export const challengeDetail = {
   // Section haut de page
   sectionDetail: "lg:flex",
   detailContainer: "flex flex-col lg:flex-row w-full gap-4",
-  imageContainer: "aspect-auto self-center w-full lg:w-100 object-cover object-center",
+  imageContainer:
+    "aspect-auto self-center w-full lg:w-100 object-cover object-center",
   imageTag: "rounded-lg w-full h-full object-fit object-center",
   contentContainer: "flex flex-col gap-4 lg:gap-8 lg:justify-center",
   tagContainer: "flex gap-2 text-sm font-semibold",

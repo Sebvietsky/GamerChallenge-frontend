@@ -14,7 +14,7 @@ import { sidebarStyles as styles } from "./sidebar.styles";
 
 import { useSearch } from "@/features/hooks/useSearch";
 import { SearchContextType } from "@/features/types/search.type";
-import { ToogleDark } from "../toggle-darkmode";
+import { ToggleDark } from "../toggle-darkmode";
 
 interface SidebarProps {
   mobile?: boolean;
@@ -23,8 +23,6 @@ interface SidebarProps {
 export function Sidebar({ mobile = false }: SidebarProps) {
   const pathname = usePathname();
   const { search, setSearch } = useSearch() as SearchContextType;
-
-  
 
   return (
     <aside className={styles.sidebar}>
@@ -106,7 +104,7 @@ export function Sidebar({ mobile = false }: SidebarProps) {
 
       {/* BOTTOM ACTIONS */}
       <div className={styles.bottomActions}>
-        <ToogleDark />
+        <ToggleDark />
         <button className={styles.bottomAction}>
           <Settings size={20} />
         </button>
