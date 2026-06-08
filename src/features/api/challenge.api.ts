@@ -60,6 +60,7 @@ export async function getChallenges({
   orderBy = "votes",
   sort = "desc",
   since = undefined,
+  search = "",
 }: queryParams): Promise<Challenge[]> {
   const params = new URLSearchParams({
     page: String(page),
@@ -69,6 +70,10 @@ export async function getChallenges({
   });
   if (since) {
     params.set("since", since);
+  }
+
+  if (search.trim()) {
+    params.set("search", search);
   }
 
   if (since) params.set("since", since);
@@ -150,9 +155,7 @@ const createToggleService = (endpoint: "likes" | "favorites") => ({
 export const likeToggle = createToggleService("likes");
 export const favoriteToggle = createToggleService("favorites");
 
-export async function createChallenge (payload: createChallengePayload) {
-  
-  // export interface createChallengePayload {
+export async function createChallenge(payload: createChallengePayload) {
   // title: string,
   // gameId?: string,
   // description: string,
@@ -162,12 +165,9 @@ export async function createChallenge (payload: createChallengePayload) {
   // challengeCategoryId: number[],
   // hints?: string,
   // closesAt?: string,
-  // }
 
   const formData = new FormData();
-  // TODO Ajouter form fields
-  // Dans challenge.api.ts, juste avant le fetch
-  console.log("Payload envoyé :", JSON.stringify(payload, null, 2));
+  // TODO ajouter l'envoie de fichier pour la vidéo
   const response = await fetch(`${API_BASE_URL}/challenges`, {
     method: "POST",
     headers: {

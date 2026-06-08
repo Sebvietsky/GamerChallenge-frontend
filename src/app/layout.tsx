@@ -6,6 +6,7 @@ import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { SearchProvider } from "@/features/context/Search.Context";
+import { ThemeProvider } from "@/components/common/theme-provider";
 
 const frauncesHeading = Fraunces({
   subsets: ["latin"],
@@ -44,10 +45,12 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <SearchProvider>
-            {children}
-            <Toaster />
-          </SearchProvider>
+          <ThemeProvider>
+            <SearchProvider>
+              {children}
+              <Toaster />
+            </SearchProvider>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
