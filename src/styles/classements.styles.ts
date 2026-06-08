@@ -2,7 +2,7 @@ export const classementsStyles = {
   page: "min-h-screen w-full bg-[var(--surface)] px-4 py-8 lg:px-10 lg:py-12",
 
   container:
-    "mx-auto max-w-6xl space-y-8 rounded-[40px] border border-[var(--border)] bg-white p-6 shadow-[0_20px_50px_-30px_rgba(15,23,42,0.12)] md:p-10",
+    "mx-auto max-w-6xl space-y-8 rounded-[40px] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_20px_50px_-30px_rgba(15,23,42,0.12)] md:p-10",
 
   // HEADER
 
@@ -112,10 +112,10 @@ export const classementsStyles = {
   statsRowCompact: "mt-4 grid gap-2 sm:grid-cols-3",
 
   statCard:
-    "rounded-3xl border border-[var(--border)] bg-white px-4 py-4 text-center",
+    "rounded-3xl border border-[var(--border)] bg-[var(--surface)] px-4 py-4 text-center",
 
   statCardCompact:
-    "rounded-2xl border border-[var(--border)] bg-white px-3 py-3 text-center",
+    "rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-3 py-3 text-center",
 
   statValue: "font-heading text-lg text-text",
 
@@ -131,7 +131,7 @@ export const classementsStyles = {
   sideGrid: "grid gap-5 lg:grid-cols-2",
 
   sideCard:
-    "relative overflow-hidden rounded-[32px] border border-[var(--border)] bg-[var(--surface)] p-6 text-center",
+    "relative overflow-hidden rounded-[32px] border border-[var(--border)] bg-[var(--surface-muted)] p-6 text-center",
 
   // ACTION
 
