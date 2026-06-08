@@ -2,7 +2,7 @@ export interface Challenge {
   id: number;
   title: string;
   slug: string;
-  description: string
+  description: string;
   closesAt: string | null;
   createdAt: string;
   status: string;
@@ -49,9 +49,9 @@ export interface Participation {
   challenge: {
     game: {
       coverUrl: string;
-    }
-  }
-  video: {url: string};
+    };
+  };
+  video: { url: string };
   title: string;
   slug: string;
   description?: string;
@@ -61,18 +61,26 @@ export interface Participation {
   createdAt: string;
   user: {
     country: string;
-    profilePicture: {url: string}
+    profilePicture: { url: string };
     username: string;
-  }
+  };
   _count: {
     votes: number;
-  }
+  };
 }
 
 export interface queryParams {
   page?: number;
   limit?: number;
-  orderBy?: "createdAt" | "title" | "closesAt" | "status" | "participations" | "votes" | undefined;
+  orderBy?:
+    | "createdAt"
+    | "title"
+    | "closesAt"
+    | "status"
+    | "participations"
+    | "votes"
+    | undefined;
   sort?: "asc" | "desc";
-  since?: "1w" | "1m" | "3m" | "6m" | "1y" | undefined ;
+  since?: "1w" | "1m" | "3m" | "6m" | "1y" | undefined;
+  search?: string;
 }
