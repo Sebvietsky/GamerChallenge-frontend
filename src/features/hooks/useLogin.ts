@@ -4,6 +4,7 @@ import { useState } from "react";
 import { loginUser } from "@/features/api/auth.api";
 import { useAuth } from "@/features/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function useLogin() {
   const { login: loginContext } = useAuth();
@@ -37,9 +38,12 @@ export function useLogin() {
     try {
       const user = await loginUser(payload);
       loginContext(user);
+      console.log(user)
+      toast.success(`Connexion réussi, Bonjour ${user.userWithoutPassword.username}`)
       router.back();
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue";
+      toast.error("Impossible de vous connecter, veuillez réessayer")
       setError(message);
     } finally {
       setLoading(false);

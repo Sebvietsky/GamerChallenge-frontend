@@ -152,24 +152,22 @@ export const favoriteToggle = createToggleService("favorites");
 
 export async function createChallenge (payload: createChallengePayload) {
   
+  // export interface createChallengePayload {
   // title: string,
-  // igbdId?: string,
+  // gameId?: string,
   // description: string,
-  // goals: string,
+  // demo?: string,
+  // goals?: string,
   // difficultyId: string,
-  // categoryId: string[],
-  // hints: string,
+  // challengeCategoryId: number[],
+  // hints?: string,
+  // closesAt?: string,
+  // }
 
   const formData = new FormData();
   // TODO Ajouter form fields
-  formData.append("title", payload.title)
-  formData.append("description", payload.description)
-  formData.append("goals", payload.goals)
-  formData.append("difficultyId", payload.difficultyId)
-  formData.append("hints", payload.hints)
-
-  const json = JSON.stringify(Object.fromEntries(formData.entries()));
-
+  // Dans challenge.api.ts, juste avant le fetch
+  console.log("Payload envoyé :", JSON.stringify(payload, null, 2));
   const response = await fetch(`${API_BASE_URL}/challenges`, {
     method: "POST",
     headers: {
@@ -177,7 +175,7 @@ export async function createChallenge (payload: createChallengePayload) {
     },
     credentials: "include",
     cache: "no-cache",
-    body: json,
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) throw new Error(await getErrorMessage(response));

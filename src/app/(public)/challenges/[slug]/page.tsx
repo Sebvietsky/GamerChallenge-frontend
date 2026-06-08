@@ -28,7 +28,7 @@ export default async function ChallengeDetailPage({
   const data = await getChallengeBySlug(slug)
   const like = {isLiked: false}
   const participations = await getParticipationsByChallenge(slug)
-
+  console.log(data)
   if(!data) {
     return null
   }
@@ -51,6 +51,7 @@ export default async function ChallengeDetailPage({
               <p className={styles.dataStat}><Users className={styles.icon} />{" "}{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ?("participants"):("participant")}</p>
               <p className={styles.dataStat}><Heart className={styles.icon} />{" "}{formatNumber(data._count.votes)}{" "}{data._count.votes > 1 ?(" votes"):(" vote")} </p>
             </div>
+            <p className={styles.description}>{data.description}</p>
             <p className={styles.description}>{data.goals}</p>
           </div>
         </div>
@@ -84,11 +85,7 @@ export default async function ChallengeDetailPage({
                 <Lightbulb />Indices
               </AccordionTrigger>
               <AccordionContent>
-                <ul>
-                  <li>Indice 1</li>
-                  <li>Indice 2</li>
-                  <li>Indice 3</li>
-                </ul>
+                <p>{data.hints}</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -105,7 +102,7 @@ export default async function ChallengeDetailPage({
             <div className={styles.creatorInfo}>
               <p className={styles.creatorName}>{data.user.username}</p>
               <p className={styles.creatorRole}>Créateur de {data._count.participations > 1 ? ("challenges") : ("challenge")}</p>
-              <p className={styles.creatorStat}><Trophy className={styles.creatorStatIcon} />{"!Todo"}{formatNumber(data._count.favoritedBy)}{" "}{data._count.favoritedBy > 1 ? ("challenges créés") : ("challenge créé")} </p>
+              <p className={styles.creatorStat}><Trophy className={styles.creatorStatIcon} />{formatNumber(data._count.favoritedBy)}{" "}{data._count.favoritedBy > 1 ? ("challenges créés") : ("challenge créé")} </p>
               <p className={styles.creatorStat}><Users className={styles.creatorStatIcon} />{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ? ("participants") : ("participant")} </p>
             </div>
           </div>
