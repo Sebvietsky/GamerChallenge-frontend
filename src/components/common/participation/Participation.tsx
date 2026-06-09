@@ -40,7 +40,7 @@ export function Participation({participations, challenge}: ParticipationProps){
         </div>
       <ul className={styles.participationList}>
         {sorted.map((p) =>(
-          <ParticipationCard key={p.id ?? p.title} data={p} challenge={challenge} className={styles.participationCard}/>
+          <ParticipationCard key={p.id ?? p.title} data={p} challenge={challenge}/>
         ))}
         {/* <ParticipationCard className={styles.participationCard}/>
         <ParticipationCard className={styles.participationCard}/>

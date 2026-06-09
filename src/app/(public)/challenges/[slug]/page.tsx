@@ -44,7 +44,7 @@ export default async function ChallengeDetailPage({
           <div className={styles.contentContainer}>
             <div className={styles.tagContainer}>
               <p className={styles.tag} style={{backgroundColor: data.challengeCategory.colorCode,color: getTextColor(data.challengeCategory.colorCode)}}>{data.challengeCategory.name}</p>
-              <p className={styles.tag} style={{backgroundColor: data.difficulty.colorCode, color: getTextColor(data.difficulty.colorCode)}}>{data.game.name}</p>
+              <p className={styles.tag} style={{backgroundColor: data.difficulty.colorCode, color: getTextColor(data.difficulty.colorCode)}}>{data.difficulty.name}</p>
             </div>
             <h1 className={styles.title}>{data.game.name} - {data.title}</h1>
             <div className={styles.dataContainer}>
