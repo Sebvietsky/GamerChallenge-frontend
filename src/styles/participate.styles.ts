@@ -41,14 +41,15 @@ export const participateStyles = {
   // CHALLENGE CARD
   // =========================================================
 
-  challengeHeader: "border-b border-border px-6 py-4",
+  challengeHeader:
+    "flex items-center justify-between border-b border-border px-6 py-4",
 
   challengeTitle: "text-lg font-semibold text-text",
 
   challengeContent: "flex flex-col gap-4 p-6 md:flex-row",
 
   challengeImage:
-    "h-32 w-full overflow-hidden rounded-lg bg-surface-muted md:w-56",
+    "relative h-32 w-full overflow-hidden rounded-lg bg-surface-muted md:w-56",
 
   challengeInfo: "flex flex-1 flex-col justify-center gap-2",
 
