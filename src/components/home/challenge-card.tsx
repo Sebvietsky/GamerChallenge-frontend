@@ -14,8 +14,15 @@ interface ChallengeProps {
 }
 
 export function ChallengeCard({ challenge }: ChallengeProps) {
+  const handleClick = () => {
+    sessionStorage.setItem(
+      "scroll-restore",
+      JSON.stringify({ from: window.location.pathname, y: window.scrollY }),
+    );
+  };
+
   return (
-    <Link href={`/challenges/${challenge.slug}`}>
+    <Link href={`/challenges/${challenge.slug}`} onClick={handleClick}>
       <li className={styles.cardContainer}>
         {/* TODO à verifier les nom envoyer par le bakc pour l'affichage des valeurs */}
         <Image
@@ -35,7 +42,7 @@ export function ChallengeCard({ challenge }: ChallengeProps) {
                 style={{
                   backgroundColor: challenge.difficulty.colorCode,
                   color: getTextColor(challenge.difficulty.colorCode),
-                  borderColor: getTextColor(challenge.difficulty.colorCode)
+                  borderColor: getTextColor(challenge.difficulty.colorCode),
                 }}
               >
                 {challenge.difficulty.name}
@@ -45,7 +52,9 @@ export function ChallengeCard({ challenge }: ChallengeProps) {
                 style={{
                   backgroundColor: challenge.challengeCategory.colorCode,
                   color: getTextColor(challenge.challengeCategory.colorCode),
-                  borderColor: getTextColor(challenge.challengeCategory.colorCode)
+                  borderColor: getTextColor(
+                    challenge.challengeCategory.colorCode,
+                  ),
                 }}
               >
                 {challenge.challengeCategory.name}
@@ -59,17 +68,14 @@ export function ChallengeCard({ challenge }: ChallengeProps) {
                 {formatNumber(challenge._count?.participations)}
               </p>
               <p className={styles.stats}>
-                <Heart/>
+                <Heart />
                 {formatNumber(challenge._count?.votes)}
               </p>
             </div>
           </div>
-            <Button
-              size="icon"
-              className="h-13 w-13 rounded-full"
-            >
-              <ChevronRight className="size-10" />
-            </Button>
+          <Button size="icon" className="h-13 w-13 rounded-full">
+            <ChevronRight className="size-10" />
+          </Button>
         </div>
       </li>
     </Link>

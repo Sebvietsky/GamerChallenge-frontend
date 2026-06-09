@@ -84,3 +84,9 @@ export interface queryParams {
   since?: "1w" | "1m" | "3m" | "6m" | "1y" | undefined;
   search?: string;
 }
+
+export interface LikedAndFavoriteChallenge {
+  id: number;
+  slug: string;
+  visibility: boolean;
+}
