@@ -44,6 +44,19 @@ export function ChallengesPageClient() {
     loadChallenges();
   }, [debouncedSearch, orderBy, sort]);
 
+  useEffect(() => {
+    if (loading) return;
+    const raw = sessionStorage.getItem("scroll-restore");
+    if (!raw) return;
+    try {
+      const { from, y } = JSON.parse(raw);
+      if (from === window.location.pathname) {
+        window.scrollTo(0, y);
+        sessionStorage.removeItem("scroll-restore");
+      }
+    } catch {}
+  }, [loading]);
+
   if (loading) {
     return <p>Chargement...</p>;
   }

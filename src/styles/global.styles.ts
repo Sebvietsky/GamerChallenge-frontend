@@ -36,7 +36,7 @@ export const homeStyles = {
   // Carte challenge
   // BG de la card plus claire
   cardContainer:
-    "my-3 relative flex flex-col lg:flex-row justify-center w-full rounded-lg overflow-hidden text-primary-foreground h-fit lg:h-80 lg:bg-linear-to-r bg-linear-to-t from-primary lg:from-30% from-10% to-secondary to-100%",
+    "my-3 relative flex flex-col lg:flex-row justify-center w-full rounded-lg overflow-hidden text-text h-fit lg:h-80 lg:bg-linear-to-r bg-linear-to-t from-surface lg:from-20% from-10% to-secondary to-100%",
 
   imageCard:
     "h-full w-auto rounded-t-lg lg:rounded-none lg:rounded-l-lg object-cover flex-shrink-0",
@@ -56,5 +56,5 @@ export const homeStyles = {
 
   stats: "flex gap-1",
 
-  tag: "self-center shadow-xl/30 rounded px-1 py-0.5 font-sans text-xs text-surface lg:text-lg",
+  tag: "self-center shadow/40 rounded px-1 py-0.5 font-sans text-xs text-surface lg:text-lg",
 };

@@ -92,3 +92,9 @@ export enum Sort {
   asc = "asc",
   desc = "desc",
 }
+
+export interface LikedAndFavoriteChallenge {
+  id: number;
+  slug: string;
+  visibility: boolean;
+}

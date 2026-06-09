@@ -9,7 +9,6 @@ import { dashboardStyles as styles } from "@/styles/dashboard.styles";
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  console.log(user)
   return (
     <div className="space-y-8 p-8">
       <div>
@@ -32,7 +31,8 @@ export default function DashboardPage() {
         )}
         {user?.userWithoutPassword.username ? (
           <p className={styles.username}>
-            {user.userWithoutPassword.username} {user.userWithoutPassword.country}
+            {user.userWithoutPassword.username}{" "}
+            {user.userWithoutPassword.country}
           </p>
         ) : (
           <p className={styles.username}>Username not found ⛔</p>
@@ -44,7 +44,11 @@ export default function DashboardPage() {
         </nav>
         <div className={styles.bio}>
           <h2>Biographie</h2>
-          {user?.userWithoutPassword.bio ? <p>{user.userWithoutPassword.bio}</p> : <p>{"C'est un peu vide ici..."}</p>}
+          {user?.userWithoutPassword.bio ? (
+            <p>{user.userWithoutPassword.bio}</p>
+          ) : (
+            <p>{"C'est un peu vide ici..."}</p>
+          )}
         </div>
       </div>
     </div>

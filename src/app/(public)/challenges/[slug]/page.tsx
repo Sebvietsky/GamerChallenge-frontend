@@ -1,8 +1,8 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 import { Participation } from "@/components/common/participation/Participation";
 import { formatNumber, getTextColor } from "@/lib/utils";
-import { challengeDetail as styles } from "@/styles/challenge-detail";
+import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,27 +10,48 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 import { Users, Heart, Video, Lightbulb, Trophy, User } from "lucide-react";
-import { getChallengeBySlug, getParticipationsByChallenge } from "@/features/api/challenge.api";
-import { LikeButton, FavoriteButton } from "@/components/common/challenge-detail/ButtonLike";
-
-
+import {
+  getChallengeBySlug,
+  getParticipationsByChallenge,
+} from "@/features/api/challenge.api";
+import {
+  getUserFavoritedOnChallenge,
+  getUserLikedOnChallenge,
+} from "@/features/api/challenge.api.server";
+import {
+  LikeButton,
+  FavoriteButton,
+} from "@/components/common/challenge-detail/ButtonLike";
+import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export default async function ChallengeDetailPage({
-  params
+  params,
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
-  const data = await getChallengeBySlug(slug)
-  const like = {isLiked: false}
-  const participations = await getParticipationsByChallenge(slug)
-  console.log(data)
-  if(!data) {
-    return null
+  const data = await getChallengeBySlug(slug);
+  const likedChallenges = await getUserLikedOnChallenge();
+  const favoritedChallenges = await getUserFavoritedOnChallenge();
+  const participations = await getParticipationsByChallenge(slug);
+
+  // Vérifie si le slug de la page courante figure dans la liste des challenges
+  // likés par l'utilisateur. Retourne false si non connecté (likedChallenges = []).
+  const isLiked: boolean =
+    likedChallenges?.some(
+      (chal: LikedAndFavoriteChallenge): boolean => chal.slug === slug,
+    ) ?? false;
+
+  const isFavorite: boolean =
+    favoritedChallenges?.some(
+      (chal: LikedAndFavoriteChallenge): boolean => chal.slug === slug,
+    ) ?? false;
+  if (!data) {
+    return null;
   }
 
   return (
@@ -39,50 +60,95 @@ export default async function ChallengeDetailPage({
       <section className={styles.sectionDetail}>
         <div className={styles.detailContainer}>
           <div className={styles.imageContainer}>
-            <Image className={styles.imageTag} src={data.game.coverUrl || "/images/image-not-found.png"} width={10000} height={10000} alt="Image du jeu"/>
+            <Image
+              className={styles.imageTag}
+              src={data.game.coverUrl || "/images/image-not-found.png"}
+              width={10000}
+              height={10000}
+              alt="Image du jeu"
+            />
           </div>
           <div className={styles.contentContainer}>
             <div className={styles.tagContainer}>
-              <p className={styles.tag} style={{backgroundColor: data.challengeCategory.colorCode,color: getTextColor(data.challengeCategory.colorCode)}}>{data.challengeCategory.name}</p>
-              <p className={styles.tag} style={{backgroundColor: data.difficulty.colorCode, color: getTextColor(data.difficulty.colorCode)}}>{data.game.name}</p>
+              <p
+                className={styles.tag}
+                style={{
+                  backgroundColor: data.challengeCategory.colorCode,
+                  color: getTextColor(data.challengeCategory.colorCode),
+                }}
+              >
+                {data.challengeCategory.name}
+              </p>
+              <p
+                className={styles.tag}
+                style={{
+                  backgroundColor: data.difficulty.colorCode,
+                  color: getTextColor(data.difficulty.colorCode),
+                }}
+              >
+                {data.difficulty.name}
+              </p>
             </div>
-            <h1 className={styles.title}>{data.game.name} - {data.title}</h1>
+            <h1 className={styles.title}>
+              {data.game.name} - {data.title}
+            </h1>
             <div className={styles.dataContainer}>
-              <p className={styles.dataStat}><Users className={styles.icon} />{" "}{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ?("participants"):("participant")}</p>
-              <p className={styles.dataStat}><Heart className={styles.icon} />{" "}{formatNumber(data._count.votes)}{" "}{data._count.votes > 1 ?(" votes"):(" vote")} </p>
+              <p className={styles.dataStat}>
+                <Users className={styles.icon} />{" "}
+                {formatNumber(data._count.participations)}{" "}
+                {data._count.participations > 1
+                  ? "participants"
+                  : "participant"}
+              </p>
+              <p className={styles.dataStat}>
+                <Heart className={styles.icon} />{" "}
+                {formatNumber(data._count.votes)}{" "}
+                {data._count.votes > 1 ? " votes" : " vote"}{" "}
+              </p>
             </div>
             <p className={styles.description}>{data.description}</p>
             <p className={styles.description}>{data.goals}</p>
           </div>
         </div>
         <div className={styles.buttonContainer}>
-        <LikeButton 
-          slug={slug}
-          initialLiked={like.isLiked}
-          initialCount={data._count.votes}
-        />
-        <FavoriteButton 
-          slug={slug}
-          initialLiked={like.isLiked}
-          initialCount={data._count.favoritedBy}
-        />
+          <LikeButton
+            slug={slug}
+            initialLiked={isLiked}
+            initialCount={data._count.votes}
+          />
+          <FavoriteButton
+            slug={slug}
+            initialLiked={isFavorite}
+            initialCount={data._count.favoritedBy}
+          />
         </div>
         {/* SECTION Vidéo, Créé par and Indice */}
       </section>
       <section className={styles.sectionGrid}>
         <div className={styles.videoContainer}>
-          <h2 className={styles.videoTitle}><Video />{' '}Démonstration</h2>
+          <h2 className={styles.videoTitle}>
+            <Video /> Démonstration
+          </h2>
           {/* TODO changer par nos vidéo de démonstration */}
           {/* <video className="styles.iframe" controls>
             <source src={data.demo}/>
           </video> */}
-          <iframe className={styles.iframe} src="https://www.youtube.com/embed/Djtsw5k_DNc" title="ELDEN RING NIGHTREIGN – REVEAL GAMEPLAY TRAILER" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+          <iframe
+            className={styles.iframe}
+            src="https://www.youtube.com/embed/Djtsw5k_DNc"
+            title="ELDEN RING NIGHTREIGN – REVEAL GAMEPLAY TRAILER"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
         </div>
         <div className={styles.hintsContainer}>
           <Accordion type="single" collapsible>
             <AccordionItem value="indices">
               <AccordionTrigger>
-                <Lightbulb />Indices
+                <Lightbulb />
+                Indices
               </AccordionTrigger>
               <AccordionContent>
                 <p>{data.hints}</p>
@@ -94,34 +160,55 @@ export default async function ChallengeDetailPage({
           <h2 className={styles.creatorTitle}>Créé par</h2>
           <div className={styles.creatorContent}>
             <Avatar className={styles.avatar}>
-              <AvatarImage src={data.user.profilePicture || undefined} alt="Image de profil du Créateur du chalenge"/>
+              <AvatarImage
+                src={data.user.profilePicture || undefined}
+                alt="Image de profil du Créateur du chalenge"
+              />
               <AvatarFallback>
                 <User />
               </AvatarFallback>
             </Avatar>
             <div className={styles.creatorInfo}>
               <p className={styles.creatorName}>{data.user.username}</p>
-              <p className={styles.creatorRole}>Créateur de {data._count.participations > 1 ? ("challenges") : ("challenge")}</p>
-              <p className={styles.creatorStat}><Trophy className={styles.creatorStatIcon} />{formatNumber(data._count.favoritedBy)}{" "}{data._count.favoritedBy > 1 ? ("challenges créés") : ("challenge créé")} </p>
-              <p className={styles.creatorStat}><Users className={styles.creatorStatIcon} />{formatNumber(data._count.participations)}{" "}{data._count.participations > 1 ? ("participants") : ("participant")} </p>
+              <p className={styles.creatorRole}>
+                Créateur de{" "}
+                {data._count.participations > 1 ? "challenges" : "challenge"}
+              </p>
+              <p className={styles.creatorStat}>
+                <Trophy className={styles.creatorStatIcon} />
+                {formatNumber(data._count.favoritedBy)}{" "}
+                {data._count.favoritedBy > 1
+                  ? "challenges créés"
+                  : "challenge créé"}{" "}
+              </p>
+              <p className={styles.creatorStat}>
+                <Users className={styles.creatorStatIcon} />
+                {formatNumber(data._count.participations)}{" "}
+                {data._count.participations > 1
+                  ? "participants"
+                  : "participant"}{" "}
+              </p>
             </div>
           </div>
         </div>
       </section>
       {/* SECTION Participation */}
-      <Participation challenge={data} participations={participations ?? []}/>
+      <Participation challenge={data} participations={participations ?? []} />
       <section className={styles.ctaSection}>
         <div className={styles.ctaContainer}>
           <h3 className={styles.ctaTitle}>Prêt à relever le défi ?</h3>
-          <p className={styles.ctaSubtitle}>Partagez votre meilleure performance et affronter la communauté !</p>
+          <p className={styles.ctaSubtitle}>
+            Partagez votre meilleure performance et affronter la communauté !
+          </p>
         </div>
         <div className="w-full lg:w-[80%]">
           <Link href={`/participate?slug=${slug}`}>
-            <Button className={styles.ctaButton}>Participer au challenge</Button>
+            <Button className={styles.ctaButton}>
+              Participer au challenge
+            </Button>
           </Link>
         </div>
       </section>
-      
     </div>
   );
 }

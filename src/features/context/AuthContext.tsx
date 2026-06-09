@@ -2,8 +2,7 @@
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { User } from "@/features/types/auth.type";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { fetchWithAuth, setSessionExpiredHandler, API_URL } from "@/lib/api";
 
 type AuthContextType = {
   user: User | null;
@@ -33,18 +32,22 @@ export function AuthProvider({
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_URL}/auth/refresh`, {
-      method: "POST",
-      credentials: "include"
-    })
-    fetch(`${API_URL}/auth/me`, {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((me) => me && setUser(me))
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false));
+    // Enregistre le handler au montage de l'app, avant tout appel réseau.
+    // Garantit que fetchWithAuth peut déclencher la déconnexion à tout moment.
+    setSessionExpiredHandler(() => setUser(null));
+
+    // fetchWithAuth gère le refresh silencieux si l'access token est expiré.
+    async function checkAuth() {
+      try {
+        const res = await fetchWithAuth(`${API_URL}/auth/me`);
+        if (res.ok) setUser(await res.json());
+      } catch {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    checkAuth();
   }, []);
 
   function login(user: User) {
@@ -54,7 +57,7 @@ export function AuthProvider({
   async function logout() {
     setIsLoggingOut(true);
     try {
-      await fetch(`${API_URL}/auth/logout`, {
+      await fetchWithAuth(`${API_URL}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

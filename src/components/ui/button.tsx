@@ -21,8 +21,10 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         filterButton: "rounded-sm bg-secondary text-secondary-foreground",
         filterButtonAlt: "rounded-sm bg-surface text-text border-test-muted",
-        iconButton: "bg-primary text-primary-foreground hover:brightness-120 w-8 h-8 rounded-full",
-        iconButtonToggle: "border-border bg-background text-foreground hover:brightness-120 w-8 h-8 rounded-full",
+        iconButton:
+          "bg-primary text-primary-foreground hover:brightness-120 w-8 h-8 rounded-full",
+        iconButtonToggle:
+          "border-border bg-background text-foreground hover:brightness-120 w-8 h-8 rounded-full",
       },
       size: {
         default:

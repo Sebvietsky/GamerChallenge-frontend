@@ -1,6 +1,7 @@
 "use client";
 
 // COMPONENTS
+import { useEffect } from "react";
 import { ChallengeList } from "@/components/home/challenge-list";
 import { SelectFilter } from "@/components/home/selectFilter";
 
@@ -17,6 +18,19 @@ interface HomeClientProps {
 
 export default function HomeClient({ queryParams }: HomeClientProps) {
   const { challenges, filter, setFilter, isLoading } = useHome(queryParams);
+
+  useEffect(() => {
+    if (isLoading) return;
+    const raw = sessionStorage.getItem("scroll-restore");
+    if (!raw) return;
+    try {
+      const { from, y } = JSON.parse(raw);
+      if (from === window.location.pathname) {
+        window.scrollTo(0, y);
+        sessionStorage.removeItem("scroll-restore");
+      }
+    } catch {}
+  }, [isLoading]);
 
   return (
     <main className={styles.page}>
