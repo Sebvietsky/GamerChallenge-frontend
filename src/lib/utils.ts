@@ -20,3 +20,9 @@ export function getTextColor(hex: string): string {
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
   return luminance > 0.5 ? "#000000" : "#ffffff"
 }
+
+export function parseYoutubeUrl(url: string){
+  const videoId = url.split("v=")[1]
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`
+  return embedUrl;
+}

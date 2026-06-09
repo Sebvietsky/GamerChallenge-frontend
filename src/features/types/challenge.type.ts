@@ -46,12 +46,8 @@ export interface Challenge {
 
 export interface Participation {
   id: number;
-  challenge: {
-    game: {
-      coverUrl: string;
-    };
-  };
-  video: { url: string };
+  challenge: Challenge;
+  video: string;
   title: string;
   slug: string;
   description?: string;
@@ -61,7 +57,7 @@ export interface Participation {
   createdAt: string;
   user: {
     country: string;
-    profilePicture: { url: string };
+    profilePicture: string;
     username: string;
   };
   _count: {

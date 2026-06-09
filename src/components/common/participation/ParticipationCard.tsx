@@ -2,24 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatNumber } from "@/lib/utils";
 
+import { challengeDetail as heriteStyles } from "@/styles/challenge-detail.styles";
 import { participationCardStyles as styles } from "./ParticipationCard-styles";
 import { Heart } from "lucide-react";
 import { Challenge, Participation } from "@/features/types/challenge.type";
 
 interface ParticipationCardProps {
-  className?: string;
   data: Participation;
   challenge: Challenge;
 }
 
 export function ParticipationCard({
-  className,
   data,
   challenge,
 }: ParticipationCardProps) {
   return (
-    <li className={className}>
-      <Link href={`/participation/${data.slug}`}>
+    <li className="w-full flex justify-center">
+      <Link href={`/participations/${data.slug}`} className={heriteStyles.participationCard}>
         <div className={styles.infoContainer}>
           <Image
             src={challenge.game.coverUrl || "/images/image-not-found"}
