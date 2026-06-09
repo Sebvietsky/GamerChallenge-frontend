@@ -1,7 +1,8 @@
-import type {
-  Challenge,
-  Participation,
-  queryParams,
+import {
+  OrderBy,
+  type Challenge,
+  type Participation,
+  type queryParams,
 } from "@/features/types/challenge.type";
 import { API_BASE_URL, fetchWithAuth } from "@/lib/api";
 import { CreateChallengePayload } from "../types/createSchema";
@@ -28,7 +29,7 @@ export async function getErrorMessage(response: Response): Promise<string> {
 }
 
 export async function getHomeChallenges({
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   since = undefined,
   limit = 3,
 }: queryParams): Promise<Challenge[]> {
@@ -57,7 +58,7 @@ export async function getHomeChallenges({
 export async function getChallenges({
   page = 1,
   limit = 20,
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   sort = "desc",
   since = undefined,
   search = "",
