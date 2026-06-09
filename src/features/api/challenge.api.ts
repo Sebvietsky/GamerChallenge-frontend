@@ -3,7 +3,7 @@ import type {
   Participation,
   queryParams,
 } from "@/features/types/challenge.type";
-import { API_BASE_URL } from "@/lib/api";
+import { API_BASE_URL, fetchWithAuth } from "@/lib/api";
 import { createChallengePayload } from "../types/createSchema";
 
 interface PaginatedResponse {
@@ -137,16 +137,14 @@ export async function getParticipationsByChallenge(
 
 const createToggleService = (endpoint: "likes" | "favorites") => ({
   add: async (slug: string): Promise<void> => {
-    await fetch(`${API_BASE_URL}/challenges/${slug}/${endpoint}`, {
+    await fetchWithAuth(`${API_BASE_URL}/challenges/${slug}/${endpoint}`, {
       method: "POST",
-      credentials: "include",
       cache: "no-cache",
     });
   },
   remove: async (slug: string): Promise<void> => {
-    await fetch(`${API_BASE_URL}/challenges/${slug}/${endpoint}`, {
+    await fetchWithAuth(`${API_BASE_URL}/challenges/${slug}/${endpoint}`, {
       method: "DELETE",
-      credentials: "include",
       cache: "no-cache",
     });
   },
@@ -168,12 +166,11 @@ export async function createChallenge(payload: createChallengePayload) {
 
   const formData = new FormData();
   // TODO ajouter l'envoie de fichier pour la vidéo
-  const response = await fetch(`${API_BASE_URL}/challenges`, {
+  const response = await fetchWithAuth(`${API_BASE_URL}/challenges`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     cache: "no-cache",
     body: JSON.stringify(payload),
   });

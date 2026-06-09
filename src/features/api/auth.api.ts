@@ -38,6 +38,12 @@ export async function loginUser(payload: LoginPayload) {
     credentials: "include",
   });
 
+  if (!user.ok) {
+    throw new Error(
+      "Impossible de récupérer les informations de l'utilisateur",
+    );
+  }
+
   return user.json();
 }
 
