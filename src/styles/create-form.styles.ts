@@ -1,6 +1,6 @@
 export const createFormStyles = {
   "cc-form": "w-full space-y-3 bg-surface border-border rounded-lg p-4",
-  
+
   "cc-label": "",
   "cc-label--title": "",
   "cc-label--igdbId": "",
@@ -9,11 +9,11 @@ export const createFormStyles = {
   "cc-label--difficulty": "",
   "cc-label--category": "",
   "cc-label--hints": "",
-  
+
   "cc-input": "py-1 text-xs",
   "cc-input--title": "",
-  
-  "cc-field": "", 
+
+  "cc-field": "",
   "cc-field--igdbId": "",
   "cc-field--difficulty": "",
 
@@ -40,8 +40,8 @@ export const createFormStyles = {
 
   "cc-select-item": "",
   "cc-select-item--category": "",
-  
-  "cc-error": "text-sm text-red-500", 
+
+  "cc-error": "text-sm text-red-500",
   "cc-error--title": "",
   "cc-error--igdbId": "",
   "cc-error--description": "",
@@ -50,7 +50,6 @@ export const createFormStyles = {
   "cc-error--category": "",
   "cc-error--hints": "",
 
-  "cc-button": "", 
+  "cc-button": "",
   "cc-button--submit": "",
-
-}
+};

@@ -3,6 +3,7 @@
 import { Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { sidebarStyles as styles } from "@/components/common/sidebar/sidebar.styles";
 
 export function ToggleDark() {
   const [mounted, setMounted] = useState(false);
@@ -15,7 +16,10 @@ export function ToggleDark() {
   if (!mounted) return null;
 
   return (
-    <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+    <button
+      className={styles.bottomAction}
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+    >
       <Moon size={20} />
     </button>
   );

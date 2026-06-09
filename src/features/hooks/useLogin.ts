@@ -38,12 +38,13 @@ export function useLogin() {
     try {
       const user = await loginUser(payload);
       loginContext(user);
-      console.log(user)
-      toast.success(`Connexion réussi, Bonjour ${user.userWithoutPassword.username}`)
+      toast.success(
+        `Connexion réussi, Bonjour ${user.userWithoutPassword.username}`,
+      );
       router.back();
     } catch (err) {
       const message = err instanceof Error ? err.message : "Erreur inconnue";
-      toast.error("Impossible de vous connecter, veuillez réessayer")
+      toast.error("Impossible de vous connecter, veuillez réessayer");
       setError(message);
     } finally {
       setLoading(false);
