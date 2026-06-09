@@ -1,43 +1,26 @@
-import { createChallenge } from "../api/challenge.api";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
+import { createParticipation } from "../api/participation.api";
 
-const createChallengeSchema = z.object({
-  title: z.string().min(3, "Minimum 3 caractères"),
-  description: z.string().min(10, "Minimum 10 caractères").max(500),
-  goals: z.string().max(500).optional(),
-  hints: z.string().max(500).optional(),
-  demo: z.string().url("URL invalide").optional().or(z.literal("")),
-  closesAt: z.date().optional(),
-  status: z.string().min(1, "Choisir un statut").optional(),
-  igdbId: z
-    .number({ required_error: "Choisir un jeu" })
-    .min(1, "Choisir un jeu"),
-  challengeCategoryId: z
-    .number({ required_error: "Choisir une catégorie" })
-    .min(1, "Choisir une catégorie"),
-  difficultyId: z
-    .number({ required_error: "Choisir une difficulté" })
-    .min(1, "Choisir une difficulté"),
+const createParticipationSchema = z.object({
+  title: z.string().min(3, "Minimum 3 caractères").max(150),
+  description: z.string().min(10, "Minimum 10 caractères").max(3000),
+  video: z.string().url("URL invalide").or(z.literal("")),
 });
 
-type CreateChallengeFormValues = z.infer<typeof createChallengeSchema>;
+type CreateParticipationFormValues = z.infer<typeof createParticipationSchema>;
 
-export const useCreateParticipation = () => {
+export const useCreateParticipation = (challengeSlug: string) => {
   const router = useRouter();
-  const form = useForm<CreateChallengeFormValues>({
-    resolver: zodResolver(createChallengeSchema),
+  const form = useForm<CreateParticipationFormValues>({
+    resolver: zodResolver(createParticipationSchema),
     defaultValues: {
       title: "",
-      igdbId: undefined,
       description: "",
-      goals: "",
-      difficultyId: undefined,
-      challengeCategoryId: undefined,
-      hints: "",
+      video: "",
     },
   });
 
@@ -45,18 +28,13 @@ export const useCreateParticipation = () => {
     formState: { errors },
   } = form;
 
-  const onSubmit = async (values: CreateChallengeFormValues) => {
+  const onSubmit = async (values: CreateParticipationFormValues) => {
     try {
-      await createChallenge({
-        ...values,
-        demo: values.demo || undefined,
-        goals: values.goals || undefined,
-        hints: values.hints || undefined,
-      });
-      toast.success("Challenge créer avec succés !");
-      router.push("/");
+      await createParticipation(challengeSlug, values);
+      toast.success("Participation créée avec succès !");
+      router.push(`/challenges/${challengeSlug}`);
     } catch (error) {
-      toast.error("Erreur lors de la création du challenge");
+      toast.error("Erreur lors de la création de la participation");
       console.error(error);
     }
   };

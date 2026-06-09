@@ -26,7 +26,9 @@ export async function fetchWithAuth(
   const res = await fetch(url, { ...options, credentials: "include" });
 
   if (res.status === 401) {
-    const refreshRes = await fetch(`${API_URL}/auth/refresh`, {
+    // API_BASE_URL et non API_URL : côté serveur Docker, localhost ne pointe pas
+    // sur le backend — il faut le nom du service (gamer_challenge_api:4000).
+    const refreshRes = await fetch(`${API_BASE_URL}/auth/refresh`, {
       method: "POST",
       credentials: "include",
     });
@@ -42,3 +44,4 @@ export async function fetchWithAuth(
 
   return res;
 }
+

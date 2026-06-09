@@ -17,10 +17,15 @@ import {
   getParticipationsByChallenge,
 } from "@/features/api/challenge.api";
 import {
+  getUserFavoritedOnChallenge,
+  getUserLikedOnChallenge,
+} from "@/features/api/challenge.api.server";
+import {
   LikeButton,
   FavoriteButton,
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
+import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -31,9 +36,21 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
-  const like = { isLiked: false };
+  const likedChallenges = await getUserLikedOnChallenge();
+  const favoritedChallenges = await getUserFavoritedOnChallenge();
   const participations = await getParticipationsByChallenge(slug);
-  console.log(data)
+
+  // Vérifie si le slug de la page courante figure dans la liste des challenges
+  // likés par l'utilisateur. Retourne false si non connecté (likedChallenges = []).
+  const isLiked: boolean =
+    likedChallenges?.some(
+      (chal: LikedAndFavoriteChallenge): boolean => chal.slug === slug,
+    ) ?? false;
+
+  const isFavorite: boolean =
+    favoritedChallenges?.some(
+      (chal: LikedAndFavoriteChallenge): boolean => chal.slug === slug,
+    ) ?? false;
   if (!data) {
     return null;
   }
@@ -78,12 +95,12 @@ export default async function ChallengeDetailPage({
         <div className={styles.buttonContainer}>
           <LikeButton
             slug={slug}
-            initialLiked={like.isLiked}
+            initialLiked={isLiked}
             initialCount={data._count.votes}
           />
           <FavoriteButton
             slug={slug}
-            initialLiked={like.isLiked}
+            initialLiked={isFavorite}
             initialCount={data._count.favoritedBy}
           />
         </div>

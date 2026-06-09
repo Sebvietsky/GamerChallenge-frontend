@@ -1,10 +1,11 @@
-import type {
-  Challenge,
-  Participation,
-  queryParams,
+import {
+  OrderBy,
+  type Challenge,
+  type Participation,
+  type queryParams,
 } from "@/features/types/challenge.type";
 import { API_BASE_URL, fetchWithAuth } from "@/lib/api";
-import { createChallengePayload } from "../types/createSchema";
+import { CreateChallengePayload } from "../types/createSchema";
 
 interface PaginatedResponse {
   data: Challenge[];
@@ -14,7 +15,7 @@ interface PaginatedResponse {
   totalPages: number;
 }
 
-async function getErrorMessage(response: Response): Promise<string> {
+export async function getErrorMessage(response: Response): Promise<string> {
   const contentType = response.headers.get("content-type");
   if (contentType?.includes("application/json")) {
     try {
@@ -28,7 +29,7 @@ async function getErrorMessage(response: Response): Promise<string> {
 }
 
 export async function getHomeChallenges({
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   since = undefined,
   limit = 3,
 }: queryParams): Promise<Challenge[]> {
@@ -57,7 +58,7 @@ export async function getHomeChallenges({
 export async function getChallenges({
   page = 1,
   limit = 20,
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   sort = "desc",
   since = undefined,
   search = "",
@@ -153,7 +154,7 @@ const createToggleService = (endpoint: "likes" | "favorites") => ({
 export const likeToggle = createToggleService("likes");
 export const favoriteToggle = createToggleService("favorites");
 
-export async function createChallenge(payload: createChallengePayload) {
+export async function createChallenge(payload: CreateChallengePayload) {
   // title: string,
   // gameId?: string,
   // description: string,
@@ -164,7 +165,6 @@ export async function createChallenge(payload: createChallengePayload) {
   // hints?: string,
   // closesAt?: string,
 
-  const formData = new FormData();
   // TODO ajouter l'envoie de fichier pour la vidéo
   const response = await fetchWithAuth(`${API_BASE_URL}/challenges`, {
     method: "POST",

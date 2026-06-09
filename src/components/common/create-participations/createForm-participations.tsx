@@ -8,15 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import ChallengeSummaryCard from "@/components/common/create-participations/ChallengeSummaryCard";
+import { Challenge } from "@/features/types/challenge.type";
 
 type CreateParticipationFormProps = {
-  challengeSlug: string;
+  challenge: Challenge;
 };
 
 export default function CreateParticipationForm({
-  challengeSlug,
+  challenge,
 }: CreateParticipationFormProps) {
-  console.log(challengeSlug);
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -32,12 +32,7 @@ export default function CreateParticipationForm({
             CHALLENGE
         ========================================================= */}
 
-        <ChallengeSummaryCard
-          title="Faraway Willow Challenge"
-          gameName="Elden Ring"
-          difficulty="Moyen"
-          imageUrl="/images/urDragon.webp"
-        />
+        <ChallengeSummaryCard challenge={challenge} />
 
         {/* =========================================================
             FORMULAIRE
