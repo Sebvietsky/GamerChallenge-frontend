@@ -20,6 +20,7 @@ import {
   LikeButton,
   FavoriteButton,
 } from "@/components/common/challenge-detail/ButtonLike";
+import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -32,6 +33,7 @@ export default async function ChallengeDetailPage({
   const data = await getChallengeBySlug(slug);
   const like = { isLiked: false };
   const participations = await getParticipationsByChallenge(slug);
+  console.log(data)
   if (!data) {
     return null;
   }
@@ -51,26 +53,7 @@ export default async function ChallengeDetailPage({
             />
           </div>
           <div className={styles.contentContainer}>
-            <div className={styles.tagContainer}>
-              <p
-                className={styles.tag}
-                style={{
-                  backgroundColor: data.challengeCategory.colorCode,
-                  color: getTextColor(data.challengeCategory.colorCode),
-                }}
-              >
-                {data.challengeCategory.name}
-              </p>
-              <p
-                className={styles.tag}
-                style={{
-                  backgroundColor: data.difficulty.colorCode,
-                  color: getTextColor(data.difficulty.colorCode),
-                }}
-              >
-                {data.game.name}
-              </p>
-            </div>
+            <TagContainer data={data} />
             <h1 className={styles.title}>
               {data.game.name} - {data.title}
             </h1>
@@ -111,10 +94,6 @@ export default async function ChallengeDetailPage({
           <h2 className={styles.videoTitle}>
             <Video /> Démonstration
           </h2>
-          {/* TODO changer par nos vidéo de démonstration */}
-          {/* <video className="styles.iframe" controls>
-            <source src={data.demo}/>
-          </video> */}
           <iframe
             className={styles.iframe}
             src="https://www.youtube.com/embed/Djtsw5k_DNc"
@@ -184,7 +163,7 @@ export default async function ChallengeDetailPage({
           </p>
         </div>
         <div className="w-full lg:w-[80%]">
-          <Link href={`/participate/${slug}`}>
+          <Link href={`/participations/${slug}`}>
             <Button className={styles.ctaButton}>
               Participer au challenge
             </Button>
