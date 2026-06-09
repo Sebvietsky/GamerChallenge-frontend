@@ -9,7 +9,8 @@ import { useDebounce } from "@/features/hooks/useDebounce";
 import { useSearch } from "@/features/hooks/useSearch";
 
 import { OrderBy, Sort, type Challenge } from "@/features/types/challenge.type";
-import { Button } from "../ui/button";
+import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
+import { homeStyles } from "@/styles/global.styles";
 
 export function ChallengesPageClient() {
   const { search } = useSearch();
@@ -49,48 +50,33 @@ export function ChallengesPageClient() {
 
   return (
     <>
-      <Button
-        onClick={() => {
-          if (orderBy === OrderBy.votes) {
-            if (sort === Sort.asc) {
-              setSort(Sort.desc);
-            } else {
-              setSort(Sort.asc);
-            }
-          }
-          setOrderBy(OrderBy.votes);
-        }}
-      >
-        {`Popularité ${sort === Sort.asc && orderBy === OrderBy.votes ? ">" : "<"}`}
-      </Button>
-      <Button
-        onClick={() => {
-          if (orderBy === OrderBy.createdAt) {
-            if (sort === Sort.asc) {
-              setSort(Sort.desc);
-            } else {
-              setSort(Sort.asc);
-            }
-          }
-          setOrderBy(OrderBy.createdAt);
-        }}
-      >
-        {`Récents ${sort === Sort.asc && orderBy === OrderBy.createdAt ? ">" : "<"}`}
-      </Button>
-      <Button
-        onClick={() => {
-          if (orderBy === OrderBy.title) {
-            if (sort === Sort.asc) {
-              setSort(Sort.desc);
-            } else {
-              setSort(Sort.asc);
-            }
-          }
-          setOrderBy(OrderBy.title);
-        }}
-      >
-        {`Alphabétique ${sort === Sort.asc && orderBy === OrderBy.title ? ">" : "<"}`}
-      </Button>
+      <div className={homeStyles.challengesOrderByButtonContainer}>
+        <ChallengesOrderByButton
+          selfOrderBy={OrderBy.createdAt}
+          setOrderBy={setOrderBy}
+          sort={sort}
+          setSort={setSort}
+          displayedText="Récents"
+          currentOrderBy={orderBy}
+        />
+        <ChallengesOrderByButton
+          selfOrderBy={OrderBy.votes}
+          setOrderBy={setOrderBy}
+          sort={sort}
+          setSort={setSort}
+          displayedText="Populaires"
+          currentOrderBy={orderBy}
+        />
+        <ChallengesOrderByButton
+          selfOrderBy={OrderBy.difficulty}
+          setOrderBy={setOrderBy}
+          sort={sort}
+          setSort={setSort}
+          displayedText="Difficulté"
+          currentOrderBy={orderBy}
+        />
+      </div>
+
       <ChallengeList challenges={challenges} />
     </>
   );

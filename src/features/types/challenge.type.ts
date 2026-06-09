@@ -85,6 +85,7 @@ export enum OrderBy {
   status = "status",
   participations = "participations",
   votes = "votes",
+  difficulty = "difficulty",
 }
 
 export enum Sort {

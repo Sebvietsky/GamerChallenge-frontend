@@ -1,7 +1,8 @@
-import type {
-  Challenge,
-  Participation,
-  queryParams,
+import {
+  OrderBy,
+  type Challenge,
+  type Participation,
+  type queryParams,
 } from "@/features/types/challenge.type";
 import { API_BASE_URL } from "@/lib/api";
 import { createChallengePayload } from "../types/createSchema";
@@ -28,7 +29,7 @@ async function getErrorMessage(response: Response): Promise<string> {
 }
 
 export async function getHomeChallenges({
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   since = undefined,
   limit = 3,
 }: queryParams): Promise<Challenge[]> {
@@ -57,7 +58,7 @@ export async function getHomeChallenges({
 export async function getChallenges({
   page = 1,
   limit = 20,
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   sort = "desc",
   since = undefined,
   search = "",
@@ -166,7 +167,6 @@ export async function createChallenge(payload: createChallengePayload) {
   // hints?: string,
   // closesAt?: string,
 
-  const formData = new FormData();
   // TODO ajouter l'envoie de fichier pour la vidéo
   const response = await fetch(`${API_BASE_URL}/challenges`, {
     method: "POST",
