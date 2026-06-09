@@ -1,6 +1,6 @@
-"use client"
-import { useState } from "react"
-import { likeToggle } from "../api/challenge.api"
+"use client";
+import { useState } from "react";
+import { likeToggle } from "../api/challenge.api";
 
 interface ToggleService {
   add: (slug: string) => Promise<void>;
@@ -14,34 +14,37 @@ interface UseToggleProps {
   service: ToggleService;
 }
 
-export const useToggle = ({ initialLiked, initialCount, slug, service}: UseToggleProps) => {
-  
-  const [ isLiked, setIsLiked ] = useState(initialLiked);
-  const [ likeCount, setLikeCount ] = useState(initialCount);
-  const [ isPending, setIsPending] = useState(false)
-  
-  
+export const useToggle = ({
+  initialLiked,
+  initialCount,
+  slug,
+  service,
+}: UseToggleProps) => {
+  const [isLiked, setIsLiked] = useState(initialLiked);
+  const [likeCount, setLikeCount] = useState(initialCount);
+  const [isPending, setIsPending] = useState(false);
+
   const toggleLike = async () => {
-    if (isPending) return
+    if (isPending) return;
 
     const newLiked = !isLiked;
     setIsLiked(newLiked);
-    setLikeCount(prev => newLiked ? prev + 1 : prev -1);
-    setIsPending(true)
+    setLikeCount((prev) => (newLiked ? prev + 1 : prev - 1));
+    setIsPending(true);
 
     try {
-      if(newLiked) {
+      if (newLiked) {
         await service.add(slug);
       } else {
-        await service.remove(slug)
+        await service.remove(slug);
       }
     } catch {
-      setIsLiked(!newLiked)
-      setLikeCount(prev => newLiked ? prev - 1 : prev +1 )
+      setIsLiked(!newLiked);
+      setLikeCount((prev) => (newLiked ? prev - 1 : prev + 1));
     } finally {
-      setIsPending(false)
+      setIsPending(false);
     }
   };
 
-  return { isLiked, likeCount, toggleLike, isPending}
-}
+  return { isLiked, likeCount, toggleLike, isPending };
+};

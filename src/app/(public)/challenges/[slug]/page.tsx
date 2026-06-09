@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Participation } from "@/components/common/participation/Participation";
 import { formatNumber, getTextColor } from "@/lib/utils";
-import { challengeDetail as styles } from "@/styles/challenge-detail";
+import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
