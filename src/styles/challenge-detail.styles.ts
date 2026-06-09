@@ -1,56 +1,117 @@
 export const challengeDetail = {
-  main: "space-y-8 py-8 px-8",
-  // Section haut de page
-  sectionDetail: "lg:flex",
-  detailContainer: "flex flex-col lg:flex-row w-full gap-4",
-  imageContainer:
-    "aspect-auto self-center w-full lg:w-100 object-cover object-center",
-  imageTag: "rounded-lg w-full h-full object-fit object-center",
+  // =========================================================
+  // PAGE LAYOUT
+  // =========================================================
+
+  main: "space-y-6 px-4 py-4 md:px-6 md:py-6 lg:px-8 lg:py-8",
+
+  // =========================================================
+  // HERO / CHALLENGE OVERVIEW
+  // Image, tags, titre, statistiques et description
+  // =========================================================
+
+  sectionDetail: "w-full",
+
+  detailContainer: "flex flex-col lg:flex-row w-full gap-4 lg:gap-8",
+
+  imageContainer: "w-full max-w-md mx-auto lg:mx-0 lg:w-[400px] shrink-0",
+
+  imageTag:
+    "rounded-lg w-full aspect-[16/9] lg:aspect-auto lg:h-full object-cover object-center",
+
   contentContainer: "flex flex-col flex-1 gap-4 lg:gap-8 lg:justify-center",
-  tagContainer: "flex gap-2 text-sm font-semibold",
-  tag: "rounded-lg bg-brand-info px-4 py-1.5",
-  title: "text-2xl font-semibold",
-  dataContainer: "flex gap-4 text-text-muted",
-  dataStat: "flex items-center",
+
+  tagContainer: "flex flex-wrap gap-2 text-xs md:text-sm font-semibold",
+
+  tag: "rounded-lg bg-brand-info px-3 py-1 text-xs md:px-4 md:py-1.5 md:text-sm",
+
+  title: "text-xl md:text-2xl lg:text-4xl font-semibold leading-tight",
+
+  dataContainer: "flex flex-wrap gap-3 md:gap-4 text-text-muted",
+
+  dataStat: "flex items-center text-sm md:text-base",
+
   icon: "mr-2",
-  description: "w-full text-text-muted",
-  buttonContainer: "flex my-2 gap-1.5 justify-end px-8",
+
+  description: "w-full text-sm md:text-base text-text-muted",
+
+  buttonContainer: "flex justify-end gap-1.5 px-0 md:px-4 lg:px-8",
+
   iconButton: "w-8 h-8 rounded-full",
-  // Section vidéo et autres
+
+  // =========================================================
+  // VIDEO & COMPLEMENTARY INFORMATION
+  // Vidéo + encarts informatifs
+  // =========================================================
+
   sectionGrid:
-    "lg:grid lg:grid-cols-[1fr_400px] lg:grid-rows-[auto_1fr] gap-4 mb-4",
-  videoContainer:
-    "lg:col-span-1 lg:row-span-3 lg:h-fit border rounded-lg bg-surface p-4 mb-4 lg:mb-0",
-  videoTitle: "flex mb-2",
+    "flex flex-col gap-4 lg:grid lg:grid-cols-[1fr_400px] lg:grid-rows-[auto_1fr]",
+
+  videoContainer: "border rounded-lg bg-surface p-4",
+
+  videoTitle: "flex items-center mb-2",
+
   iframe: "w-full aspect-video rounded-sm object-cover",
+
   hintsContainer:
-    "flex justify-between lg:col-span-2 lg:row-start-4 lg:row-span-1 border rounded-lg bg-surface px-4 mb-4 lg:mb0",
-  hintsTitle: "flex ",
-  creatorContainer:
-    "lg:col-span-1 lg:row-span-1 lg:row-start-1 lg:col-start-2 border rounded-lg bg-surface p-4 mb-4 lg:mb-0",
-  creatorTitle: "mb-2 text-xl font-semibold",
-  creatorContent: "flex gap-4",
-  avatar: "w-15 h-15",
+    "flex flex-col gap-2 md:flex-row md:items-center md:justify-between border rounded-lg bg-surface px-4 py-3",
+
+  hintsTitle: "flex items-center",
+
+  // =========================================================
+  // CREATOR CARD
+  // Informations du créateur du challenge
+  // =========================================================
+
+  creatorContainer: "border rounded-lg bg-surface p-4",
+
+  creatorTitle: "mb-4 text-lg md:text-xl font-semibold",
+
+  creatorContent: "flex flex-col sm:flex-row gap-4",
+
+  avatar: "w-14 h-14 md:w-16 md:h-16",
+
   creatorInfo: "flex flex-col",
-  creatorName: "font-heading font-semibold text-lg",
+
+  creatorName: "font-heading font-semibold text-base md:text-lg",
+
   creatorRole: "text-text-muted text-sm mb-2",
-  creatorStat: "flex items-center mb-1",
+
+  creatorStat: "flex items-center mb-1 text-sm",
+
   creatorStatIcon: "h-4 w-4 mr-2",
-  // Section participations
-  participationSection: "border bg-surface p-4 rounded-lg",
+
+  // =========================================================
+  // PARTICIPATIONS
+  // Liste des participations et filtres
+  // =========================================================
+
+  participationSection: "border bg-surface p-3 md:p-4 rounded-lg",
+
   participationHeader:
-    "relative flex justify-between lg:justify-start gap-25 items-center after:absolute after:-translate-x-1/2 after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-[95%] after:w-[90%] after:h-px mb-2",
-  participationTitle: "font-semibold text-sm",
-  filterContainer: "flex gap-1 items-center",
-  // filterButton: "rounded-sm bg-secondary text-secondary-foreground",
-  // filterButtonAlt: "rounded-sm bg-surface text-text border-test-muted",
+    "relative flex flex-col gap-2 md:flex-row md:items-center md:justify-between after:absolute after:-bottom-2 after:left-1/2 after:h-px after:w-[95%] after:-translate-x-1/2 after:bg-border pb-2",
+
+  participationTitle: "font-semibold text-sm md:text-base",
+
+  filterContainer: "flex flex-wrap gap-1 items-center",
+
   participationList: "flex flex-col items-center w-full",
+
   participationCard:
-    "relative flex items-center justify-between w-full lg:w-[95%] px-2 after:absolute after:-bottom-1 after:left-1/2 after:bg-border lg:after:w-full after:w-[90%] after:-translate-x-1/2 after:h-px mb-2",
-  // Section CTA
-  ctaSection: "flex flex-col gap-2 lg:gap-4 items-center",
-  ctaContainer: "",
-  ctaTitle: "font-semibold",
-  ctaSubtitle: "text-text-soft text-xs mb-1",
-  ctaButton: " w-full rounded-sm py-6",
+    "relative flex items-center justify-between w-full px-2 py-2 after:absolute after:-bottom-1 after:left-1/2 after:h-px after:w-[95%] after:-translate-x-1/2 after:bg-border",
+
+  // =========================================================
+  // CALL TO ACTION
+  // Invitation à participer au challenge
+  // =========================================================
+
+  ctaSection: "flex flex-col gap-2 md:gap-4 items-center text-center",
+
+  ctaContainer: "flex flex-col items-center",
+
+  ctaTitle: "text-lg md:text-xl font-semibold",
+
+  ctaSubtitle: "text-xs md:text-sm text-text-soft",
+
+  ctaButton: "w-full md:w-auto md:min-w-[320px] rounded-sm py-6",
 };

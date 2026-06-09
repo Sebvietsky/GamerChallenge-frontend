@@ -164,7 +164,6 @@ export async function createChallenge(payload: createChallengePayload) {
   // hints?: string,
   // closesAt?: string,
 
-  const formData = new FormData();
   // TODO ajouter l'envoie de fichier pour la vidéo
   const response = await fetchWithAuth(`${API_BASE_URL}/challenges`, {
     method: "POST",
