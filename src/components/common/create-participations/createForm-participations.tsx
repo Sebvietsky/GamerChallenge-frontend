@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import ChallengeSummaryCard from "@/components/common/create-participations/ChallengeSummaryCard";
 import { Challenge } from "@/features/types/challenge.type";
+import { useCreateParticipation } from "@/features/hooks/useCreateParticipations";
 
 type CreateParticipationFormProps = {
   challenge: Challenge;
@@ -17,6 +18,8 @@ type CreateParticipationFormProps = {
 export default function CreateParticipationForm({
   challenge,
 }: CreateParticipationFormProps) {
+  const { form, errors, onSubmit } = useCreateParticipation(challenge.slug);
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -39,60 +42,85 @@ export default function CreateParticipationForm({
         ========================================================= */}
 
         <Card className={styles.card}>
-          <div className={styles.section}>
-            {/* =====================================================
+          <form onSubmit={onSubmit}>
+            <div className={styles.section}>
+              {/* =====================================================
                 TITRE
             ===================================================== */}
 
-            <div className={styles.field}>
-              <label className={styles.label}>Titre</label>
+              <div className={styles.field}>
+                <label className={styles.label}>Titre</label>
 
-              <Input placeholder="Ex : Victoire sans utiliser d'objets" />
-            </div>
+                <Input
+                  placeholder="Ex : Victoire sans utiliser d'objets"
+                  {...form.register("title")}
+                />
+                {errors.title && (
+                  <p className="text-sm text-destructive">
+                    {errors.title.message}
+                  </p>
+                )}
+              </div>
 
-            {/* =====================================================
+              {/* =====================================================
                 DESCRIPTION
             ===================================================== */}
 
-            <div className={styles.field}>
-              <label className={styles.label}>Description</label>
+              <div className={styles.field}>
+                <label className={styles.label}>Description</label>
 
-              <Textarea
-                rows={8}
-                placeholder="Explique ta stratégie, les difficultés rencontrées et comment tu as réussi ce challenge."
-              />
-            </div>
+                <Textarea
+                  rows={8}
+                  placeholder="Explique ta stratégie, les difficultés rencontrées et comment tu as réussi ce challenge."
+                  {...form.register("description")}
+                />
+                {errors.description && (
+                  <p className="text-sm text-destructive">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
 
-            {/* =====================================================
+              {/* =====================================================
                 MÉDIA
             ===================================================== */}
 
-            <div className="space-y-4">
-              <label className={styles.label}>Média (optionnel)</label>
+              <div className="space-y-4">
+                <label className={styles.label}>Média (optionnel)</label>
 
-              <div className={styles.mediaBox}>
-                <div className={styles.mediaContent}>
-                  <p className={styles.mediaTitle}>
-                    Upload vidéo bientôt disponible
-                  </p>
+                <div className={styles.mediaBox}>
+                  <div className={styles.mediaContent}>
+                    <p className={styles.mediaTitle}>
+                      Upload vidéo bientôt disponible
+                    </p>
 
-                  <p className={styles.mediaDescription}>
-                    Pour le moment, ajoute simplement un lien YouTube ou Twitch.
-                  </p>
+                    <p className={styles.mediaDescription}>
+                      Pour le moment, ajoute simplement un lien YouTube ou
+                      Twitch.
+                    </p>
+                  </div>
                 </div>
+
+                <Input
+                  placeholder="https://youtube.com/watch?v=..."
+                  {...form.register("video")}
+                />
+                {errors.video && (
+                  <p className="text-sm text-destructive">
+                    {errors.video.message}
+                  </p>
+                )}
               </div>
 
-              <Input placeholder="https://youtube.com/watch?v=..." />
-            </div>
-
-            {/* =====================================================
+              {/* =====================================================
                 ACTIONS
             ===================================================== */}
 
-            <Button size="lg" className={styles.submitButton}>
-              Publier ma participation
-            </Button>
-          </div>
+              <Button size="lg" className={styles.submitButton} type="submit">
+                Publier ma participation
+              </Button>
+            </div>
+          </form>
         </Card>
       </div>
     </div>
