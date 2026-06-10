@@ -15,6 +15,12 @@ interface ChallengeProps {
 }
 
 export function ChallengeCard({ challenge, onClick }: ChallengeProps) {
+  const handleClick = () => {
+    sessionStorage.setItem(
+      "scroll-restore",
+      JSON.stringify({ from: window.location.pathname, y: window.scrollY }),
+    );
+  };
   const cardContent = (
     <div className={styles.cardContainer}>
       <Image
@@ -90,5 +96,9 @@ export function ChallengeCard({ challenge, onClick }: ChallengeProps) {
     );
   }
 
-  return <Link href={`/challenges/${challenge.slug}`}>{cardContent}</Link>;
+  return (
+    <Link href={`/challenges/${challenge.slug}`} onClick={handleClick}>
+      {cardContent}
+    </Link>
+  );
 }
