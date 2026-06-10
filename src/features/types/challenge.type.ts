@@ -1,3 +1,23 @@
+interface User {
+  username: string;
+  country: string;
+  profilePicture: string;
+  _count: {
+    participations: number;
+  };
+  challenges: {
+    _count: {
+      votes: number,
+      participations: number,
+    };
+  }[];
+  participations: {
+    _count: {
+      votes: number;
+    };
+  }[];
+};
+
 export interface Challenge {
   id: number;
   title: string;
@@ -31,11 +51,7 @@ export interface Challenge {
     colorCode: string;
   };
 
-  user: {
-    username: string;
-    country: string | null;
-    profilePicture: string | null;
-  };
+  user: User;
 
   _count: {
     participations: number;
@@ -60,23 +76,18 @@ export function isEasterEggChallenge(
 
 export interface Participation {
   id: number;
-  challenge: Challenge;
   video: string;
   title: string;
   slug: string;
-  description?: string;
+  description: string;
   status: string;
-  rejectedReason?: string;
   visibility: boolean;
-  createdAt: string;
-  user: {
-    country: string;
-    profilePicture: string;
-    username: string;
-  };
+  createdAt: Date;
+  user: User;
   _count: {
     votes: number;
   };
+  challenge: ChallengeItem
 }
 
 export interface queryParams {

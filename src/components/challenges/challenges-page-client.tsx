@@ -8,7 +8,7 @@ import { ChallengeList } from "@/components/home/challenge-list";
 import { PageLoader } from "../ui/page-loader";
 import type { ChallengeItem } from "@/features/types/challenge.type";
 import { isEasterEggChallenge } from "@/features/types/challenge.type";
-import { OrderBy } from "@/features/types/challenge.type";
+import { OrderBy, Sort } from "@/features/types/challenge.type";
 import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
 import { homeStyles } from "@/styles/global.styles";
 import { useChallenges } from "@/features/hooks/useChallenges";

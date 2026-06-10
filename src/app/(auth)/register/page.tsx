@@ -109,7 +109,7 @@ export default function RegisterPage() {
                   <SelectContent>
                     {countries.map((country) => (
                       // Code Country or Name Country
-                      <SelectItem key={country.code} value={country.code}>
+                      <SelectItem key={country.code} value={country.name}>
                         {country.name}
                       </SelectItem>
                     ))}

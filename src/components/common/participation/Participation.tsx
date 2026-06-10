@@ -4,14 +4,14 @@ import { useState } from "react";
 import { formatNumber } from "@/lib/utils";
 import { ParticipationCard } from "./ParticipationCard";
 import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
-import type { Challenge, Participation } from "@/features/types/challenge.type";
+import type { ChallengeItem, Participation } from "@/features/types/challenge.type";
 import { Button } from "@/components/ui/button";
 
 type SortType = "newest" | "popular";
 
 interface ParticipationProps {
   participations: Participation[] | null;
-  challenge: Challenge;
+  challenge: ChallengeItem;
 }
 
 export function Participation({

@@ -1,5 +1,5 @@
 export const createFormStyles = {
-  "cc-form": "w-full space-y-3 bg-surface border-border rounded-lg p-4",
+  "cc-form": "overflow-hidden flex flex-col lg:w-[60%] space-y-3 bg-surface border-border rounded-lg mt-8 p-4 self-center",
 
   "cc-label": "",
   "cc-label--title": "",
@@ -20,7 +20,7 @@ export const createFormStyles = {
   "cc-field-group": "",
   "cc-field-group--category": "",
 
-  "cc-textarea": "mb-0 w-full resize-none min-w-0 h-20",
+  "cc-textarea": "mb-0 w-full resize-none min-w-0 min-h-20 max-h-none",
   "cc-textarea--description": "",
   "cc-textarea--goals": "",
   "cc-textarea--hints": "",
@@ -50,6 +50,6 @@ export const createFormStyles = {
   "cc-error--category": "",
   "cc-error--hints": "",
 
-  "cc-button": "",
+  "cc-button": "w-full lg:w-fit self-center px-10 py-6 rounded-3xl",
   "cc-button--submit": "",
 };
