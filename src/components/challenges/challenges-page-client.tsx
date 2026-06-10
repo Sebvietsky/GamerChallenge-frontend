@@ -93,6 +93,19 @@ export function ChallengesPageClient() {
     loadChallenges();
   }, [debouncedSearch, easterEggChallenge, isEasterEggSearch, orderBy, sort]);
 
+  useEffect(() => {
+    if (loading) return;
+    const raw = sessionStorage.getItem("scroll-restore");
+    if (!raw) return;
+    try {
+      const { from, y } = JSON.parse(raw);
+      if (from === window.location.pathname) {
+        window.scrollTo(0, y);
+        sessionStorage.removeItem("scroll-restore");
+      }
+    } catch {}
+  }, [loading]);
+
   const handleChallengeClick = (challenge: ChallengeItem) => {
     if (isEasterEggChallenge(challenge)) {
       router.push("/easteregg.mp4");
