@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Participation } from "@/components/common/participation/Participation";
-import { formatNumber, getTextColor } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
 import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,6 +26,7 @@ import {
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
+import { useAuth } from "@/features/hooks/useAuth";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;

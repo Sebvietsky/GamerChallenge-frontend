@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { likeToggle } from "../api/challenge.api";
+import { toast } from "sonner";
 
 interface ToggleService {
   add: (slug: string) => Promise<void>;
@@ -12,6 +12,7 @@ interface UseToggleProps {
   initialCount: number;
   slug: string;
   service: ToggleService;
+  unauthMessage?: string;
 }
 
 export const useToggle = ({
@@ -19,6 +20,7 @@ export const useToggle = ({
   initialCount,
   slug,
   service,
+  unauthMessage,
 }: UseToggleProps) => {
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [likeCount, setLikeCount] = useState(initialCount);
@@ -46,5 +48,9 @@ export const useToggle = ({
     }
   };
 
-  return { isLiked, likeCount, toggleLike, isPending };
+  const toastMessage = () => {
+    toast.error(unauthMessage ?? "Connectez-vous pour effectuer cette action");
+  };
+
+  return { isLiked, likeCount, toggleLike, isPending, toastMessage };
 };
