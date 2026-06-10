@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
 
-
 const createChallengeSchema = z.object({
   title: z.string().min(3, "Minimum 3 caractères"),
   description: z.string().min(10, "Minimum 10 caractères").max(500),
@@ -14,9 +13,15 @@ const createChallengeSchema = z.object({
   demo: z.string().url("URL invalide").optional().or(z.literal("")),
   closesAt: z.date().optional(),
   status: z.string().min(1, "Choisir un statut").optional(),
-  igdbId: z.number({ required_error: "Choisir un jeu" }).min(1, "Choisir un jeu"),
-  challengeCategoryId: z.number({ required_error: "Choisir une catégorie" }).min(1, "Choisir une catégorie"),
-  difficultyId: z.number({ required_error: "Choisir une difficulté" }).min(1, "Choisir une difficulté"),
+  igdbId: z
+    .number({ required_error: "Choisir un jeu" })
+    .min(1, "Choisir un jeu"),
+  challengeCategoryId: z
+    .number({ required_error: "Choisir une catégorie" })
+    .min(1, "Choisir une catégorie"),
+  difficultyId: z
+    .number({ required_error: "Choisir une difficulté" })
+    .min(1, "Choisir une difficulté"),
 });
 
 type CreateChallengeFormValues = z.infer<typeof createChallengeSchema>;
@@ -26,17 +31,19 @@ export const useCreateChallenge = () => {
   const form = useForm<CreateChallengeFormValues>({
     resolver: zodResolver(createChallengeSchema),
     defaultValues: {
-    title: "",
-    igdbId: undefined,       
-    description: "",
-    goals: "",
-    difficultyId: undefined, 
-    challengeCategoryId: undefined,
-    hints: "",
-},
+      title: "",
+      igdbId: undefined,
+      description: "",
+      goals: "",
+      difficultyId: undefined,
+      challengeCategoryId: undefined,
+      hints: "",
+    },
   });
 
-  const { formState: { errors } } = form;
+  const {
+    formState: { errors },
+  } = form;
 
   const onSubmit = async (values: CreateChallengeFormValues) => {
     try {
@@ -46,10 +53,10 @@ export const useCreateChallenge = () => {
         goals: values.goals || undefined,
         hints: values.hints || undefined,
       });
-      toast.success("Challenge créer avec succés !")
-      router.push("/")
+      toast.success("Challenge créé avec succès !");
+      router.push("/");
     } catch (error) {
-      toast.error("Erreur lors de la création du challenge")
+      toast.error("Erreur lors de la création du challenge");
       console.error(error);
     }
   };

@@ -52,7 +52,6 @@ export function Participation({
             key={p.id ?? p.title}
             data={p}
             challenge={challenge}
-            className={styles.participationCard}
           />
         ))}
         {/* <ParticipationCard className={styles.participationCard}/>

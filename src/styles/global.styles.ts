@@ -26,6 +26,13 @@ export const homeStyles = {
 
   cardsGrid: "w-full",
 
+  // Bouton de tri
+
+  challengesOrderByButtonContainer:
+    "flex flex-row justify-center lg:justify-start lg:gap-14 md:gap-8 gap-6",
+  challengesOrderByButtonActive:
+    "bg-purple-400 text-secondary-foreground border-purple-200 shadow-lg shadow-purple-200",
+
   // Carte challenge
   // BG de la card plus claire
   cardContainer:
