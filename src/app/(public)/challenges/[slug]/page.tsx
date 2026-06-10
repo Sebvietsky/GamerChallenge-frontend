@@ -26,6 +26,7 @@ import {
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
+import { useAuth } from "@/features/hooks/useAuth";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
