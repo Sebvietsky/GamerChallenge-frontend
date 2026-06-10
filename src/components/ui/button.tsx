@@ -24,7 +24,7 @@ const buttonVariants = cva(
         iconButton:
           "bg-primary text-primary-foreground hover:brightness-120 w-8 h-8 rounded-full",
         iconButtonToggle:
-          "border-border bg-background text-foreground hover:brightness-120 w-8 h-8 rounded-full",
+          "border-border bg-background/90 dark:bg-surface/90 text-foreground hover:bg-surface/50 dark:hover:brightness-125 w-8 h-8 rounded-full",
       },
       size: {
         default:

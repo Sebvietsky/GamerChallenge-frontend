@@ -253,6 +253,10 @@ export function CreateChallenge() {
         </p>
       )}
 
+      <label htmlFor="">
+        
+      </label>
+
       {/* <p>⚠️ À Faire ⚠️ Démonstration - label demo</p> */}
       <Button
         type="submit"
