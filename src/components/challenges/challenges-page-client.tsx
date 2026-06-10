@@ -9,6 +9,7 @@ import { useDebounce } from "@/features/hooks/useDebounce";
 import { useSearch } from "@/features/hooks/useSearch";
 
 import type { Challenge } from "@/features/types/challenge.type";
+import { PageLoader } from "../ui/page-loader";
 
 export function ChallengesPageClient() {
   const { search } = useSearch();
@@ -52,7 +53,7 @@ export function ChallengesPageClient() {
   }, [loading]);
 
   if (loading) {
-    return <p>Chargement...</p>;
+    return <PageLoader />;
   }
 
   return <ChallengeList challenges={challenges} />;
