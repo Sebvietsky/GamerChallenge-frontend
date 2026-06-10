@@ -26,7 +26,6 @@ import {
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
-import { number } from "zod/v4-mini";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -37,7 +36,7 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
-  console.log(data)
+
   const likedChallenges = await getUserLikedOnChallenge();
   const favoritedChallenges = await getUserFavoritedOnChallenge();
   const participations = await getParticipationsByChallenge(slug);
@@ -126,14 +125,19 @@ export default async function ChallengeDetailPage({
               className={styles.iframe}
               src={parseYoutubeUrl(data.demo)}
               title={data.game.name}
-              style={{border: 0}}
+              style={{ border: 0 }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             ></iframe>
-
           ) : (
-            <Image src={"/images/image-not-found.png"} className={styles.iframe} alt="Video non trouver" width={1000} height={1000}/>
+            <Image
+              src={"/images/image-not-found.png"}
+              className={styles.iframe}
+              alt="Video non trouver"
+              width={1000}
+              height={1000}
+            />
           )}
         </div>
         <div className={styles.hintsContainer}>
@@ -176,20 +180,15 @@ export default async function ChallengeDetailPage({
               </p>
               <p className={styles.creatorStat}>
                 <Users className={styles.creatorStatIcon} />
-                {formatNumber(numberOfParticipants)} 
-                {" "}
-                {numberOfParticipants > 1
-                  ? "participants"
-                  : "participant"}
+                {formatNumber(numberOfParticipants)}{" "}
+                {numberOfParticipants > 1 ? "participants" : "participant"}
               </p>
-              <p className={styles.creatorStat} >
-                <Heart className={styles.creatorStatIcon}/>
-                {formatNumber(numberOfVotes)}
-                {" "}
+              <p className={styles.creatorStat}>
+                <Heart className={styles.creatorStatIcon} />
+                {formatNumber(numberOfVotes)}{" "}
                 {numberOfVotes > 1
                   ? "votes sur les challenges"
-                  : "vote sur les challenges"
-                }
+                  : "vote sur les challenges"}
               </p>
             </div>
           </div>
