@@ -15,7 +15,7 @@ import type {
   EasterEggChallenge,
 } from "@/features/types/challenge.type";
 import { isEasterEggChallenge } from "@/features/types/challenge.type";
-import { OrderBy, Sort, type Challenge } from "@/features/types/challenge.type";
+import { OrderBy, Sort } from "@/features/types/challenge.type";
 import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
 import { homeStyles } from "@/styles/global.styles";
 
