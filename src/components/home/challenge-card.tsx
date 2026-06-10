@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getTextColor, formatNumber } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
 import { Users, Heart, ChevronRight } from "lucide-react";
 import { homeStyles as styles } from "@/styles/global.styles";
 import { Button } from "../ui/button";
 
-import { Challenge } from "@/features/types/challenge.type";
 import { TagContainer } from "../common/tagContainer/TagContainer";
 import type { ChallengeItem } from "@/features/types/challenge.type";
 

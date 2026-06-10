@@ -3,12 +3,9 @@
 import { useEffect, useState } from "react";
 
 import { getHomeChallenges } from "../api/challenge.api";
-import type { Challenge, queryParams } from "../types/challenge.type";
+import { OrderBy, type Challenge, type queryParams } from "../types/challenge.type";
 
-export type HomeChallengeOrderBy = Extract<
-  NonNullable<queryParams["orderBy"]>,
-  "votes" | "createdAt" | "participations"
->;
+export type HomeChallengeOrderBy = "votes" | "createdAt" | "participations";
 
 const HOME_CHALLENGE_ORDER_BY_VALUES: HomeChallengeOrderBy[] = [
   "votes",
@@ -16,22 +13,20 @@ const HOME_CHALLENGE_ORDER_BY_VALUES: HomeChallengeOrderBy[] = [
   "participations",
 ];
 
-function isHomeChallengeOrderBy(
-  orderBy: queryParams["orderBy"],
-): orderBy is HomeChallengeOrderBy {
+function isHomeChallengeOrderBy(orderBy: unknown): orderBy is HomeChallengeOrderBy {
   return HOME_CHALLENGE_ORDER_BY_VALUES.includes(
     orderBy as HomeChallengeOrderBy,
   );
 }
 
 export function useHome({
-  orderBy = "votes",
+  orderBy = OrderBy.votes,
   since,
   limit = 3,
 }: queryParams = {}) {
   const initialOrderBy = isHomeChallengeOrderBy(orderBy) ? orderBy : "votes";
 
-  const [filter, setFilter] = useState<HomeChallengeOrderBy>(initialOrderBy);
+  const [filter, setFilter] = useState<OrderBy>(initialOrderBy as OrderBy);
 
   const [challenges, setChallenges] = useState<Challenge[]>([]);
 
@@ -55,13 +50,13 @@ export function useHome({
       }
     }
     loadChallenges();
-  }, [orderBy, filter, limit, since]);
+  }, [filter, limit, since]);
 
   return {
     challenges,
     filter,
     setFilter,
     isLoading,
-    orderBy,
+    orderBy: filter as OrderBy,
   };
 }

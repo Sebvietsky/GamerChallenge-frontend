@@ -92,18 +92,18 @@ export default async function ChallengeDetailPage({
             <p className={styles.description}>{data.description}</p>
             <p className={styles.description}>{data.goals}</p>
           </div>
-        </div>
-        <div className={styles.buttonContainer}>
-          <LikeButton
-            slug={slug}
-            initialLiked={isLiked}
-            initialCount={data._count.votes}
-          />
-          <FavoriteButton
-            slug={slug}
-            initialLiked={isFavorite}
-            initialCount={data._count.favoritedBy}
-          />
+          <div className={styles.buttonContainer}>
+            <LikeButton
+              slug={slug}
+              initialLiked={isLiked}
+              initialCount={data._count.votes}
+            />
+            <FavoriteButton
+              slug={slug}
+              initialLiked={isFavorite}
+              initialCount={data._count.favoritedBy}
+            />
+          </div>
         </div>
         {/* SECTION Vidéo, Créé par and Indice */}
       </section>

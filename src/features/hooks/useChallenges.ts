@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 
 import { getChallenges } from "@/features/api/challenge.api";
-import type { Challenge, queryParams } from "@/features/types/challenge.type";
+import { OrderBy, type Challenge, type queryParams } from "@/features/types/challenge.type";
 
-export function useChallenges({page = 1, limit = 20, orderBy = "votes", sort = "desc", since = undefined}: queryParams) {
+export function useChallenges({page = 1, limit = 20, orderBy = OrderBy.votes, sort = "desc", since = undefined}: queryParams) {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
 

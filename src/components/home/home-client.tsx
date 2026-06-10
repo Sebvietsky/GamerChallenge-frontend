@@ -74,7 +74,10 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
               <div className={styles.sortContainer}>
                 <span className={styles.sortLabel}>Trier par</span>
 
-                <SelectFilter value={filter} onChange={setFilter} />
+                <SelectFilter
+                  value={filter as unknown as any}
+                  onChange={(v: any) => setFilter(v as any)}
+                />
               </div>
             </div>
 
