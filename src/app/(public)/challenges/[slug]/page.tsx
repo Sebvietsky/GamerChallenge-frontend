@@ -26,7 +26,6 @@ import {
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
-import { number } from "zod/v4-mini";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -88,6 +87,7 @@ export default async function ChallengeDetailPage({
               <p className={styles.dataStat}>
                 <Users className={styles.icon} />
                 {formatNumber(data._count.participations)}
+                {" "}
                 {data._count.participations > 1
                   ? "participants"
                   : "participant"}
@@ -95,7 +95,8 @@ export default async function ChallengeDetailPage({
               <p className={styles.dataStat}>
                 <Heart className={styles.icon} />
                 {formatNumber(data._count.votes)}
-                {data._count.votes > 1 ? " votes" : " vote"}
+                {" "}
+                {data._count.votes > 1 ? "votes" : "vote"}
               </p>
             </div>
             <p className={styles.description}>{data.description}</p>

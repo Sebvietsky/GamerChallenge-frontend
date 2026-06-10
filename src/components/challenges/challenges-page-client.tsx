@@ -60,13 +60,19 @@ export function ChallengesPageClient() {
       },
       user: {
         username: "Système",
-        country: null,
-        profilePicture: null,
+        country: "Easter Egg",
+        profilePicture: "/images/avatarEG.png",
+        _count: {
+          challenges: 0,
+          participations: 0,
+        },
+        challenges: [],
+        participations: [],
       },
       _count: {
-        participations: 0,
+        participations: 999,
         favoritedBy: 0,
-        votes: 0,
+        votes: 999,
       },
       isEasterEgg: true,
     }),
