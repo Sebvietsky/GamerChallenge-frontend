@@ -14,6 +14,9 @@ import type {
   EasterEggChallenge,
 } from "@/features/types/challenge.type";
 import { isEasterEggChallenge } from "@/features/types/challenge.type";
+import { OrderBy, Sort, type Challenge } from "@/features/types/challenge.type";
+import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
+import { homeStyles } from "@/styles/global.styles";
 
 export function ChallengesPageClient() {
   const router = useRouter();
@@ -78,8 +81,8 @@ export function ChallengesPageClient() {
       const data = await getChallenges({
         page: 1,
         limit: 50,
-        orderBy: "createdAt",
-        sort: "asc",
+        orderBy,
+        sort,
         search: debouncedSearch,
       });
 
