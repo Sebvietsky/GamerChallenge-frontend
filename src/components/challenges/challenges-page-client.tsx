@@ -15,9 +15,17 @@ import type {
   EasterEggChallenge,
 } from "@/features/types/challenge.type";
 import { isEasterEggChallenge } from "@/features/types/challenge.type";
-import { OrderBy, Sort, type Challenge } from "@/features/types/challenge.type";
+import {
+  OrderBy,
+  Sort,
+  CategoryName,
+  DifficultyName,
+} from "@/features/types/challenge.type";
 import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
 import { homeStyles } from "@/styles/global.styles";
+import { ChallengesFilterButton } from "./challenges-filter-button";
+
+// Système de difficulté / catégorie à refacto après routes GET mises en place côté Back => créer une checkBox pour chaque difficulté / catégorie fetch
 
 export function ChallengesPageClient() {
   const router = useRouter();
@@ -27,6 +35,14 @@ export function ChallengesPageClient() {
   const [loading, setLoading] = useState(true);
   const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.createdAt);
   const [sort, setSort] = useState<Sort>(Sort.asc);
+
+  const [selectedDifficulties, setSelectedDifficulties] = useState<
+    DifficultyName[]
+  >([]);
+  const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(
+    [],
+  );
+
   const isEasterEggSearch =
     debouncedSearch.trim().toLowerCase() === "easter egg";
   const easterEggChallenge = useMemo<EasterEggChallenge>(
@@ -56,6 +72,7 @@ export function ChallengesPageClient() {
       difficulty: {
         id: -1,
         name: "Système",
+        indexDifficulty: -1,
         colorCode: "#ef4444",
       },
       user: {
@@ -82,6 +99,8 @@ export function ChallengesPageClient() {
         limit: 50,
         orderBy,
         sort,
+        categories: selectedCategories,
+        difficulties: selectedDifficulties,
         search: debouncedSearch,
       });
 
@@ -90,7 +109,15 @@ export function ChallengesPageClient() {
     }
 
     loadChallenges();
-  }, [debouncedSearch, easterEggChallenge, isEasterEggSearch, orderBy, sort]);
+  }, [
+    debouncedSearch,
+    easterEggChallenge,
+    isEasterEggSearch,
+    orderBy,
+    sort,
+    selectedCategories,
+    selectedDifficulties,
+  ]);
 
   useEffect(() => {
     if (loading) return;
@@ -146,6 +173,13 @@ export function ChallengesPageClient() {
           currentOrderBy={orderBy}
         />
       </div>
+
+      <ChallengesFilterButton
+        selectedCategories={selectedCategories}
+        selectedDifficulties={selectedDifficulties}
+        setSelectedCategories={setSelectedCategories}
+        setSelectedDifficulties={setSelectedDifficulties}
+      />
 
       <ChallengeList
         challenges={challenges}

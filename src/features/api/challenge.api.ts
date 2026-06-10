@@ -61,6 +61,8 @@ export async function getChallenges({
   orderBy = OrderBy.votes,
   sort = "desc",
   since = undefined,
+  categories = [],
+  difficulties = [],
   search = "",
 }: queryParams): Promise<Challenge[]> {
   const params = new URLSearchParams({
@@ -77,7 +79,16 @@ export async function getChallenges({
     params.set("search", search);
   }
 
-  if (since) params.set("since", since);
+  if (categories.length) {
+    categories.forEach((category) => {
+      params.append("categories", category);
+    });
+  }
+  if (difficulties.length) {
+    difficulties.forEach((difficulty) => {
+      params.append("difficulties", difficulty);
+    });
+  }
 
   const response = await fetch(`${API_BASE_URL}/challenges?${params}`, {
     credentials: "include",
