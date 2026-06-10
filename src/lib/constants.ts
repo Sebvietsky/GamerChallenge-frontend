@@ -35,8 +35,22 @@ export const EASTER_EGG = {
   },
   user: {
     username: "Système",
-    country: null,
-    profilePicture: null,
+    country: "",
+    profilePicture: "",
+    participations: [{
+      _count: {
+        votes: 0,
+      }
+    }],
+    challenges: [{
+      _count: {
+        votes: 0,
+        participations: 0,
+      }
+    }],
+    _count: {
+      participations: 0,
+    },
   },
   _count: {
     participations: 0,
