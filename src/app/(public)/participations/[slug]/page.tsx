@@ -1,4 +1,3 @@
-
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { User, Trophy, Heart, Video } from "lucide-react";
@@ -8,7 +7,7 @@ import Image from "next/image";
 import { getParticipationsBySlug } from "@/features/api/participation.api";
 import { parseYoutubeUrl } from "@/lib/utils";
 import ButtonLike from "./ButtonLike";
-import { getInformationDashboard } from "@/features/api/user.api";
+import { getInformationDashboard } from "@/features/api/dashboard.api";
 
 interface ParticipationDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -43,11 +42,11 @@ export default async function ParticipationPage({
               {data.challenge.game.name} - {data.challenge.title}
             </h1>
             {data.description && (
-            <p className="text-sm mt-2">{data.description}</p>
-          )}
+              <p className="text-sm mt-2">{data.description}</p>
+            )}
           </div>
         </div>
-            <ButtonLike initialVotes={data._count.votes}/>
+        <ButtonLike initialVotes={data._count.votes} />
       </section>
 
       {/* SECTION bas — vidéo gauche + carte auteur droite */}
@@ -87,11 +86,17 @@ export default async function ParticipationPage({
           <div className="flex flex-col gap-2 text-sm text-muted-foreground">
             <p className="flex items-center gap-2">
               <Heart className="w-4 h-4" />
-              {userInfo.totalChallengeUserVoted} {userInfo.totalChallengeUserVoted > 1 ? "Votes sur les challenge" : "Vote sur les challenges"}
+              {userInfo.totalChallengeUserVoted}{" "}
+              {userInfo.totalChallengeUserVoted > 1
+                ? "Votes sur les challenge"
+                : "Vote sur les challenges"}
             </p>
             <p className="flex items-center gap-2">
               <Trophy className="w-4 h-4" />
-              {userInfo.totalChallengeCreated} {userInfo.totalChallengeCreated > 1 ? "Challenges créés" : "Challenge crée"}
+              {userInfo.totalChallengeCreated}
+              {userInfo.totalChallengeCreated > 1
+                ? "Challenges créés"
+                : "Challenge crée"}
             </p>
           </div>
         </div>

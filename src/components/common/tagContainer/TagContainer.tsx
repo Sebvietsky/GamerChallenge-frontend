@@ -1,12 +1,12 @@
 import { tagStyles as styles } from "./tag-container.styles";
 import { getTextColor } from "@/lib/utils";
-import type { Challenge } from "@/features/types/challenge.type";
+import { ChallengeItem } from "@/features/types/challenge.type";
 
 interface TagProps {
-  data: Challenge;
+  data: ChallengeItem;
 }
 
-export function TagContainer({data}: TagProps) {
+export function TagContainer({ data }: TagProps) {
   return (
     <div className={styles.tagContainer}>
       <p
