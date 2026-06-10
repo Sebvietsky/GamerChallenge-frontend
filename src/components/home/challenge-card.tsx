@@ -7,6 +7,8 @@ import { Users, Heart, ChevronRight } from "lucide-react";
 import { homeStyles as styles } from "@/styles/global.styles";
 import { Button } from "../ui/button";
 
+import { Challenge } from "@/features/types/challenge.type";
+import { TagContainer } from "../common/tagContainer/TagContainer";
 import type { ChallengeItem } from "@/features/types/challenge.type";
 
 interface ChallengeProps {
@@ -34,28 +36,7 @@ export function ChallengeCard({ challenge, onClick }: ChallengeProps) {
       <div className={styles.container}>
         <div className={styles.detailContainer}>
           <div id="tag" className={styles.titleCard}>
-            <p
-              className={styles.tag}
-              style={{
-                backgroundColor: challenge.difficulty.colorCode,
-                color: getTextColor(challenge.difficulty.colorCode),
-                borderColor: getTextColor(challenge.difficulty.colorCode),
-              }}
-            >
-              {challenge.difficulty.name}
-            </p>
-            <p
-              className={styles.tag}
-              style={{
-                backgroundColor: challenge.challengeCategory.colorCode,
-                color: getTextColor(challenge.challengeCategory.colorCode),
-                borderColor: getTextColor(
-                  challenge.challengeCategory.colorCode,
-                ),
-              }}
-            >
-              {challenge.challengeCategory.name}
-            </p>
+            <TagContainer data={challenge}/>
           </div>
           <h3 className={styles.gameTitle}>{challenge.game.name}</h3>
           <h4 className={styles.challengeTitle}>{challenge.title}</h4>
