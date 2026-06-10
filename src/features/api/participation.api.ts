@@ -36,3 +36,22 @@ export async function createParticipation(
 
   return response.json();
 }
+
+export async function voteParticipation(slug: string): Promise<void> {
+  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}/vote`, {
+    method: "POST",
+  })
+
+  if (response.status === 409) throw new Error("ALREADY_VOTED")
+  if (response.status === 401) throw new Error("UNAUTHORIZED")
+  if (!response.ok) throw new Error("Impossible de voter")
+}
+
+export async function unvoteParticipation(slug: string): Promise<void> {
+  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}/vote`, {
+    method: "DELETE",
+  })
+
+  if (response.status === 401) throw new Error("UNAUTHORIZED")
+  if (!response.ok) throw new Error("Impossible de retirer le vote")
+}
