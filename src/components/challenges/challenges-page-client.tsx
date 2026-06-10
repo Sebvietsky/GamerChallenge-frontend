@@ -21,15 +21,13 @@ import { homeStyles } from "@/styles/global.styles";
 export function ChallengesPageClient() {
   const router = useRouter();
   const { search } = useSearch();
-
   const debouncedSearch = useDebounce(search, 300);
-
   const [challenges, setChallenges] = useState<ChallengeItem[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.createdAt);
+  const [sort, setSort] = useState<Sort>(Sort.asc);
   const isEasterEggSearch =
     debouncedSearch.trim().toLowerCase() === "easter egg";
-
   const easterEggChallenge = useMemo<EasterEggChallenge>(
     () => ({
       id: "easter_egg",
@@ -91,7 +89,7 @@ export function ChallengesPageClient() {
     }
 
     loadChallenges();
-  }, [debouncedSearch, easterEggChallenge, isEasterEggSearch]);
+  }, [debouncedSearch, easterEggChallenge, isEasterEggSearch, orderBy, sort]);
 
   const handleChallengeClick = (challenge: ChallengeItem) => {
     if (isEasterEggChallenge(challenge)) {
@@ -107,9 +105,38 @@ export function ChallengesPageClient() {
   }
 
   return (
-    <ChallengeList
-      challenges={challenges}
-      onChallengeClick={handleChallengeClick}
-    />
+    <>
+      <div className={homeStyles.challengesOrderByButtonContainer}>
+        <ChallengesOrderByButton
+          selfOrderBy={OrderBy.createdAt}
+          setOrderBy={setOrderBy}
+          sort={sort}
+          setSort={setSort}
+          displayedText="Récents"
+          currentOrderBy={orderBy}
+        />
+        <ChallengesOrderByButton
+          selfOrderBy={OrderBy.votes}
+          setOrderBy={setOrderBy}
+          sort={sort}
+          setSort={setSort}
+          displayedText="Populaires"
+          currentOrderBy={orderBy}
+        />
+        <ChallengesOrderByButton
+          selfOrderBy={OrderBy.difficulty}
+          setOrderBy={setOrderBy}
+          sort={sort}
+          setSort={setSort}
+          displayedText="Difficulté"
+          currentOrderBy={orderBy}
+        />
+      </div>
+
+      <ChallengeList
+        challenges={challenges}
+        onChallengeClick={handleChallengeClick}
+      />
+    </>
   );
 }
