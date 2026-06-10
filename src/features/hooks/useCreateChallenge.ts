@@ -38,6 +38,7 @@ export const useCreateChallenge = () => {
       difficultyId: undefined,
       challengeCategoryId: undefined,
       hints: "",
+      demo: "",
     },
   });
 

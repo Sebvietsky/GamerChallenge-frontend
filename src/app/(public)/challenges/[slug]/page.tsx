@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Participation } from "@/components/common/participation/Participation";
-import { formatNumber } from "@/lib/utils";
+import { formatNumber, parseYoutubeUrl } from "@/lib/utils";
 import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,7 +26,7 @@ import {
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
-import { useAuth } from "@/features/hooks/useAuth";
+import { number } from "zod/v4-mini";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -37,9 +37,18 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
+  console.log(data)
   const likedChallenges = await getUserLikedOnChallenge();
   const favoritedChallenges = await getUserFavoritedOnChallenge();
   const participations = await getParticipationsByChallenge(slug);
+
+  const numberOfParticipants = data
+    ? data.user.challenges.reduce((acc, p) => acc + p._count.participations, 0)
+    : 0;
+
+  const numberOfVotes = data
+    ? data.user.challenges.reduce((acc, v) => acc + v._count.votes, 0)
+    : 0;
 
   // Vérifie si le slug de la page courante figure dans la liste des challenges
   // likés par l'utilisateur. Retourne false si non connecté (likedChallenges = []).
@@ -112,15 +121,20 @@ export default async function ChallengeDetailPage({
           <h2 className={styles.videoTitle}>
             <Video /> Démonstration
           </h2>
-          <iframe
-            className={styles.iframe}
-            src="https://www.youtube.com/embed/Djtsw5k_DNc"
-            title="ELDEN RING NIGHTREIGN – REVEAL GAMEPLAY TRAILER"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+          {data.demo ? (
+            <iframe
+              className={styles.iframe}
+              src={parseYoutubeUrl(data.demo)}
+              title={data.game.name}
+              style={{border: 0}}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+
+          ) : (
+            <Image src={"/images/image-not-found.png"} className={styles.iframe} alt="Video non trouver" width={1000} height={1000}/>
+          )}
         </div>
         <div className={styles.hintsContainer}>
           <Accordion type="single" collapsible>
@@ -151,21 +165,31 @@ export default async function ChallengeDetailPage({
               <p className={styles.creatorName}>{data.user.username}</p>
               <p className={styles.creatorRole}>
                 Créateur de{" "}
-                {data._count.participations > 1 ? "challenges" : "challenge"}
+                {data.user.challenges.length > 1 ? "challenges" : "challenge"}
               </p>
               <p className={styles.creatorStat}>
                 <Trophy className={styles.creatorStatIcon} />
-                {formatNumber(data._count.favoritedBy)}{" "}
-                {data._count.favoritedBy > 1
+                {formatNumber(data.user.challenges.length)}{" "}
+                {data.user.challenges.length > 1
                   ? "challenges créés"
                   : "challenge créé"}{" "}
               </p>
               <p className={styles.creatorStat}>
                 <Users className={styles.creatorStatIcon} />
-                {formatNumber(data._count.participations)}
-                {data._count.participations > 1
+                {formatNumber(numberOfParticipants)} 
+                {" "}
+                {numberOfParticipants > 1
                   ? "participants"
-                  : "participant"}{" "}
+                  : "participant"}
+              </p>
+              <p className={styles.creatorStat} >
+                <Heart className={styles.creatorStatIcon}/>
+                {formatNumber(numberOfVotes)}
+                {" "}
+                {numberOfVotes > 1
+                  ? "votes sur les challenges"
+                  : "vote sur les challenges"
+                }
               </p>
             </div>
           </div>

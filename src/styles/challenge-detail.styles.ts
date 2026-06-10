@@ -47,14 +47,14 @@ export const challengeDetail = {
   sectionGrid:
     "flex flex-col gap-4 lg:grid lg:grid-cols-[1fr_400px] lg:grid-rows-[auto_1fr]",
 
-  videoContainer: "border rounded-lg bg-surface p-4",
+  videoContainer: "border rounded-lg bg-surface p-4 lg:",
 
   videoTitle: "flex items-center mb-2",
 
   iframe: "w-full aspect-video rounded-sm object-cover",
 
   hintsContainer:
-    "flex flex-col gap-2 md:flex-row md:items-center md:justify-between border rounded-lg bg-surface px-4 py-3",
+    "flex flex-col gap-2 lg:col-span-2 md:flex-row md:items-center md:justify-between border rounded-lg bg-surface px-4 py-3",
 
   hintsTitle: "flex items-center",
 
@@ -63,7 +63,7 @@ export const challengeDetail = {
   // Informations du créateur du challenge
   // =========================================================
 
-  creatorContainer: "border rounded-lg bg-surface p-4",
+  creatorContainer: "border rounded-lg bg-surface p-4 lg:col-start-2 lg:row-start-1 lg:h-fit",
 
   creatorTitle: "mb-4 text-lg md:text-xl font-semibold",
 
@@ -93,12 +93,12 @@ export const challengeDetail = {
 
   participationTitle: "font-semibold text-sm md:text-base",
 
-  filterContainer: "flex flex-wrap gap-1 items-center",
+  filterContainer: "flex flex-wrap gap-1 items-center mr-8",
 
   participationList: "flex flex-col items-center w-full",
 
   participationCard:
-    "relative flex items-center justify-between w-full px-2 py-2 after:absolute after:-bottom-1 after:left-1/2 after:h-px after:w-[95%] after:-translate-x-1/2 after:bg-border",
+    "relative lg:w-[95%] flex items-center justify-between w-full px-2 py-2 after:absolute after:-bottom-1 after:left-1/2 after:h-px after:w-[95%] lg:after:w-full after:-translate-x-1/2 after:bg-border",
 
   // =========================================================
   // CALL TO ACTION
