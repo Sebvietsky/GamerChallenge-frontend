@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Participation } from "@/components/common/participation/Participation";
-import { formatNumber, getTextColor } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
 import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -76,16 +76,16 @@ export default async function ChallengeDetailPage({
             </h1>
             <div className={styles.dataContainer}>
               <p className={styles.dataStat}>
-                <Users className={styles.icon} />{" "}
-                {formatNumber(data._count.participations)}{" "}
+                <Users className={styles.icon} />
+                {formatNumber(data._count.participations)}
                 {data._count.participations > 1
                   ? "participants"
                   : "participant"}
               </p>
               <p className={styles.dataStat}>
-                <Heart className={styles.icon} />{" "}
-                {formatNumber(data._count.votes)}{" "}
-                {data._count.votes > 1 ? " votes" : " vote"}{" "}
+                <Heart className={styles.icon} />
+                {formatNumber(data._count.votes)}
+                {data._count.votes > 1 ? " votes" : " vote"}
               </p>
             </div>
             <p className={styles.description}>{data.description}</p>
@@ -161,7 +161,7 @@ export default async function ChallengeDetailPage({
               </p>
               <p className={styles.creatorStat}>
                 <Users className={styles.creatorStatIcon} />
-                {formatNumber(data._count.participations)}{" "}
+                {formatNumber(data._count.participations)}
                 {data._count.participations > 1
                   ? "participants"
                   : "participant"}{" "}
@@ -180,7 +180,7 @@ export default async function ChallengeDetailPage({
           </p>
         </div>
         <div className="w-full lg:w-[80%]">
-          <Link href={`/participations/${slug}`}>
+          <Link href={`/participate/${slug}`}>
             <Button className={styles.ctaButton}>
               Participer au challenge
             </Button>

@@ -16,7 +16,6 @@ export default async function ParticipationPage({
 }: ParticipationDetailPageProps) {
   const { slug } = await params;
   const data = await getParticipationsBySlug(slug);
-  console.log("Participations", data);
 
   if (!data) return null;
 
@@ -46,10 +45,10 @@ export default async function ParticipationPage({
       <section className="flex flex-col lg:flex-row gap-6">
         {/* Colonne principale : vidéo */}
         <div className="flex-1 bg-surface rounded-lg p-4 space-y-2">
-            <div className="flex items-center gap-2">
-              <Video size={20} className="shrink-0" />
-              <p className="">{data.title}</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <Video size={20} className="shrink-0" />
+            <p className="">{data.title}</p>
+          </div>
           <iframe
             src={parseYoutubeUrl(data.video)}
             title={data.title}
