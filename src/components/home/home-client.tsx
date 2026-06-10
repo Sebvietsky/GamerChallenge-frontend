@@ -11,6 +11,7 @@ import { homeStyles as styles } from "@/components/home/home.styles";
 // HOOKS
 import { useHome } from "@/features/hooks/useHome";
 import type { queryParams } from "@/features/types/challenge.type";
+import { PageLoader } from "../ui/page-loader";
 
 interface HomeClientProps {
   queryParams: queryParams;
@@ -78,7 +79,7 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
             </div>
 
             {isLoading ? (
-              <p>Chargement...</p>
+              <PageLoader />
             ) : (
               <ChallengeList challenges={challenges} />
             )}

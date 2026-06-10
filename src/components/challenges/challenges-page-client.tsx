@@ -9,6 +9,8 @@ import { getChallenges } from "@/features/api/challenge.api";
 import { useDebounce } from "@/features/hooks/useDebounce";
 import { useSearch } from "@/features/hooks/useSearch";
 
+import type { Challenge } from "@/features/types/challenge.type";
+import { PageLoader } from "../ui/page-loader";
 import type {
   ChallengeItem,
   EasterEggChallenge,
@@ -101,7 +103,7 @@ export function ChallengesPageClient() {
   };
 
   if (loading) {
-    return <p>Chargement...</p>;
+    return <PageLoader />;
   }
 
   return (

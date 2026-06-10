@@ -7,6 +7,7 @@ import { loginStyles as styles } from "@/styles/login.styles";
 import { commonStyles as common } from "@/styles/common-auth.styles";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 
 export default function LoginPage() {
   const { handleSubmit, error, loading } = useLogin();
@@ -59,7 +60,11 @@ export default function LoginPage() {
           className={common.submitButton}
           disabled={loading}
         >
-          {loading ? "Connexion..." : "Se connecter"}
+          {loading ? (
+            <Loader variant="classic-spinner" size="sm" />
+          ) : (
+            "Se connecter"
+          )}
         </Button>
       </form>
       {/* Footer Login */}
