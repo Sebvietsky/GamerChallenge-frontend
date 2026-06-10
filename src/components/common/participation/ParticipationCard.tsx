@@ -5,11 +5,11 @@ import { formatNumber } from "@/lib/utils";
 import { challengeDetail as heriteStyles } from "@/styles/challenge-detail.styles";
 import { participationCardStyles as styles } from "./ParticipationCard-styles";
 import { Heart } from "lucide-react";
-import { Challenge, Participation } from "@/features/types/challenge.type";
+import { ChallengeItem, Participation } from "@/features/types/challenge.type";
 
 interface ParticipationCardProps {
   data: Participation;
-  challenge: Challenge;
+  challenge: ChallengeItem;
 }
 
 export function ParticipationCard({

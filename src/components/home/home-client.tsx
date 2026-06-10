@@ -9,8 +9,8 @@ import { SelectFilter } from "@/components/home/selectFilter";
 import { homeStyles as styles } from "@/components/home/home.styles";
 
 // HOOKS
-import { useHome } from "@/features/hooks/useHome";
-import type { queryParams } from "@/features/types/challenge.type";
+import { HomeChallengeOrderBy, useHome } from "@/features/hooks/useHome";
+import type { OrderBy, queryParams } from "@/features/types/challenge.type";
 import { PageLoader } from "../ui/page-loader";
 
 interface HomeClientProps {
@@ -74,7 +74,14 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
               <div className={styles.sortContainer}>
                 <span className={styles.sortLabel}>Trier par</span>
 
-                <SelectFilter value={filter} onChange={setFilter} />
+                <SelectFilter
+                  value={filter as HomeChallengeOrderBy} // as unknown as any
+                  onChange={
+                    (
+                      v: HomeChallengeOrderBy, // any
+                    ) => setFilter(v as OrderBy) // as any
+                  }
+                />
               </div>
             </div>
 

@@ -1,13 +1,14 @@
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { User, Trophy, Heart, Video } from "lucide-react";
+import type { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
 
 import Image from "next/image";
 
 import { getParticipationsBySlug } from "@/features/api/participation.api";
+import { isLikedParticipation } from "@/features/api/participations.api.server"
 import { parseYoutubeUrl } from "@/lib/utils";
 import ButtonLike from "./ButtonLike";
-import { getInformationDashboard } from "@/features/api/dashboard.api";
 
 interface ParticipationDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -17,8 +18,11 @@ export default async function ParticipationPage({
   params,
 }: ParticipationDetailPageProps) {
   const { slug } = await params;
+
   const data = await getParticipationsBySlug(slug);
-  const userInfo = await getInformationDashboard();
+
+  const likedParticpation = await isLikedParticipation();
+  const isLiked: boolean = likedParticpation?.some((p: LikedAndFavoriteChallenge) => p.slug ===  slug ) ?? false
 
   if (!data) return null;
 
@@ -46,7 +50,7 @@ export default async function ParticipationPage({
             )}
           </div>
         </div>
-        <ButtonLike initialVotes={data._count.votes} />
+            <ButtonLike slug={slug} initialVotes={data._count.votes} initialLiked={isLiked} />
       </section>
 
       {/* SECTION bas — vidéo gauche + carte auteur droite */}
@@ -86,17 +90,11 @@ export default async function ParticipationPage({
           <div className="flex flex-col gap-2 text-sm text-muted-foreground">
             <p className="flex items-center gap-2">
               <Heart className="w-4 h-4" />
-              {userInfo.totalChallengeUserVoted}{" "}
-              {userInfo.totalChallengeUserVoted > 1
-                ? "Votes sur les challenge"
-                : "Vote sur les challenges"}
+              {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0)} {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0) > 1 ? "Votes sur les praticipations" : "Vote sur les participations"}
             </p>
             <p className="flex items-center gap-2">
               <Trophy className="w-4 h-4" />
-              {userInfo.totalChallengeCreated}
-              {userInfo.totalChallengeCreated > 1
-                ? "Challenges créés"
-                : "Challenge crée"}
+              {data.user._count.participations} {data.user._count.participations > 1 ? "Participations" : "Participation"}
             </p>
           </div>
         </div>

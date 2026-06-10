@@ -1,6 +1,6 @@
 import { tagStyles as styles } from "./tag-container.styles";
 import { getTextColor } from "@/lib/utils";
-import { ChallengeItem } from "@/features/types/challenge.type";
+import type { ChallengeItem } from "@/features/types/challenge.type";
 
 interface TagProps {
   data: ChallengeItem;
