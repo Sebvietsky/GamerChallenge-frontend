@@ -23,7 +23,6 @@ import { useDebounce } from "./useDebounce";
 export function useChallenges() {
   const [challenges, setChallenges] = useState<ChallengeItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
   const isFetchingMore = useRef(false);
   const [page, setPage] = useState(CHALLENGES_DEFAULT_PAGE);
@@ -62,7 +61,6 @@ export function useChallenges() {
   const loadMoreChallenges = async () => {
     if (!hasMoreData || isFetchingMore.current || loading) return;
     isFetchingMore.current = true;
-    setLoadingMore(true);
     const nextPage = page + 1;
     try {
       const data = await getChallenges({
@@ -84,7 +82,6 @@ export function useChallenges() {
         if (data.length < CHALLENGES_PER_PAGE) setHasMoreData(false);
       }
     } finally {
-      setLoadingMore(false);
       isFetchingMore.current = false;
     }
   };
