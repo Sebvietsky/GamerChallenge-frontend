@@ -7,6 +7,7 @@ import { Controller } from "react-hook-form";
 import { commonStyles as common } from "@/styles/common-auth.styles";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 import { countries } from "@/lib/countries";
 import {
   Select,
@@ -126,7 +127,7 @@ export default function RegisterPage() {
           type="submit"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Création..." : "Créer votre compte"}
+          {isSubmitting ? <Loader variant="classic-spinner" size="sm" /> : "Créer votre compte"}
         </Button>
       </form>
       {/* End Form */}

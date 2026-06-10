@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { ChallengeList } from "@/components/home/challenge-list";
 
@@ -8,22 +9,69 @@ import { getChallenges } from "@/features/api/challenge.api";
 import { useDebounce } from "@/features/hooks/useDebounce";
 import { useSearch } from "@/features/hooks/useSearch";
 
+import { PageLoader } from "../ui/page-loader";
+import type {
+  ChallengeItem,
+  EasterEggChallenge,
+} from "@/features/types/challenge.type";
+import { isEasterEggChallenge } from "@/features/types/challenge.type";
 import { OrderBy, Sort, type Challenge } from "@/features/types/challenge.type";
 import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
 import { homeStyles } from "@/styles/global.styles";
 
 export function ChallengesPageClient() {
+  const router = useRouter();
   const { search } = useSearch();
-
   const debouncedSearch = useDebounce(search, 300);
-
-  const [challenges, setChallenges] = useState<Challenge[]>([]);
-
+  const [challenges, setChallenges] = useState<ChallengeItem[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.createdAt);
-
   const [sort, setSort] = useState<Sort>(Sort.asc);
+  const isEasterEggSearch =
+    debouncedSearch.trim().toLowerCase() === "easter egg";
+  const easterEggChallenge = useMemo<EasterEggChallenge>(
+    () => ({
+      id: "easter_egg",
+      slug: "easter_egg",
+      title: "⚠️ NE PAS CLIQUER ⚠️",
+      description: "On vous avait pourtant prévenu.",
+      closesAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      status: "hidden",
+      hints: "",
+      goals: "",
+      game: {
+        name: "Système",
+        studio: null,
+        platform: null,
+        coverUrl: "/images/image-not-found.png",
+        bannerUrl: "",
+        categories: [],
+      },
+      challengeCategory: {
+        id: -1,
+        name: "Système",
+        colorCode: "#111827",
+      },
+      difficulty: {
+        id: -1,
+        name: "Système",
+        colorCode: "#ef4444",
+      },
+      user: {
+        username: "Système",
+        country: null,
+        profilePicture: null,
+      },
+      _count: {
+        participations: 0,
+        favoritedBy: 0,
+        votes: 0,
+      },
+      isEasterEgg: true,
+    }),
+    [],
+  );
 
   useEffect(() => {
     async function loadChallenges() {
@@ -37,12 +85,12 @@ export function ChallengesPageClient() {
         search: debouncedSearch,
       });
 
-      setChallenges(data);
+      setChallenges(isEasterEggSearch ? [easterEggChallenge, ...data] : data);
       setLoading(false);
     }
 
     loadChallenges();
-  }, [debouncedSearch, orderBy, sort]);
+  }, [debouncedSearch, easterEggChallenge, isEasterEggSearch, orderBy, sort]);
 
   useEffect(() => {
     if (loading) return;
@@ -57,8 +105,17 @@ export function ChallengesPageClient() {
     } catch {}
   }, [loading]);
 
+  const handleChallengeClick = (challenge: ChallengeItem) => {
+    if (isEasterEggChallenge(challenge)) {
+      router.push("/easteregg.mp4");
+      return;
+    }
+
+    return;
+  };
+
   if (loading) {
-    return <p>Chargement...</p>;
+    return <PageLoader />;
   }
 
   return (
@@ -90,7 +147,10 @@ export function ChallengesPageClient() {
         />
       </div>
 
-      <ChallengeList challenges={challenges} />
+      <ChallengeList
+        challenges={challenges}
+        onChallengeClick={handleChallengeClick}
+      />
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Sparkles, Trophy, Users } from "lucide-react";
+import { PageLoader } from "@/components/ui/page-loader";
 
 import { ClassementPodium } from "@/components/classements/classement-podium";
 import { FiltersClassements } from "@/components/classements/filters-classements";
@@ -66,13 +67,7 @@ export default function ClassementsPage() {
   // LOADING
   // ==================================================
   if (isLoading) {
-    return (
-      <div className={styles.page}>
-        <div className={styles.container}>
-          <p>Chargement...</p>
-        </div>
-      </div>
-    );
+    return <PageLoader />;
   }
 
   // ==================================================

@@ -44,6 +44,20 @@ export interface Challenge {
   };
 }
 
+export interface EasterEggChallenge extends Omit<Challenge, "id" | "slug"> {
+  id: "easter_egg";
+  slug: "easter_egg";
+  isEasterEgg: true;
+}
+
+export type ChallengeItem = Challenge | EasterEggChallenge;
+
+export function isEasterEggChallenge(
+  challenge: ChallengeItem,
+): challenge is EasterEggChallenge {
+  return challenge.id === "easter_egg";
+}
+
 export interface Participation {
   id: number;
   challenge: Challenge;
