@@ -37,8 +37,12 @@ export function ChallengesPageClient() {
     try {
       const { from, y } = JSON.parse(raw);
       if (from === window.location.pathname) {
-        window.scrollTo(0, y);
         sessionStorage.removeItem("scroll-restore");
+        // Double rAF : attend que la liste restaurée soit peinte avant de
+        // scroller, sinon la hauteur du document est encore insuffisante.
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => window.scrollTo(0, y));
+        });
       }
     } catch {}
   }, [isInitialLoading]);
