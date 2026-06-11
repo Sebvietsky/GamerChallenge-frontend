@@ -1,14 +1,18 @@
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { User, Trophy, Heart, Video } from "lucide-react";
+import { User, Trophy, Heart, Video, Pen, Trash } from "lucide-react";
 import type { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { getParticipationsBySlug } from "@/features/api/participation.api";
 import { isLikedParticipation } from "@/features/api/participations.api.server"
 import { parseYoutubeUrl } from "@/lib/utils";
+import { getMe } from "@/features/api/auth.api.server"
 import ButtonLike from "./ButtonLike";
+import { Button } from "@/components/ui/button";
+import { DeleteButton } from "./DeleteButton";
 
 interface ParticipationDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -20,6 +24,15 @@ export default async function ParticipationPage({
   const { slug } = await params;
 
   const data = await getParticipationsBySlug(slug);
+  
+  const me = await getMe();
+  const user = me?.userWithoutPassword
+    
+  let isAuthorOrAdmin = false
+  if(user?.username === data?.user.username || user?.role === "admin") {
+    isAuthorOrAdmin = true;
+  }
+
 
   const likedParticpation = await isLikedParticipation();
   const isLiked: boolean = likedParticpation?.some((p: LikedAndFavoriteChallenge) => p.slug ===  slug ) ?? false
@@ -41,6 +54,14 @@ export default async function ParticipationPage({
             />
           </div>
           <div className="flex flex-col gap-3">
+              {isAuthorOrAdmin && (
+                <div className="flex gap-2">
+              <Link href={`/participations/${slug}/edit`} >
+                <Button type="button"><Pen />Modifier ma participation</Button>
+              </Link>
+              <DeleteButton slug={data.slug} />
+              </div>
+              )}
             <TagContainer data={data.challenge} />
             <h1 className="text-2xl font-bold">
               {data.challenge.game.name} - {data.challenge.title}
@@ -73,7 +94,7 @@ export default async function ParticipationPage({
         </div>
 
         {/* Colonne latérale : carte auteur */}
-        <div className="lg:w-64 w-full shrink-0 bg-surface rounded-lg p-4 space-y-4 self-start">
+        <div className="lg:w-90 w-full shrink-0 bg-surface rounded-lg p-4 space-y-4 self-start">
           <p className="font-semibold text-sm">Participation de</p>
           <div className="flex items-center gap-3">
             <Avatar>

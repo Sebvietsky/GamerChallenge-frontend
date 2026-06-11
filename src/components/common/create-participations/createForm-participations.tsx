@@ -8,18 +8,29 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import ChallengeSummaryCard from "@/components/common/create-participations/ChallengeSummaryCard";
-import { Challenge } from "@/features/types/challenge.type";
+import { Challenge, Participation } from "@/features/types/challenge.type";
 import { useCreateParticipation } from "@/features/hooks/useCreateParticipations";
-import { RequiredStar } from "@/components/common/form/RequiredStar";
+import { useEditParticipation } from "@/features/hooks/useEditParticipation";
+
+import type { UseFormReturn, FieldErrors } from "react-hook-form";
 
 type CreateParticipationFormProps = {
+  participation?: Participation
   challenge: Challenge;
 };
 
 export default function CreateParticipationForm({
   challenge,
+  participation
 }: CreateParticipationFormProps) {
-  const { form, errors, onSubmit } = useCreateParticipation(challenge.slug);
+  const createHook = useCreateParticipation(challenge.slug) as any
+  const editHook = useEditParticipation(participation?.slug ?? "", participation ?? {} as Participation) as any
+
+    const { form, errors, onSubmit } = participation ? editHook : createHook  as {
+  form: UseFormReturn<any>;
+  errors: FieldErrors<any>;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+}
 
   return (
     <div className={styles.page}>
@@ -123,7 +134,7 @@ export default function CreateParticipationForm({
             ===================================================== */}
 
               <Button size="lg" className={styles.submitButton} type="submit">
-                Publier ma participation
+                {!participation ? "Publier ma participation" : "Modifier ma participation"}
               </Button>
             </div>
           </form>
