@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { RequiredStar } from "@/components/common/form/RequiredStar";
 import { useRegister } from "@/features/hooks/useRegister";
 import { Controller } from "react-hook-form";
 import { commonStyles as common } from "@/styles/common-auth.styles";
@@ -16,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function RegisterPage() {
   const { register, handleSubmit, control, errors, isSubmitting, error } =
@@ -42,7 +44,7 @@ export default function RegisterPage() {
         {error && <p className="text-destructive text-sm">{error}</p>}
 
         <div className={common.labelContainer}>
-          <label htmlFor="username">{"Nom d'utilisateur"}</label>
+          <label htmlFor="username">{"Nom d'utilisateur"}<RequiredStar /></label>
           <Input
             id="username"
             {...register("username")}
@@ -56,7 +58,7 @@ export default function RegisterPage() {
           )}
         </div>
         <div className={common.labelContainer}>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email<RequiredStar /></label>
           <Input
             id="email"
             type="email"
@@ -69,7 +71,7 @@ export default function RegisterPage() {
           )}
         </div>
         <div className={common.labelContainer}>
-          <label htmlFor="password">Mot de passe</label>
+          <label htmlFor="password">Mot de passe<RequiredStar /></label>
           <Input
             autoComplete="new-password"
             id="password"
@@ -83,7 +85,7 @@ export default function RegisterPage() {
           )}
         </div>
         <div className={common.labelContainer}>
-          <label htmlFor="confirm">Confirmation de mot de passe</label>
+          <label htmlFor="confirm">Confirmation de mot de passe<RequiredStar /></label>
           <Input
             id="confirm"
             {...register("confirm")}
@@ -95,7 +97,7 @@ export default function RegisterPage() {
           )}
         </div>
         <div className={common.labelContainer}>
-          <label htmlFor="country">Pays</label>
+          <label htmlFor="country">Pays<RequiredStar /></label>
           <Controller
             name="country"
             control={control}
@@ -122,6 +124,22 @@ export default function RegisterPage() {
             <p className="text-destructive text-xs">{errors.country.message}</p>
           )}
         </div>
+        <div className="flex items-center">
+          <Controller 
+          name="cguAccepted"
+          control={control}
+          render={({ field }) => (
+            <Checkbox className="mr-2" 
+            checked={field.value}
+            onCheckedChange={field.onChange}
+            />
+          )}
+          />
+          <p className="text-xs">
+            J'accepte les <Link className="text-secondary font-semibold hover:underline hover:brightness-110" href={"/legal"} target="_blank" rel="noopener noreferrer">conditions d'utilisations</Link><RequiredStar />
+          </p>
+        </div>
+        <p className="text-xs text-text-muted"><RequiredStar />: champs requis</p>
         <Button
           className={common.submitButton}
           type="submit"

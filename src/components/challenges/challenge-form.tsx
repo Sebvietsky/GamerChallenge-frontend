@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { RequiredStar } from "./RequiredStar";
+import { RequiredStar } from "@/components/common/form/RequiredStar";
 import {
   SelectContent,
   SelectItem,
@@ -10,21 +10,29 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
-import { Controller } from "react-hook-form";
+import { Controller, type FieldError, type UseFormReturn, type FieldErrors } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { challengeCategories } from "@/lib/challenge-category";
-import { useCreateChallenge } from "@/features/hooks/useCreateChallenge";
 import { GameSearchInput } from "@/components/GameSeachInput";
 import { createFormStyles as styles } from "@/styles/create-form.styles";
 import { cn } from "@/lib/utils";
+import { ChallengeFormValues } from "@/features/schema/challenge.schema";
 
-export function CreateChallenge() {
-  const { form, onSubmit } = useCreateChallenge();
+type CreateChallengeFormValues = ChallengeFormValues & { igdbId: number };
+
+type ChallengeProps<T extends ChallengeFormValues | CreateChallengeFormValues> = {
+  mode: "edit" | "create";
+  form: UseFormReturn<T>;
+  onSubmit: (e: React.SubmitEvent) => void;
+}
+
+export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFormValues>({form, onSubmit, mode}: ChallengeProps<T>){
+  const anyForm = form as UseFormReturn<any>;
   const {
     register,
     watch,
     formState: { errors },
-  } = form;
+  } = anyForm;
   const description = watch("description") ?? "";
   const goals = watch("goals") ?? "";
   const hints = watch("hints") ?? "";
@@ -48,29 +56,33 @@ export function CreateChallenge() {
       />
       {errors.title && (
         <p className={`${styles["cc-error"]} ${styles["cc-error--title"]}`}>
-          {errors.title.message}
+          {errors.title.message as string}
         </p>
       )}
+      {mode === "create" && (
+        <>
+        <label
+          htmlFor="igdbId"
+          className={`${styles["cc-label"]} ${styles["cc-label--igdbId"]}`}
+        >
+          Jeu<RequiredStar />
+        </label>
+        <div className={`${styles["cc-field"]} ${styles["cc-field--igdbId"]}`}>
+          <Controller
+            name="igdbId"
+            control={(anyForm as UseFormReturn<CreateChallengeFormValues>).control}
+            render={({ field }) => (
+              <GameSearchInput value={field.value} onChange={field.onChange} />
+            )}
+          />
+        </div>
+        {(errors as FieldErrors<CreateChallengeFormValues>).igdbId && (
+          <p className={`${styles["cc-error"]} ${styles["cc-error--igdbId"]}`}>
+            {(errors as FieldErrors<CreateChallengeFormValues>).igdbId?.message}
+          </p>
+        )}
+        </>
 
-      <label
-        htmlFor="igdbId"
-        className={`${styles["cc-label"]} ${styles["cc-label--igdbId"]}`}
-      >
-        Jeu<RequiredStar />
-      </label>
-      <div className={`${styles["cc-field"]} ${styles["cc-field--igdbId"]}`}>
-        <Controller
-          name="igdbId"
-          control={form.control}
-          render={({ field }) => (
-            <GameSearchInput value={field.value} onChange={field.onChange} />
-          )}
-        />
-      </div>
-      {errors.igdbId && (
-        <p className={`${styles["cc-error"]} ${styles["cc-error--igdbId"]}`}>
-          {errors.igdbId.message}
-        </p>
       )}
 
       <label
@@ -99,7 +111,7 @@ export function CreateChallenge() {
         <p
           className={`${styles["cc-error"]} ${styles["cc-error--description"]}`}
         >
-          {errors.description.message}
+          {errors.description.message as string}
         </p>
       )}
 
@@ -122,7 +134,7 @@ export function CreateChallenge() {
       </p>
       {errors.goals && (
         <p className={`${styles["cc-error"]} ${styles["cc-error--goals"]}`}>
-          {errors.goals.message}
+          {errors.goals.message as string}
         </p>
       )}
 
@@ -136,7 +148,7 @@ export function CreateChallenge() {
         className={`${styles["cc-field"]} ${styles["cc-field--difficulty"]}`}
       >
         <Controller
-          control={form.control}
+          control={anyForm.control}
           name="difficultyId"
           render={({ field }) => (
             <Select
@@ -175,7 +187,7 @@ export function CreateChallenge() {
         <p
           className={`${styles["cc-error"]} ${styles["cc-error--difficulty"]}`}
         >
-          {errors.difficultyId.message}
+          {errors.difficultyId.message as string}
         </p>
       )}
 
@@ -190,7 +202,7 @@ export function CreateChallenge() {
         </label>
         <Controller
           name="challengeCategoryId"
-          control={form.control}
+          control={anyForm.control}
           render={({ field }) => (
             <Select
               onValueChange={(value) => field.onChange(Number(value))}
@@ -230,7 +242,7 @@ export function CreateChallenge() {
           <p
             className={`${styles["cc-error"]} ${styles["cc-error--category"]}`}
           >
-            {errors.challengeCategoryId.message}
+            {errors.challengeCategoryId.message as string}
           </p>
         )}
       </div>
@@ -254,7 +266,7 @@ export function CreateChallenge() {
       </p>
       {errors.hints && (
         <p className={`${styles["cc-error"]} ${styles["cc-error--hints"]}`}>
-          {errors.hints.message}
+          {errors.hints.message as string}
         </p>
       )}
 
@@ -273,8 +285,8 @@ export function CreateChallenge() {
         type="submit"
         className={`${styles["cc-button"]} ${styles["cc-button--submit"]}`}
       >
-        Créer ton challenge
+        {mode === "create" ? "Créer ton challenge" : "Modifier le challenge"}
       </Button>
     </form>
-  );
+  )
 }
