@@ -30,14 +30,14 @@ export function mapDashboardData(data: DashboardResponse): DashboardModelView {
     { name: "Légende 👑", min: 2000 },
   ];
 
-  const currentLevel = [...levels]
-    .reverse()
-    .find((level) => reputation >= level.min)!;
+  const currentLevel =
+    [...levels].reverse().find((level) => reputation >= level.min) ?? levels[0];
   const nextLevel = [...levels].find((level) => level.min > reputation) ?? null;
   const nextLevelStep = nextLevel?.min ?? null;
   const pointsToNextLevel = nextLevelStep ? nextLevelStep - reputation : 0;
-  const progressPercent = nextLevelStep
-    ? Math.min((reputation / nextLevelStep) * 100, 100)
+  const progressPercent = nextLevel
+    ? ((reputation - currentLevel.min) / (nextLevel.min - currentLevel.min)) *
+      100
     : 100;
 
   return {
