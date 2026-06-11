@@ -37,7 +37,7 @@ export const bannerStyles = {
        avatar à droite
   ====================================================== */
 
-  mobileContainer: "flex h-full items-center justify-between lg:hidden",
+  mobileContainer: "flex h-full items-center justify-between",
 
   /* ======================================================
      MOBILE MENU BUTTON
@@ -86,7 +86,7 @@ export const bannerStyles = {
        visible uniquement desktop
   ====================================================== */
 
-  desktopContainer: "hidden h-full items-center justify-end lg:flex",
+  desktopContainer: "flex h-full items-center justify-between",
 
   /* ======================================================
      AVATAR
@@ -112,4 +112,11 @@ export const bannerStyles = {
   ====================================================== */
 
   avatarFallback: "bg-surface-accent text-secondary",
+
+  userData: "flex items-center gap-3",
+
+  username: "text-text font-semibold text-sm tracking-wide",
+
+  userLevel:
+    "text-primary text-[11px] font-bold tracking-wide uppercase bg-primary/10 rounded-lg px-2.5 py-1",
 };

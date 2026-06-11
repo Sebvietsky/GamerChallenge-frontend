@@ -4,13 +4,13 @@ import { BannerMobile } from "./banner-mobile";
 export function Banner() {
   return (
     <>
-      {/* MOBILE */}
-      <div className="lg:hidden">
+      {/* MOBILE (< md) */}
+      <div className="md:hidden">
         <BannerMobile />
       </div>
 
-      {/* DESKTOP */}
-      <div className="hidden lg:block">
+      {/* DESKTOP (md+, le burger reste affiché jusqu'à lg via BannerMenu) */}
+      <div className="hidden md:block">
         <BannerDesktop />
       </div>
     </>

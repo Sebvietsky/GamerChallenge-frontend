@@ -12,6 +12,8 @@ import { homeStyles as styles } from "@/components/home/home.styles";
 import { HomeChallengeOrderBy, useHome } from "@/features/hooks/useHome";
 import type { OrderBy, queryParams } from "@/features/types/challenge.type";
 import { PageLoader } from "../ui/page-loader";
+import { useAuth } from "@/features/hooks/useAuth";
+import { useDashboard } from "@/features/hooks/useDashboard";
 
 interface HomeClientProps {
   queryParams: queryParams;
@@ -19,6 +21,8 @@ interface HomeClientProps {
 
 export default function HomeClient({ queryParams }: HomeClientProps) {
   const { challenges, filter, setFilter, isLoading } = useHome(queryParams);
+  const { user } = useAuth();
+  const { dashboard, loading } = useDashboard();
 
   useEffect(() => {
     if (isLoading) return;
@@ -36,7 +40,47 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
   return (
     <main className={styles.page}>
       <div className={styles.layout}>
-        <section className={styles.main}>
+        <section className={styles.header}>
+          {!loading && dashboard && (
+            <div className={styles.userBanner}>
+              <div className={styles.userBannerLeft}>
+                <span className={styles.userBannerGreeting}>
+                  Salut, {user?.userWithoutPassword.username} !
+                </span>
+                <span className={styles.userBannerLevel}>
+                  {dashboard.level}
+                </span>
+              </div>
+
+              {dashboard.nextLevel && (
+                <div className={styles.userBannerProgress}>
+                  <div className={styles.userBannerProgressLabel}>
+                    <span>{dashboard.reputation} rep</span>
+                    <span>→ {dashboard.nextLevel}</span>
+                  </div>
+                  <div className={styles.userBannerProgressBar}>
+                    <div
+                      className={styles.userBannerProgressFill}
+                      style={{ width: `${dashboard.progressPercent}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className={styles.userBannerStats}>
+                <span className={styles.userBannerStat}>
+                  {dashboard.stats.challenges} défis
+                </span>
+                <span className={styles.userBannerStat}>
+                  {dashboard.stats.participations} participations
+                </span>
+                <span className={styles.userBannerStat}>
+                  {dashboard.stats.votesReceived} votes reçus
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* HERO */}
           <section className={styles.showcaseSection}>
             <div className={styles.showcaseContent}>
