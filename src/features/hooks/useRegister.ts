@@ -30,9 +30,9 @@ const schema = z
 
     country: z.string().min(1, "Veuillez choisir un pays"),
 
-    bio: z.string().max(500, "500 caractères maximum").optional(),
-
-    // profilPicture: z.any().optional(),
+    cguAccepted: z.boolean().refine((val) => val === true, {
+      message: "Vous devez avoir accepter les CGU"
+    })
   })
   .refine((d) => d.password === d.confirm, {
     message: "Les mots de passe ne correspondent pas",
@@ -59,7 +59,10 @@ export function useRegister() {
   async function onSubmit(data: RegisterForm) {
     setError(null);
     try {
-      const response = await registerApi(data);
+      const response = await registerApi({
+        ...data,
+        acceptCgu: true
+      });
       toast.success("Création de compte réaliser avec succés !")
       login(response.user);
     } catch (err) {

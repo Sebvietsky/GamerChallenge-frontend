@@ -50,26 +50,20 @@ export async function loginUser(payload: LoginPayload) {
 export async function register(
   payload: RegisterPayload,
 ): Promise<AuthResponse> {
-  const formData = new FormData();
-  // Ajoute chaque champ clé:valeur au formData
-  formData.append("username", payload.username);
-  formData.append("email", payload.email);
-  formData.append("password", payload.password);
-  formData.append("confirm", payload.confirm);
-  formData.append("country", payload.country);
-  const json = JSON.stringify(Object.fromEntries(formData.entries()));
-
+  console.log(payload)
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: json,
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
-    throw new Error(await getErrorMessage(response));
+    const errorBody = await response.json()
+    console.log("Erreur back:", errorBody)
+    throw new Error(errorBody.error ?? "Erreur inconnue")
   }
 
   return response.json();
