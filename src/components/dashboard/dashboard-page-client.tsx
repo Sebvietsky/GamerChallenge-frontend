@@ -10,6 +10,10 @@ import { useAuth } from "@/features/hooks/useAuth";
 import { NavButton } from "@/components/dashboard/nav-button";
 import { dashboardLink } from "@/components/dashboard/nav-button-link";
 import { dashboardStyles as styles } from "@/styles/dashboard.styles";
+import { DashboardModelView } from "@/features/types/dashboard.type";
+import { HallOfFameItem } from "./hall-of-fame-item";
+import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
+import { XPBar } from "./xp-bar";
 
 import { HallOfFameItem } from "./hall-of-fame-item";
 import { useDashboard } from "@/features/hooks/useDashboard";
@@ -35,57 +39,77 @@ export function DashboardPageClient() {
           PLAYER PROFILE
       ===================================================== */}
 
-        <Card className={styles.profileCard}>
-          <div className={styles.profileContent}>
-            {user?.userWithoutPassword.profilePicture ? (
-              <Image
-                src={user.userWithoutPassword.profilePicture}
-                alt="Photo de profil"
-                width={120}
-                height={120}
-                className="rounded-full border-2 border-primary object-cover"
-              />
-            ) : (
-              <div className={styles.avatar}>
-                <User className={styles.avatarIcon} />
-              </div>
+      <Card className={styles.profileCard}>
+        <div className={styles.profileContent}>
+          {user?.userWithoutPassword.profilePicture ? (
+            <Image
+              src={user.userWithoutPassword.profilePicture}
+              alt="Photo de profil"
+              width={120}
+              height={120}
+              className="rounded-full border-2 border-primary object-cover"
+            />
+          ) : (
+            <div className={styles.avatar}>
+              <User className={styles.avatarIcon} />
+            </div>
+          )}
+
+          <div className={styles.profileInfo}>
+            <h2 className={styles.username}>
+              {user?.userWithoutPassword.username ?? "Utilisateur"}
+            </h2>
+
+            <p className={styles.rank}>{dashboard.level}</p>
+
+            {user?.userWithoutPassword.country && (
+              <p className={styles.country}>
+                🌍 {user.userWithoutPassword.country}
+              </p>
             )}
 
-            <div className={styles.profileInfo}>
-              <h2 className={styles.username}>
-                {user?.userWithoutPassword.username ?? "Utilisateur"}
-              </h2>
+            {/* Reputation */}
 
-              <p className={styles.rank}>{dashboard.level}</p>
-
-              {user?.userWithoutPassword.country && (
-                <p className={styles.country}>
-                  🌍 {user.userWithoutPassword.country}
-                </p>
-              )}
-
-              {/* Reputation */}
-
-              <div className={styles.reputationContainer}>
-                <div className={styles.reputationHeader}>
-                  <span>Réputation</span>
-
-                  <span>
-                    {dashboard.nextLevelStep
-                      ? `${dashboard.reputation} / ${dashboard.nextLevelStep}`
-                      : `${dashboard.reputation} XP`}
-                  </span>
-                </div>
-
-                <div className={styles.reputationBar}>
-                  <div className={styles.reputationProgress} />
-                </div>
-
+            <div className={styles.reputationContainer}>
+              <div className={styles.reputationHeader}>
+                <span>Renommée</span>
                 <p className={styles.reputationText}>
                   {dashboard.nextLevel
                     ? `Plus que ${dashboard.pointsToNextLevel} points pour atteindre ${dashboard.nextLevel}`
                     : "🏆 Félicitations, vous avez atteint le rang ULTIME 🏆"}
                 </p>
+
+                <span>
+                  {dashboard.nextLevelStep
+                    ? `${dashboard.reputation} / ${dashboard.nextLevelStep}`
+                    : `${dashboard.reputation} XP`}
+                </span>
+              </div>
+            )}
+
+              <XPBar progress={dashboard.progressPercent} />
+
+              <div className={styles.levelTrack}>
+                {DASHBOARD_LEVELS.map((level) => {
+                  const unlocked = dashboard.reputation >= level.min;
+                  const current = dashboard.level === level.name;
+
+                  return (
+                    <span
+                      key={level.name}
+                      title={level.name}
+                      className={
+                        current
+                          ? styles.levelCurrent
+                          : unlocked
+                            ? styles.levelUnlocked
+                            : styles.levelLocked
+                      }
+                    >
+                      {level.emoji}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -149,50 +173,50 @@ export function DashboardPageClient() {
           HALL OF FAME
       ===================================================== */}
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>🔥 Hall of Fame</h2>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>🔥 Hall of Fame</h2>
 
-          <div className={styles.hallOfFameGrid}>
-            <Card className={styles.hallOfFameCard}>
-              <h3 className={styles.hallOfFameTitle}>
-                Challenge le plus populaire
-              </h3>
+        <div className={styles.hallOfFameGrid}>
+          <Card className={styles.hallOfFameCard}>
+            <h3 className={styles.hallOfFameTitle}>
+              Challenge le plus populaire
+            </h3>
 
-              {dashboard.hallOfFame.challenge ? (
-                <HallOfFameItem
-                  href={`/challenge/${dashboard.hallOfFame.challenge!.slug}`}
-                  image={dashboard.hallOfFame.challenge!.game.coverUrl}
-                  title={dashboard.hallOfFame.challenge!.title}
-                  votes={dashboard.hallOfFame.challenge!._count.votes}
-                />
-              ) : (
-                <p className={styles.hallOfFameText}>
-                  Aucun challenge populaire pour le moment.
-                </p>
-              )}
-            </Card>
+            {dashboard.hallOfFame.challenge ? (
+              <HallOfFameItem
+                href={`/challenges/${dashboard.hallOfFame.challenge!.slug}`}
+                image={dashboard.hallOfFame.challenge!.game.coverUrl}
+                title={dashboard.hallOfFame.challenge!.title}
+                votes={dashboard.hallOfFame.challenge!._count.votes}
+              />
+            ) : (
+              <p className={styles.hallOfFameText}>
+                Aucun challenge populaire pour le moment.
+              </p>
+            )}
+          </Card>
 
-            <Card className={styles.hallOfFameCard}>
-              <h3 className={styles.hallOfFameTitle}>
-                Participation la plus populaire
-              </h3>
-              {dashboard.hallOfFame.participation ? (
-                <HallOfFameItem
-                  href={`/participations/${dashboard.hallOfFame.participation.slug}`}
-                  image={
-                    dashboard.hallOfFame.participation.challenge?.game.coverUrl
-                  }
-                  title={dashboard.hallOfFame.participation.title}
-                  votes={dashboard.hallOfFame.participation.votes}
-                />
-              ) : (
-                <p className={styles.hallOfFameText}>
-                  Aucune participation populaire pour le moment.
-                </p>
-              )}
-            </Card>
-          </div>
-        </section>
+          <Card className={styles.hallOfFameCard}>
+            <h3 className={styles.hallOfFameTitle}>
+              Participation la plus populaire
+            </h3>
+            {dashboard.hallOfFame.participation ? (
+              <HallOfFameItem
+                href={`/participations/${dashboard.hallOfFame.participation.slug}`}
+                image={
+                  dashboard.hallOfFame.participation.challenge?.game.coverUrl
+                }
+                title={dashboard.hallOfFame.participation.title}
+                votes={dashboard.hallOfFame.participation.votes}
+              />
+            ) : (
+              <p className={styles.hallOfFameText}>
+                Aucune participation populaire pour le moment.
+              </p>
+            )}
+          </Card>
+        </div>
+      </section>
 
         {/* =====================================================
           ACHIEVEMENTS

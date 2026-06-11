@@ -34,13 +34,26 @@ export const dashboardStyles = {
    REPUTATION BAR
    ========================================================= */
 
+  levelTrack: "mt-4 flex justify-between gap-2",
+
+  levelStep: "flex flex-col items-center",
+
+  levelUnlocked: "text-xl",
+
+  levelLocked: "text-xl opacity-30 grayscale",
+
+  levelCurrent: "text-xl scale-125",
+
+  levelName: "hidden md:block text-[10px] text-center",
+
   reputationContainer: "mt-6",
 
   reputationHeader: "flex items-center justify-between text-sm mb-2",
 
-  reputationBar: "h-3 rounded-full bg-muted overflow-hidden",
+  reputationBar: "h-5 rounded-full bg-muted overflow-hidden",
 
-  reputationProgress: "h-full w-[64%] gaming-gradient rounded-full",
+  reputationProgress:
+    "h-full gaming-gradient rounded-full transition-all duration-1000 animate-xp-glow",
 
   reputationText: "mt-2 text-xs text-text-soft",
 

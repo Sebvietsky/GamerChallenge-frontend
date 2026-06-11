@@ -114,4 +114,7 @@ export const challengeDetail = {
   ctaSubtitle: "text-xs md:text-sm text-text-soft",
 
   ctaButton: "w-full md:w-auto md:min-w-[320px] rounded-sm py-6",
+
+  ctaButtonDisable: "w-full bg-border md:w-auto md:min-w-[320px] rounded-sm py-6 hover:cursor-default hover:brightness-100",
+
 };
