@@ -206,6 +206,15 @@ export async function editChallenge(slug: string, payload: EditChallengePayload)
   return response.json();
 }
 
+export async function deleteChallenge(slug: string): Promise<void> {
+
+  const response = await fetchWithAuth(`${API_BASE_URL}/challenges/${slug}`, {
+    method: "DELETE",
+  })
+
+  if (!response.ok) throw new Error("Impossible de supprimer le challenge")
+}
+
 function messageFromStatus(status: number): string {
   switch (status) {
     case 400:
