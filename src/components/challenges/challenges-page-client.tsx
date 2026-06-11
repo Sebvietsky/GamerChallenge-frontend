@@ -12,7 +12,6 @@ import { OrderBy } from "@/features/types/challenge.type";
 import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
 import { homeStyles } from "@/styles/global.styles";
 import { useChallenges } from "@/features/hooks/useChallenges";
-import { ChallengesFilterButton } from "./challenges-filter-button";
 
 export function ChallengesPageClient() {
   const {
