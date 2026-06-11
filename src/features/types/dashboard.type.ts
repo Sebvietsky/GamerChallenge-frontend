@@ -18,6 +18,11 @@ export type DashboardResponse = {
     video: string;
     votes: number;
     createdAt: string;
+    challenge: {
+      game: {
+        coverUrl: string;
+      };
+    };
   } | null;
 };
 
