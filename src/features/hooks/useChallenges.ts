@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getChallenges } from "@/features/api/challenge.api";
 import {
+  CategoryName,
+  DifficultyName,
   EasterEggChallenge,
   OrderBy,
   Sort,
@@ -29,10 +31,20 @@ export function useChallenges() {
   const [orderBy, setOrderBy] = useState<OrderBy>(CHALLENGES_ORDER_BY.votes);
   const [since, setSince] = useState(CHALLENGES_SINCE);
   const [sort, setSort] = useState<Sort>(CHALLENGES_SORT.desc);
+  const [selectedDifficulties, setSelectedDifficulties] = useState<
+    DifficultyName[]
+  >([]);
+  const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(
+    [],
+  );
   const { search } = useSearch();
   const debouncedSearch = useDebounce(search, 300);
-  const isEasterEggSearch = debouncedSearch.trim().toLowerCase() === "easter egg";
-  const easterEggChallenge = useMemo<EasterEggChallenge>(() => EASTER_EGG as EasterEggChallenge, []);
+  const isEasterEggSearch =
+    debouncedSearch.trim().toLowerCase() === "easter egg";
+  const easterEggChallenge = useMemo<EasterEggChallenge>(
+    () => EASTER_EGG as EasterEggChallenge,
+    [],
+  );
 
   // Fetch initial / reset quand les filtres changent
   useEffect(() => {
@@ -46,6 +58,8 @@ export function useChallenges() {
           limit: CHALLENGES_PER_PAGE,
           orderBy,
           sort,
+          categories: selectedCategories,
+          difficulties: selectedDifficulties,
           since,
           search: debouncedSearch,
         });
@@ -56,7 +70,16 @@ export function useChallenges() {
       }
     }
     fetchChallenges();
-  }, [orderBy, sort, debouncedSearch, since, isEasterEggSearch, easterEggChallenge]);
+  }, [
+    orderBy,
+    sort,
+    selectedCategories,
+    selectedDifficulties,
+    debouncedSearch,
+    since,
+    isEasterEggSearch,
+    easterEggChallenge,
+  ]);
 
   const loadMoreChallenges = async () => {
     if (!hasMoreData || isFetchingMore.current || loading) return;
@@ -68,6 +91,8 @@ export function useChallenges() {
         limit: CHALLENGES_PER_PAGE,
         orderBy,
         sort,
+        categories: selectedCategories,
+        difficulties: selectedDifficulties,
         since,
         search: debouncedSearch,
       });
@@ -93,6 +118,10 @@ export function useChallenges() {
     orderBy,
     sort,
     since,
+    selectedCategories,
+    setSelectedCategories,
+    selectedDifficulties,
+    setSelectedDifficulties,
     loadMoreChallenges,
     hasMoreData,
     setOrderBy,

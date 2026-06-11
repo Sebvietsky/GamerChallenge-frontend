@@ -7,8 +7,8 @@ interface User {
   };
   challenges: {
     _count: {
-      votes: number,
-      participations: number,
+      votes: number;
+      participations: number;
     };
   }[];
   participations: {
@@ -16,7 +16,7 @@ interface User {
       votes: number;
     };
   }[];
-};
+}
 
 export interface Challenge {
   id: number;
@@ -48,7 +48,6 @@ export interface Challenge {
   difficulty: {
     id: number;
     name: string;
-    indexDifficulty: number;
     colorCode: string;
   };
 
