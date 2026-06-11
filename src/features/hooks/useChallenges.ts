@@ -56,10 +56,22 @@ export function useChallenges() {
   const [hasMoreData, setHasMoreData] = useState(true);
   const isFetchingMore = useRef(false);
   const restoredPage = useRef(restoredState?.page ?? null);
-  const [page, setPage] = useState(restoredState?.page ?? CHALLENGES_DEFAULT_PAGE);
-  const [orderBy, setOrderBy] = useState<OrderBy>(restoredState?.orderBy ?? CHALLENGES_ORDER_BY.votes);
+  const [page, setPage] = useState(
+    restoredState?.page ?? CHALLENGES_DEFAULT_PAGE,
+  );
+  const [orderBy, setOrderBy] = useState<OrderBy>(
+    restoredState?.orderBy ?? CHALLENGES_ORDER_BY.votes,
+  );
   const [since, setSince] = useState(CHALLENGES_SINCE);
-  const [sort, setSort] = useState<Sort>(restoredState?.sort ?? CHALLENGES_SORT.desc);
+  const [sort, setSort] = useState<Sort>(
+    restoredState?.sort ?? CHALLENGES_SORT.desc,
+  );
+  const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(
+    [],
+  );
+  const [selectedDifficulties, setSelectedDifficulties] = useState<
+    DifficultyName[]
+  >([]);
   const { search } = useSearch();
   const debouncedSearch = useDebounce(search, 300);
   const isEasterEggSearch =
