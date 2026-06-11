@@ -11,8 +11,9 @@ import { NavButton } from "@/components/dashboard/nav-button";
 import { dashboardLink } from "@/components/dashboard/nav-button-link";
 import { dashboardStyles as styles } from "@/styles/dashboard.styles";
 import { DashboardModelView } from "@/features/types/dashboard.type";
-import { ParticipationCard } from "../common/participation/ParticipationCard";
 import { HallOfFameItem } from "./hall-of-fame-item";
+import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
+import { XPBar } from "./xp-bar";
 
 type DashboardPageClientProps = {
   dashboard: DashboardModelView;
@@ -20,9 +21,6 @@ type DashboardPageClientProps = {
 
 export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
   const { user } = useAuth();
-  console.log(dashboard);
-  console.log("DASHBOARD ITEM =", dashboard.hallOfFame.participation);
-
   return (
     <div className={styles.page}>
       {/* =====================================================
@@ -70,7 +68,12 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
 
             <div className={styles.reputationContainer}>
               <div className={styles.reputationHeader}>
-                <span>Réputation</span>
+                <span>Renommée</span>
+                <p className={styles.reputationText}>
+                  {dashboard.nextLevel
+                    ? `Plus que ${dashboard.pointsToNextLevel} points pour atteindre ${dashboard.nextLevel}`
+                    : "🏆 Félicitations, vous avez atteint le rang ULTIME 🏆"}
+                </p>
 
                 <span>
                   {dashboard.nextLevelStep
@@ -79,15 +82,30 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
                 </span>
               </div>
 
-              <div className={styles.reputationBar}>
-                <div className={styles.reputationProgress} />
-              </div>
+              <XPBar progress={dashboard.progressPercent} />
 
-              <p className={styles.reputationText}>
-                {dashboard.nextLevel
-                  ? `Plus que ${dashboard.pointsToNextLevel} points pour atteindre ${dashboard.nextLevel}`
-                  : "🏆 Félicitations, vous avez atteint le rang ULTIME 🏆"}
-              </p>
+              <div className={styles.levelTrack}>
+                {DASHBOARD_LEVELS.map((level) => {
+                  const unlocked = dashboard.reputation >= level.min;
+                  const current = dashboard.level === level.name;
+
+                  return (
+                    <span
+                      key={level.name}
+                      title={level.name}
+                      className={
+                        current
+                          ? styles.levelCurrent
+                          : unlocked
+                            ? styles.levelUnlocked
+                            : styles.levelLocked
+                      }
+                    >
+                      {level.emoji}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -158,7 +176,7 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
 
             {dashboard.hallOfFame.challenge ? (
               <HallOfFameItem
-                href={`/challenge/${dashboard.hallOfFame.challenge!.slug}`}
+                href={`/challenges/${dashboard.hallOfFame.challenge!.slug}`}
                 image={dashboard.hallOfFame.challenge!.game.coverUrl}
                 title={dashboard.hallOfFame.challenge!.title}
                 votes={dashboard.hallOfFame.challenge!._count.votes}
