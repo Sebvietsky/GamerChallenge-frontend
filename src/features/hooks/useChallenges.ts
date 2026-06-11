@@ -58,6 +58,8 @@ export function useChallenges() {
           limit: CHALLENGES_PER_PAGE,
           orderBy,
           sort,
+          categories: selectedCategories,
+          difficulties: selectedDifficulties,
           since,
           search: debouncedSearch,
         });
@@ -71,6 +73,8 @@ export function useChallenges() {
   }, [
     orderBy,
     sort,
+    selectedCategories,
+    selectedDifficulties,
     debouncedSearch,
     since,
     isEasterEggSearch,
@@ -87,6 +91,8 @@ export function useChallenges() {
         limit: CHALLENGES_PER_PAGE,
         orderBy,
         sort,
+        categories: selectedCategories,
+        difficulties: selectedDifficulties,
         since,
         search: debouncedSearch,
       });
