@@ -12,6 +12,8 @@ import { Challenge, Participation } from "@/features/types/challenge.type";
 import { useCreateParticipation } from "@/features/hooks/useCreateParticipations";
 import { useEditParticipation } from "@/features/hooks/useEditParticipation";
 
+import { RequiredStar } from "../form/RequiredStar";
+
 import type { UseFormReturn, FieldErrors } from "react-hook-form";
 
 type CreateParticipationFormProps = {
