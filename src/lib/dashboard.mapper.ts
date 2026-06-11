@@ -1,0 +1,66 @@
+import {
+  DashboardModelView,
+  DashboardResponse,
+} from "@/features/types/dashboard.type";
+
+export function mapDashboardData(data: DashboardResponse): DashboardModelView {
+  const votesReceived =
+    data.totalVoteReceivedOnChallenge + data.totalVoteReceivedOnParticipation;
+
+  const votesGiven =
+    data.totalChallengeUserVoted + data.totalParticipationUserVoted;
+
+  const totalContribution =
+    data.totalChallengeCreated + data.totalParticipation;
+
+  const totalActivity = votesGiven + votesReceived;
+
+  const reputation =
+    data.totalChallengeCreated * 20 +
+    data.totalParticipation * 10 +
+    votesReceived * 5 +
+    votesGiven;
+
+  const levels = [
+    { name: "Novice 🌱", min: 0 },
+    { name: "Challenger 🥉", min: 100 },
+    { name: "Compétiteur 🥈", min: 250 },
+    { name: "Vétéran 🥇", min: 500 },
+    { name: "Maître des challenges 🏅", min: 1000 },
+    { name: "Légende 👑", min: 2000 },
+  ];
+
+  const currentLevel = [...levels]
+    .reverse()
+    .find((level) => reputation >= level.min)!;
+  const nextLevel = [...levels].find((level) => level.min > reputation) ?? null;
+  const nextLevelStep = nextLevel?.min ?? null;
+  const pointsToNextLevel = nextLevelStep ? nextLevelStep - reputation : 0;
+  const progressPercent = nextLevelStep
+    ? Math.min((reputation / nextLevelStep) * 100, 100)
+    : 100;
+
+  return {
+    reputation,
+
+    level: currentLevel.name,
+    nextLevel: nextLevel?.name ?? null,
+    nextLevelStep,
+    pointsToNextLevel,
+    progressPercent,
+
+    stats: {
+      challenges: data.totalChallengeCreated,
+      participations: data.totalParticipation,
+      votesReceived,
+      votesGiven,
+      totalActivity,
+      totalContribution,
+    },
+
+    hallOfFame: {
+      challenge: data.mostLikedChallenge,
+      participation: data.mostLikedParticipation,
+    },
+  };
+}

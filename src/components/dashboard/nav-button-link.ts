@@ -1,31 +1,26 @@
-import { Heart, 
-  FileText,
-  Pen,
-  Trophy
+import { Heart, FileText, Pen, Trophy } from "lucide-react";
 
-} from "lucide-react";
-
-const path = "/dashboard/"
+const path = "/dashboard/";
 
 export const dashboardLink = [
   {
-    label:"favorites",
-    path:`${path}favorites`,
-    icon: Heart
+    label: "Mes Favoris",
+    path: `${path}favorites`,
+    icon: Heart,
   },
   {
-    label: "myChallenges",
+    label: "Mes Challenges",
     path: `${path}challenges`,
-    icon: Trophy
+    icon: Trophy,
   },
   {
-    label: "draft",
+    label: "Mes Brouillons",
     path: `${path}draft`,
-    icon: Pen
+    icon: Pen,
   },
   {
-    label: "participations",
+    label: "Mes Participations",
     path: `${path}participations`,
-    icon: FileText
-  }
-]
+    icon: FileText,
+  },
+];

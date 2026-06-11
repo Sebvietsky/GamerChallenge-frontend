@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getChallenges } from "@/features/api/challenge.api";
 import {
+  CategoryName,
+  DifficultyName,
   EasterEggChallenge,
   OrderBy,
   Sort,
@@ -60,8 +62,12 @@ export function useChallenges() {
   const [sort, setSort] = useState<Sort>(restoredState?.sort ?? CHALLENGES_SORT.desc);
   const { search } = useSearch();
   const debouncedSearch = useDebounce(search, 300);
-  const isEasterEggSearch = debouncedSearch.trim().toLowerCase() === "easter egg";
-  const easterEggChallenge = useMemo<EasterEggChallenge>(() => EASTER_EGG as EasterEggChallenge, []);
+  const isEasterEggSearch =
+    debouncedSearch.trim().toLowerCase() === "easter egg";
+  const easterEggChallenge = useMemo<EasterEggChallenge>(
+    () => EASTER_EGG as EasterEggChallenge,
+    [],
+  );
 
   // Fetch initial / reset quand les filtres changent.
   // Au retour d'une page détail, recharge en un seul appel toutes les pages
@@ -79,6 +85,8 @@ export function useChallenges() {
           limit,
           orderBy,
           sort,
+          categories: selectedCategories,
+          difficulties: selectedDifficulties,
           since,
           search: debouncedSearch,
         });
@@ -90,7 +98,16 @@ export function useChallenges() {
       }
     }
     fetchChallenges();
-  }, [orderBy, sort, debouncedSearch, since, isEasterEggSearch, easterEggChallenge]);
+  }, [
+    orderBy,
+    sort,
+    selectedCategories,
+    selectedDifficulties,
+    debouncedSearch,
+    since,
+    isEasterEggSearch,
+    easterEggChallenge,
+  ]);
 
   // Persiste l'état courant de la liste pour pouvoir le restaurer au retour
   useEffect(() => {
@@ -110,6 +127,8 @@ export function useChallenges() {
         limit: CHALLENGES_PER_PAGE,
         orderBy,
         sort,
+        categories: selectedCategories,
+        difficulties: selectedDifficulties,
         since,
         search: debouncedSearch,
       });
@@ -135,6 +154,10 @@ export function useChallenges() {
     orderBy,
     sort,
     since,
+    selectedCategories,
+    setSelectedCategories,
+    selectedDifficulties,
+    setSelectedDifficulties,
     loadMoreChallenges,
     hasMoreData,
     setOrderBy,
