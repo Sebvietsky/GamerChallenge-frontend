@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { RequiredStar } from "./RequiredStar";
 import {
   SelectContent,
   SelectItem,
@@ -36,12 +37,13 @@ export function CreateChallenge() {
         htmlFor="title"
         className={`${styles["cc-label"]} ${styles["cc-label--title"]}`}
       >
-        Titre
+        Titre<RequiredStar />
       </label>
       <Input
         {...register("title")}
         name="title"
         id="title"
+        placeholder="Le titre de ton challenge"
         className={`${styles["cc-input"]} ${styles["cc-input--title"]}`}
       />
       {errors.title && (
@@ -54,7 +56,7 @@ export function CreateChallenge() {
         htmlFor="igdbId"
         className={`${styles["cc-label"]} ${styles["cc-label--igdbId"]}`}
       >
-        Jeu
+        Jeu<RequiredStar />
       </label>
       <div className={`${styles["cc-field"]} ${styles["cc-field--igdbId"]}`}>
         <Controller
@@ -75,7 +77,7 @@ export function CreateChallenge() {
         htmlFor="description"
         className={`${styles["cc-label"]} ${styles["cc-label--description"]}`}
       >
-        Description
+        Description<RequiredStar />
       </label>
       <Textarea
         {...register("description")}
@@ -86,6 +88,7 @@ export function CreateChallenge() {
         maxLength={MAX}
         id="description"
         name="description"
+        placeholder="Décris ce qui ta donner envie de crée ce challenge"
       />
       <p
         className={`${styles["cc-counter"]} ${styles["cc-counter--description"]}`}
@@ -112,6 +115,7 @@ export function CreateChallenge() {
         maxLength={MAX}
         id="goals"
         name="goals"
+        placeholder="Décris l'objectif à réaliser"
       />
       <p className={`${styles["cc-counter"]} ${styles["cc-counter--goals"]}`}>
         {goals.length}/{MAX}
@@ -126,7 +130,7 @@ export function CreateChallenge() {
         htmlFor="difficultyId"
         className={`${styles["cc-label"]} ${styles["cc-label--difficulty"]}`}
       >
-        Difficulté
+        Difficulté<RequiredStar />
       </label>
       <div
         className={`${styles["cc-field"]} ${styles["cc-field--difficulty"]}`}
@@ -182,7 +186,7 @@ export function CreateChallenge() {
           htmlFor="challengeCategoryId"
           className={`${styles["cc-label"]} ${styles["cc-label--category"]}`}
         >
-          Catégorie
+          Catégorie<RequiredStar />
         </label>
         <Controller
           name="challengeCategoryId"
@@ -243,6 +247,7 @@ export function CreateChallenge() {
         className={cn(styles["cc-textarea"], styles["cc-textarea--hints"])}
         id="hints"
         name="hints"
+        placeholder="Décris comment réaliser ton challenge"
       />
       <p className={`${styles["cc-counter"]} ${styles["cc-counter--hints"]}`}>
         {hints.length}/{MAX}
@@ -253,11 +258,17 @@ export function CreateChallenge() {
         </p>
       )}
 
-      <label htmlFor="">
-        
+      <label htmlFor="demo"
+        className={"cc-label"}
+      >
+        Démonstration
       </label>
+      <Input 
+      placeholder="https://youtube.com/watch?v=..."
+      {...register("demo")}
+      />
 
-      {/* <p>⚠️ À Faire ⚠️ Démonstration - label demo</p> */}
+      <p className="ml-2 text-xs text-text-muted font-light"><RequiredStar /> {": champs requis"}</p>
       <Button
         type="submit"
         className={`${styles["cc-button"]} ${styles["cc-button--submit"]}`}

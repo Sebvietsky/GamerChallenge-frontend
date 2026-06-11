@@ -76,23 +76,18 @@ export function isEasterEggChallenge(
 
 export interface Participation {
   id: number;
-  challenge: Challenge;
   video: string;
   title: string;
   slug: string;
-  description?: string;
+  description: string;
   status: string;
-  rejectedReason?: string;
   visibility: boolean;
-  createdAt: string;
-  user: {
-    country: string;
-    profilePicture: string;
-    username: string;
-  };
+  createdAt: Date;
+  user: User;
   _count: {
     votes: number;
   };
+  challenge: ChallengeItem
 }
 
 export interface queryParams {

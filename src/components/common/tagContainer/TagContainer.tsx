@@ -6,7 +6,7 @@ interface TagProps {
   data: ChallengeItem;
 }
 
-export function TagContainer({data}: TagProps) {
+export function TagContainer({ data }: TagProps) {
   return (
     <div className={styles.tagContainer}>
       <p
