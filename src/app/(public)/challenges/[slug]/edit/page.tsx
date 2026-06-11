@@ -3,7 +3,7 @@ import { getMe } from "@/features/api/auth.api.server";
 import { getChallengeBySlug } from "@/features/api/challenge.api";
 import { redirect } from "next/navigation";
 
-export default async function CreateChallengePage({params}: {params: Promise<{slug: string}>}) {
+export default async function EditChallengePage({params}: {params: Promise<{slug: string}>}) {
   const { slug } = await params;
   const challenge = await getChallengeBySlug(slug);
   let me
@@ -13,12 +13,11 @@ export default async function CreateChallengePage({params}: {params: Promise<{sl
     redirect("/login");
   }
 
-  const user = me.userWithoutPassword
-  console.log(user)
+  const user = me?.userWithoutPassword
   
   if(!challenge) redirect("/");
   if(!me) redirect("/");
-  if(user.username !== challenge?.user.username && user.role !== "admin") {
+  if(user?.username !== challenge?.user.username && user?.role !== "admin") {
     redirect(`/challenges/${slug}`)
   }
 

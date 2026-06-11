@@ -37,6 +37,32 @@ export async function createParticipation(
   return response.json();
 }
 
+export async function editParticipation(
+  slug: string,
+  payload: CreateParticipationPayload
+) {
+  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+    body: JSON.stringify(payload)
+  })
+
+  if(!response.ok) throw new Error(await getErrorMessage(response))
+
+  return response.json();
+}
+
+export async function deleteParticiaption(slug: string){
+  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}`, {
+    method: "DELETE",
+  })
+
+  if(!response.ok) throw new Error("Impossible de supprimer la participation")
+}
+
 export async function voteParticipation(slug: string): Promise<void> {
   const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}/vote`, {
     method: "POST",

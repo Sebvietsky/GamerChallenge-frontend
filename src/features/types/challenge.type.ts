@@ -87,7 +87,7 @@ export interface Participation {
   _count: {
     votes: number;
   };
-  challenge: ChallengeItem
+  challenge: Challenge
 }
 
 export interface queryParams {

@@ -50,7 +50,6 @@ export async function loginUser(payload: LoginPayload) {
 export async function register(
   payload: RegisterPayload,
 ): Promise<AuthResponse> {
-  console.log(payload)
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: {
@@ -62,7 +61,6 @@ export async function register(
 
   if (!response.ok) {
     const errorBody = await response.json()
-    console.log("Erreur back:", errorBody)
     throw new Error(errorBody.error ?? "Erreur inconnue")
   }
 
