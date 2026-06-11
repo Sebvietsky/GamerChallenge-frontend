@@ -31,23 +31,28 @@ export const EASTER_EGG = {
   difficulty: {
     id: -1,
     name: "Système",
+    indexDifficulty: -1,
     colorCode: "#ef4444",
   },
   user: {
     username: "Système",
     country: "",
     profilePicture: "",
-    participations: [{
-      _count: {
-        votes: 0,
-      }
-    }],
-    challenges: [{
-      _count: {
-        votes: 0,
-        participations: 0,
-      }
-    }],
+    participations: [
+      {
+        _count: {
+          votes: 0,
+        },
+      },
+    ],
+    challenges: [
+      {
+        _count: {
+          votes: 0,
+          participations: 0,
+        },
+      },
+    ],
     _count: {
       participations: 0,
     },

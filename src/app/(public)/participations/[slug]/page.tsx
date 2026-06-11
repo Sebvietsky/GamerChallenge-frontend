@@ -90,7 +90,7 @@ export default async function ParticipationPage({
           <div className="flex flex-col gap-2 text-sm text-muted-foreground">
             <p className="flex items-center gap-2">
               <Heart className="w-4 h-4" />
-              {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0)} {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0) > 1 ? "Votes sur les praticipations" : "Vote sur les participations"}
+              {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0)} {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0) > 1 ? "Votes sur les participations" : "Vote sur les participations"}
             </p>
             <p className="flex items-center gap-2">
               <Trophy className="w-4 h-4" />
