@@ -7,8 +7,8 @@ interface User {
   };
   challenges: {
     _count: {
-      votes: number,
-      participations: number,
+      votes: number;
+      participations: number;
     };
   }[];
   participations: {
@@ -16,7 +16,7 @@ interface User {
       votes: number;
     };
   }[];
-};
+}
 
 export interface Challenge {
   id: number;
@@ -96,7 +96,28 @@ export interface queryParams {
   orderBy?: OrderBy | undefined;
   sort?: "asc" | "desc";
   since?: "1w" | "1m" | "3m" | "6m" | "1y" | undefined;
+  categories?: CategoryName[] | undefined;
+  difficulties?: DifficultyName[] | undefined;
   search?: string;
+}
+
+export enum DifficultyName {
+  easy = "Facile",
+  medium = "Moyen",
+  hard = "Difficile",
+  expert = "Expert",
+  legendary = "Légendaire",
+}
+
+export enum CategoryName {
+  speedrun = "Speedrun",
+  noHit = "No Hit",
+  scoreAttack = "Score Attack",
+  cosplayRun = "Cosplay Run",
+  creativity = "Créativité",
+  pvp = "PvP",
+  coop = "Coopératif",
+  lowPercent = "Low%",
 }
 
 export enum OrderBy {

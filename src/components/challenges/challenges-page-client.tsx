@@ -12,6 +12,7 @@ import { OrderBy } from "@/features/types/challenge.type";
 import { ChallengesOrderByButton } from "./challenges-orderBy-Button";
 import { homeStyles } from "@/styles/global.styles";
 import { useChallenges } from "@/features/hooks/useChallenges";
+import { ChallengesFilterButton } from "./challenges-filter-button";
 
 export function ChallengesPageClient() {
   const {
@@ -20,6 +21,10 @@ export function ChallengesPageClient() {
     orderBy,
     setOrderBy,
     sort,
+    selectedCategories,
+    setSelectedCategories,
+    selectedDifficulties,
+    setSelectedDifficulties,
     setSort,
     hasMoreData,
     loadMoreChallenges,
@@ -81,6 +86,13 @@ export function ChallengesPageClient() {
           currentOrderBy={orderBy}
         />
       </div>
+
+      <ChallengesFilterButton
+        selectedCategories={selectedCategories}
+        selectedDifficulties={selectedDifficulties}
+        setSelectedCategories={setSelectedCategories}
+        setSelectedDifficulties={setSelectedDifficulties}
+      />
 
       <ChallengeList
         challenges={challenges}
