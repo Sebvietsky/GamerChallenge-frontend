@@ -12,7 +12,8 @@ export async function getMe(): Promise<User | null> {
     })
     console.log("status getMe:", response.status)
     if (!response.ok) return null
-
+    
+    console.log("Fin de getME")
     return response.json()
   } catch {
     return null
