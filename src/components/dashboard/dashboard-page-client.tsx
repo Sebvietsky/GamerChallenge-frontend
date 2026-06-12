@@ -99,6 +99,8 @@ export function DashboardPageClient() {
                     : `${dashboard.reputation} XP`}
                 </span>
               </div>
+            </div>
+            )
 
               <XPBar progress={dashboard.progressPercent} />
 
