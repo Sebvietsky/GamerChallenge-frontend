@@ -27,7 +27,10 @@ export interface Challenge {
   createdAt: string;
   status: string;
   demo?: string;
-  hints: string;
+  hints: [{
+    position: number,
+    description: string
+  }];
   goals: string;
 
   game: {

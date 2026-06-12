@@ -19,7 +19,6 @@ import {
   Lightbulb,
   Trophy,
   User,
-  Trash,
   Pen,
 } from "lucide-react";
 import {
@@ -47,6 +46,12 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
+  console.log(data)
+  // Sorted hints for display
+  const hints = Array.isArray(data?.hints) ? data.hints : [];
+  const sortedHints = hints
+    .slice()
+    .sort((a, b) => a.position - b.position);
 
   const me = await getMe();
   const user = me?.userWithoutPassword;
@@ -176,17 +181,22 @@ export default async function ChallengeDetailPage({
           )}
         </div>
         <div className={styles.hintsContainer}>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="indices">
-              <AccordionTrigger>
-                <Lightbulb />
-                Indices
-              </AccordionTrigger>
-              <AccordionContent>
-                <p>{data.hints}</p>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <h2 className="flex"><Lightbulb /> Indices ({hints.length})</h2>
+          <div>
+            {/* TODO Change by challenge.hints */}
+            <Accordion type="single" collapsible>
+            {sortedHints.map((s) => (
+              <AccordionItem key={s.position} value={`indice ${s.position}`}>
+                <AccordionTrigger>
+                  {`Indices ${s.position}`}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {s.description}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+            </Accordion>
+          </div>
         </div>
         <div className={styles.creatorContainer}>
           <h2 className={styles.creatorTitle}>Créé par</h2>

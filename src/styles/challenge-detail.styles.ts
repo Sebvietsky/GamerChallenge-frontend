@@ -54,7 +54,7 @@ export const challengeDetail = {
   iframe: "w-full aspect-video rounded-sm object-cover",
 
   hintsContainer:
-    "flex flex-col gap-2 lg:col-span-2 md:flex-row md:items-center md:justify-between border rounded-lg bg-surface px-4 py-3",
+    "flex flex-col gap-2 lg:col-span-2 border rounded-lg bg-surface px-4 py-3",
 
   hintsTitle: "flex items-center",
 
