@@ -100,32 +100,30 @@ export function DashboardPageClient() {
                 </span>
               </div>
             </div>
-            )
 
-              <XPBar progress={dashboard.progressPercent} />
+            <XPBar progress={dashboard.progressPercent} />
 
-              <div className={styles.levelTrack}>
-                {DASHBOARD_LEVELS.map((level) => {
-                  const unlocked = dashboard.reputation >= level.min;
-                  const current = dashboard.level === level.name;
+            <div className={styles.levelTrack}>
+              {DASHBOARD_LEVELS.map((level) => {
+                const unlocked = dashboard.reputation >= level.min;
+                const current = dashboard.level === level.name;
 
-                  return (
-                    <span
-                      key={level.name}
-                      title={level.name}
-                      className={
-                        current
-                          ? styles.levelCurrent
-                          : unlocked
-                            ? styles.levelUnlocked
-                            : styles.levelLocked
-                      }
-                    >
-                      {level.emoji}
-                    </span>
-                  );
-                })}
-              </div>
+                return (
+                  <span
+                    key={level.name}
+                    title={level.name}
+                    className={
+                      current
+                        ? styles.levelCurrent
+                        : unlocked
+                          ? styles.levelUnlocked
+                          : styles.levelLocked
+                    }
+                  >
+                    {level.emoji}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </div>
