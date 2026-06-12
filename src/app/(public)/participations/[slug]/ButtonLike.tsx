@@ -43,8 +43,8 @@ export default function ButtonLike({
   };
 
   return (
-    <div className="self-end lg:self-start">
-      <div className="flex items-center gap-2 lg:mr-6">
+    <div className="self-center lg:self-start">
+      <div className="flex items-center gap-2 my-2 lg:mr-6">
         <Button
           type="button"
           onClick={
@@ -58,9 +58,6 @@ export default function ButtonLike({
         >
           <Heart />
         </Button>
-        <span>
-          {votes} {votes > 1 ? "votes" : "vote"}
-        </span>
       </div>
     </div>
   );

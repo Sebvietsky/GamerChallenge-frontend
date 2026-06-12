@@ -16,11 +16,11 @@ export function DeleteButton({slug}: Props) {
   const handleDelete = async () => {
     try {
       await deleteParticiaption(slug)
-      toast.success("Challenge supprimé !")
+      toast.success("Participation supprimé !")
       router.back()
     } catch {
       toast.error("Erreur lors de la suppression")
     }
   }
-  return <Button type="button" onClick={handleDelete} ><Trash />Supprimer le challenge</Button>
+  return <Button type="button" onClick={handleDelete} className="text-xs"><Trash />Supprimer</Button>
 }

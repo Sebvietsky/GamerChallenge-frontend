@@ -22,5 +22,5 @@ export function DeleteButton({slug}: Props) {
       toast.error("Erreur lors de la suppression")
     }
   }
-  return <Button type="button" onClick={handleDelete} ><Trash />Supprimer le challenge</Button>
+  return <Button type="button" onClick={handleDelete} ><Trash />Supprimer</Button>
 }

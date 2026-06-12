@@ -12,7 +12,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Users, Heart, Video, Lightbulb, Trophy, User, Trash, Pen } from "lucide-react";
+import {
+  Users,
+  Heart,
+  Video,
+  Lightbulb,
+  Trophy,
+  User,
+  Trash,
+  Pen,
+} from "lucide-react";
 import {
   getChallengeBySlug,
   getParticipationsByChallenge,
@@ -38,20 +47,21 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
-  
+
   const me = await getMe();
-  const user = me?.userWithoutPassword
-  
-  let isAuthorOrAdmin = false
-  if(user?.username === data?.user.username || user?.role === "admin") {
+  const user = me?.userWithoutPassword;
+
+  let isAuthorOrAdmin = false;
+  if (user?.username === data?.user.username || user?.role === "admin") {
     isAuthorOrAdmin = true;
   }
-
 
   const likedChallenges = await getUserLikedOnChallenge();
   const favoritedChallenges = await getUserFavoritedOnChallenge();
   const participations = await getParticipationsByChallenge(slug);
-  const canParticipate = !participations?.some(p => p.user.username === user?.username)
+  const canParticipate = !participations?.some(
+    (p) => p.user.username === user?.username,
+  );
 
   const numberOfParticipants = data
     ? data.user.challenges.reduce((acc, p) => acc + p._count.participations, 0)
@@ -76,12 +86,35 @@ export default async function ChallengeDetailPage({
     return null;
   }
 
-  
-
   return (
     <div className={styles.main}>
       {/* SECTION haut de page : Image, titre,...  */}
       <section className={styles.sectionDetail}>
+        <div className="flex flex-row-reverse justify-between lg:justify-start items-center">
+          <div className={styles.buttonContainer}>
+            <LikeButton
+              slug={slug}
+              initialLiked={isLiked}
+              initialCount={data._count.votes}
+              />
+            <FavoriteButton
+              slug={slug}
+              initialLiked={isFavorite}
+              initialCount={data._count.favoritedBy}
+              />
+          </div>
+              {isAuthorOrAdmin && (
+                <div className="flex gap-2 items-center my-2 justify-center">
+                  <Link href={`/challenges/${data.slug}/edit`}>
+                    <Button type="button">
+                      <Pen />
+                      Modifier
+                    </Button>
+                  </Link>
+                  <DeleteButton slug={data.slug} />
+                </div>
+              )}
+        </div>
         <div className={styles.detailContainer}>
           <div className={styles.imageContainer}>
             <Image
@@ -93,14 +126,6 @@ export default async function ChallengeDetailPage({
             />
           </div>
           <div className={styles.contentContainer}>
-            { isAuthorOrAdmin && (
-              <div className="flex gap-2 items-center">
-                <Link href={`/challenges/${data.slug}/edit`}>
-                  <Button type="button"><Pen />Modifier le challenge</Button>
-                </Link>
-                <DeleteButton slug={data.slug}/>
-              </div>
-            )}
             <TagContainer data={data} />
             <h1 className={styles.title}>
               {data.game.name} - {data.title}
@@ -108,33 +133,19 @@ export default async function ChallengeDetailPage({
             <div className={styles.dataContainer}>
               <p className={styles.dataStat}>
                 <Users className={styles.icon} />
-                {formatNumber(data._count.participations)}
-                {" "}
+                {formatNumber(data._count.participations)}{" "}
                 {data._count.participations > 1
                   ? "participants"
                   : "participant"}
               </p>
               <p className={styles.dataStat}>
                 <Heart className={styles.icon} />
-                {formatNumber(data._count.votes)}
-                {" "}
+                {formatNumber(data._count.votes)}{" "}
                 {data._count.votes > 1 ? "votes" : "vote"}
               </p>
             </div>
             <p className={styles.description}>{data.description}</p>
             <p className={styles.description}>{data.goals}</p>
-          </div>
-          <div className={styles.buttonContainer}>
-            <LikeButton
-              slug={slug}
-              initialLiked={isLiked}
-              initialCount={data._count.votes}
-            />
-            <FavoriteButton
-              slug={slug}
-              initialLiked={isFavorite}
-              initialCount={data._count.favoritedBy}
-            />
           </div>
         </div>
         {/* SECTION Vidéo, Créé par and Indice */}
@@ -228,13 +239,12 @@ export default async function ChallengeDetailPage({
           </p>
         </div>
         <div className="w-full lg:w-[80%]">
-          { canParticipate ? (
-          <Link href={`/participate/${slug}`}>
-            <Button className={styles.ctaButton}>
-              Participer au challenge
-            </Button>
-          </Link>
-
+          {canParticipate ? (
+            <Link href={`/participate/${slug}`}>
+              <Button className={styles.ctaButton}>
+                Participer au challenge
+              </Button>
+            </Link>
           ) : (
             <Button className={styles.ctaButtonDisable}>
               Vous y avez déjà participé
