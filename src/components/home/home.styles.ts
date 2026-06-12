@@ -9,6 +9,37 @@ export const homeStyles = {
 
   main: "gaming-card flex-1 rounded-[32px] p-4 md:p-6 relative",
 
+  header:
+    "gaming-card flex flex-col flex-1 gap-6 rounded-[32px] p-4 md:p-6 relative",
+
+  /* =========================================================
+  USER HEADER BANNER
+  ========================================================= */
+
+  userBanner:
+    "soft-border bg-surface flex flex-wrap items-center justify-between gap-4 rounded-2xl px-5 py-3",
+
+  userBannerLeft: "flex items-center gap-3",
+
+  userBannerGreeting: "text-text text-sm font-semibold",
+
+  userBannerLevel:
+    "bg-primary/10 text-primary rounded-lg px-2.5 py-1 text-xs font-bold tracking-wide",
+
+  userBannerProgress: "flex flex-col gap-1 min-w-[140px]",
+
+  userBannerProgressLabel:
+    "text-text-muted flex items-center justify-between text-[11px]",
+
+  userBannerProgressBar:
+    "bg-surface-accent h-1.5 w-full overflow-hidden rounded-full",
+
+  userBannerProgressFill: "bg-primary h-full rounded-full transition-all",
+
+  userBannerStats: "text-text-muted flex items-center gap-4 text-xs",
+
+  userBannerStat: "flex items-center gap-1 font-bold",
+
   /* =========================================================
   SHOWCASE
   ========================================================= */
