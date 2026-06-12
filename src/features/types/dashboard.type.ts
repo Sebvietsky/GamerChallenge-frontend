@@ -49,3 +49,8 @@ export type DashboardModelView = {
     participation: DashboardResponse["mostLikedParticipation"];
   };
 };
+
+export interface queryParams {
+  page?: number;
+  limit?: number;
+}
