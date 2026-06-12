@@ -14,10 +14,10 @@ export const challengeDetail = {
 
   detailContainer: "flex flex-col lg:flex-row w-full gap-4 lg:gap-8",
 
-  imageContainer: "w-full max-w-md mx-auto lg:mx-0 lg:w-[400px] shrink-0",
+  imageContainer: "shrink-0 self-center w-60 lg:w-100",
 
   imageTag:
-    "rounded-lg w-full aspect-[16/9] lg:aspect-auto lg:h-full object-cover object-center",
+    "rounded-lg aspect-auto lg:h-full object-cover object-center",
 
   contentContainer: "flex flex-col flex-1 gap-4 lg:gap-8 lg:justify-center",
 

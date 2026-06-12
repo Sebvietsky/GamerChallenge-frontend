@@ -44,12 +44,12 @@ export default async function ParticipationPage({
       {/* SECTION Header — image gauche + infos droite */}
         <section className="flex flex-col w-full justify-between lg:flex-row gap-4 lg:gap-6">
           <div className="flex flex-col lg:flex-row gap-6 order-last lg:w-[80%] lg:order-first">
-            <div className="shrink-0 self-center w-32 lg:w-48">
+            <div className="shrink-0 self-center w-60 lg:w-60">
               <Image
                 src={data.challenge.game.coverUrl}
                 alt={`Cover de ${data.challenge.game.name}`}
-                width={190}
-                height={270}
+                width={250}
+                height={350}
                 className="rounded-lg object-cover"
               />
             </div>
