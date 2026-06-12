@@ -18,6 +18,11 @@ interface User {
   }[];
 }
 
+export interface Hints {
+  description: string;
+  position: number;
+}
+
 export interface Challenge {
   id: number;
   title: string;
@@ -27,7 +32,7 @@ export interface Challenge {
   createdAt: string;
   status: string;
   demo?: string;
-  hints: string;
+  hints: Hints[];
   goals: string;
 
   game: {
@@ -87,7 +92,7 @@ export interface Participation {
   _count: {
     votes: number;
   };
-  challenge: Challenge
+  challenge: Challenge;
 }
 
 export interface queryParams {

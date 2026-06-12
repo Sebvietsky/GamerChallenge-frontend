@@ -96,24 +96,24 @@ export default async function ChallengeDetailPage({
               slug={slug}
               initialLiked={isLiked}
               initialCount={data._count.votes}
-              />
+            />
             <FavoriteButton
               slug={slug}
               initialLiked={isFavorite}
               initialCount={data._count.favoritedBy}
-              />
+            />
           </div>
-              {isAuthorOrAdmin && (
-                <div className="flex gap-2 items-center my-2 justify-center">
-                  <Link href={`/challenges/${data.slug}/edit`}>
-                    <Button type="button">
-                      <Pen />
-                      Modifier
-                    </Button>
-                  </Link>
-                  <DeleteButton slug={data.slug} />
-                </div>
-              )}
+          {isAuthorOrAdmin && (
+            <div className="flex gap-2 items-center my-2 justify-center">
+              <Link href={`/challenges/${data.slug}/edit`}>
+                <Button type="button">
+                  <Pen />
+                  Modifier
+                </Button>
+              </Link>
+              <DeleteButton slug={data.slug} />
+            </div>
+          )}
         </div>
         <div className={styles.detailContainer}>
           <div className={styles.imageContainer}>
@@ -183,7 +183,11 @@ export default async function ChallengeDetailPage({
                 Indices
               </AccordionTrigger>
               <AccordionContent>
-                <p>{data.hints}</p>
+                {[...data.hints.sort((a, b) => a.position - b.position)].map(
+                  (h) => (
+                    <p key={h.position}>{h.description}</p>
+                  ),
+                )}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
