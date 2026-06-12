@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { API_BASE_URL } from "@/lib/api";
+// API_BASE_URL removed (unused)
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 
@@ -23,14 +23,17 @@ export function GameSearchInput({ value, onChange }: GameSearchInputProps) {
   const [results, setResults] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [selectedName, setSelectedName] = useState("");
+  // removed selectedName state (unused)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Fermer la liste si clic en dehors
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setOpen(false);
       }
     };
@@ -41,8 +44,12 @@ export function GameSearchInput({ value, onChange }: GameSearchInputProps) {
   // Debounce de la recherche
   useEffect(() => {
     if (query.length < 2) {
-      setResults([]);
-      setOpen(false);
+      // avoid synchronous setState in effect to prevent cascading renders
+      // schedule update on next animation frame
+      requestAnimationFrame(() => {
+        setResults([]);
+        setOpen(false);
+      });
       return;
     }
 
@@ -51,7 +58,9 @@ export function GameSearchInput({ value, onChange }: GameSearchInputProps) {
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games/search?q=${encodeURIComponent(query)}`)
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/games/search?q=${encodeURIComponent(query)}`,
+        );
         const json = await res.json();
         setResults(json.data);
         setOpen(true);

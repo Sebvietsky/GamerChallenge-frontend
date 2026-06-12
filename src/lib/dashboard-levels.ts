@@ -12,21 +12,21 @@ export const DASHBOARD_LEVELS = [
   {
     name: "Compétiteur",
     emoji: "🥈",
-    min: 250,
+    min: 500,
   },
   {
     name: "Vétéran",
     emoji: "🥇",
-    min: 500,
+    min: 1000,
   },
   {
     name: "Maître des challenges",
     emoji: "🏅",
-    min: 1000,
+    min: 2500,
   },
   {
     name: "Légende",
     emoji: "👑",
-    min: 2000,
+    min: 5000,
   },
 ] as const;

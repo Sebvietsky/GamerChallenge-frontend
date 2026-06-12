@@ -16,18 +16,18 @@ export function mapDashboardData(data: DashboardResponse): DashboardModelView {
   const totalActivity = votesGiven + votesReceived;
 
   const reputation =
-    data.totalChallengeCreated * 20 +
-    data.totalParticipation * 10 +
-    votesReceived * 5 +
+    data.totalChallengeCreated * 50 +
+    data.totalParticipation * 20 +
+    votesReceived * 10 +
     votesGiven;
 
   const levels = [
     { name: "Novice 🌱", min: 0 },
     { name: "Challenger 🥉", min: 100 },
-    { name: "Compétiteur 🥈", min: 250 },
-    { name: "Vétéran 🥇", min: 500 },
-    { name: "Maître des challenges 🏅", min: 1000 },
-    { name: "Légende 👑", min: 2000 },
+    { name: "Compétiteur 🥈", min: 500 },
+    { name: "Vétéran 🥇", min: 1000 },
+    { name: "Maître des challenges 🏅", min: 2500 },
+    { name: "Légende 👑", min: 5000 },
   ];
 
   const currentLevel =
