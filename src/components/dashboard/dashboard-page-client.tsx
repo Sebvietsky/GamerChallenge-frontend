@@ -6,35 +6,47 @@ import { User, Trophy, Heart, Vote, Medal, Loader } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+
 import { useAuth } from "@/features/hooks/useAuth";
+import { useDashboard } from "@/features/hooks/useDashboard";
+
 import { NavButton } from "@/components/dashboard/nav-button";
 import { dashboardLink } from "@/components/dashboard/nav-button-link";
+
 import { dashboardStyles as styles } from "@/styles/dashboard.styles";
-import { DashboardModelView } from "@/features/types/dashboard.type";
+
 import { HallOfFameItem } from "./hall-of-fame-item";
-import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
 import { XPBar } from "./xp-bar";
 
-import { useDashboard } from "@/features/hooks/useDashboard";
+import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
 
 export function DashboardPageClient() {
   const { user } = useAuth();
   const { dashboard, loading } = useDashboard();
 
-  return loading ? (
-    <Loader />
-  ) : (
-    dashboard && (
-      <div className={styles.page}>
-        {/* =====================================================
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!dashboard) {
+    return null;
+  }
+
+  return (
+    <div className={styles.page}>
+      {/* =====================================================
           PAGE HEADER
       ===================================================== */}
 
-        <section className={styles.header}>
-          <h1 className={styles.title}>Tableau de bord</h1>
-        </section>
+      <section className={styles.header}>
+        <h1 className={styles.title}>Tableau de bord</h1>
+      </section>
 
-        {/* =====================================================
+      {/* =====================================================
           PLAYER PROFILE
       ===================================================== */}
 
@@ -67,11 +79,14 @@ export function DashboardPageClient() {
               </p>
             )}
 
-            {/* Reputation */}
+            {/* =====================================================
+                RENOMMEE
+            ===================================================== */}
 
             <div className={styles.reputationContainer}>
               <div className={styles.reputationHeader}>
                 <span>Renommée</span>
+
                 <p className={styles.reputationText}>
                   {dashboard.nextLevel
                     ? `Plus que ${dashboard.pointsToNextLevel} points pour atteindre ${dashboard.nextLevel}`
@@ -79,7 +94,7 @@ export function DashboardPageClient() {
                 </p>
 
                 <span>
-                  {dashboard.nextLevelStep
+                  {dashboard.nextLevel
                     ? `${dashboard.reputation} / ${dashboard.nextLevelStep}`
                     : `${dashboard.reputation} XP`}
                 </span>
@@ -113,63 +128,60 @@ export function DashboardPageClient() {
               </div>
             </div>
           </div>
+        </div>
 
-          <div className={styles.bioContainer}>
-            <h3 className={styles.bioTitle}>Biographie</h3>
+        <div className={styles.bioContainer}>
+          <h3 className={styles.bioTitle}>Biographie</h3>
 
-            <p className={styles.bioText}>
-              {user?.userWithoutPassword.bio ?? "C'est un peu vide ici..."}
-            </p>
-          </div>
-        </Card>
+          <p className={styles.bioText}>
+            {user?.userWithoutPassword.bio ?? "C'est un peu vide ici..."}
+          </p>
+        </div>
+      </Card>
 
-        {/* =====================================================
+      {/* =====================================================
           STATISTICS
       ===================================================== */}
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>🏆 Statistiques</h2>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>🏆 Statistiques</h2>
 
-          <div className={styles.statsGrid}>
-            <Card className={styles.statCard}>
-              <Trophy className={styles.statIcon} />
+        <div className={styles.statsGrid}>
+          <Card className={styles.statCard}>
+            <Trophy className={styles.statIcon} />
 
-              <p className={styles.statLabel}>Challenges créés</p>
+            <p className={styles.statLabel}>Challenges créés</p>
 
-              <p className={styles.statValue}>{dashboard.stats.challenges}</p>
-            </Card>
+            <p className={styles.statValue}>{dashboard.stats.challenges}</p>
+          </Card>
 
-            <Card className={styles.statCard}>
-              <Medal className={styles.statIcon} />
+          <Card className={styles.statCard}>
+            <Medal className={styles.statIcon} />
 
-              <p className={styles.statLabel}>Participations</p>
+            <p className={styles.statLabel}>Participations</p>
 
-              <p className={styles.statValue}>
-                {dashboard.stats.participations}
-              </p>
-            </Card>
+            <p className={styles.statValue}>{dashboard.stats.participations}</p>
+          </Card>
 
-            <Card className={styles.statCard}>
-              <Heart className={styles.statIcon} />
+          <Card className={styles.statCard}>
+            <Heart className={styles.statIcon} />
 
-              <p className={styles.statLabel}>Votes reçus</p>
+            <p className={styles.statLabel}>Votes reçus</p>
 
-              <p className={styles.statValue}>
-                {dashboard.stats.votesReceived}
-              </p>
-            </Card>
+            <p className={styles.statValue}>{dashboard.stats.votesReceived}</p>
+          </Card>
 
-            <Card className={styles.statCard}>
-              <Vote className={styles.statIcon} />
+          <Card className={styles.statCard}>
+            <Vote className={styles.statIcon} />
 
-              <p className={styles.statLabel}>Votes donnés</p>
+            <p className={styles.statLabel}>Votes donnés</p>
 
-              <p className={styles.statValue}>{dashboard.stats.votesGiven}</p>
-            </Card>
-          </div>
-        </section>
+            <p className={styles.statValue}>{dashboard.stats.votesGiven}</p>
+          </Card>
+        </div>
+      </section>
 
-        {/* =====================================================
+      {/* =====================================================
           HALL OF FAME
       ===================================================== */}
 
@@ -184,10 +196,10 @@ export function DashboardPageClient() {
 
             {dashboard.hallOfFame.challenge ? (
               <HallOfFameItem
-                href={`/challenges/${dashboard.hallOfFame.challenge!.slug}`}
-                image={dashboard.hallOfFame.challenge!.game.coverUrl}
-                title={dashboard.hallOfFame.challenge!.title}
-                votes={dashboard.hallOfFame.challenge!._count.votes}
+                href={`/challenges/${dashboard.hallOfFame.challenge.slug}`}
+                image={dashboard.hallOfFame.challenge.game.coverUrl}
+                title={dashboard.hallOfFame.challenge.title}
+                votes={dashboard.hallOfFame.challenge._count.votes}
               />
             ) : (
               <p className={styles.hallOfFameText}>
@@ -200,6 +212,7 @@ export function DashboardPageClient() {
             <h3 className={styles.hallOfFameTitle}>
               Participation la plus populaire
             </h3>
+
             {dashboard.hallOfFame.participation ? (
               <HallOfFameItem
                 href={`/participations/${dashboard.hallOfFame.participation.slug}`}
@@ -218,46 +231,40 @@ export function DashboardPageClient() {
         </div>
       </section>
 
-        {/* =====================================================
+      {/* =====================================================
           ACHIEVEMENTS
       ===================================================== */}
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>🎖️ Succès</h2>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>🎖️ Succès</h2>
 
-          <Card className={styles.achievementsCard}>
-            <div className={styles.achievementsList}>
-              <Badge variant="secondary">Premier défi</Badge>
+        <Card className={styles.achievementsCard}>
+          <div className={styles.achievementsList}>
+            <Badge variant="secondary">Premier défi</Badge>
+            <Badge variant="secondary">Première participation</Badge>
+            <Badge variant="secondary">Premier vote reçu</Badge>
+            <Badge variant="secondary">Créateur confirmé</Badge>
+            <Badge variant="secondary">Influenceur</Badge>
+            <Badge variant="secondary">Légende</Badge>
+          </div>
+        </Card>
+      </section>
 
-              <Badge variant="secondary">Première participation</Badge>
-
-              <Badge variant="secondary">Premier vote reçu</Badge>
-
-              <Badge variant="secondary">Créateur confirmé</Badge>
-
-              <Badge variant="secondary">Influenceur</Badge>
-
-              <Badge variant="secondary">Légende</Badge>
-            </div>
-          </Card>
-        </section>
-
-        {/* =====================================================
+      {/* =====================================================
           QUICK ACCESS
       ===================================================== */}
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>⭐ Accès rapides</h2>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>⭐ Accès rapides</h2>
 
-          <Card className={styles.navigationCard}>
-            <nav className={styles.navigationGrid}>
-              {dashboardLink.map((link) => (
-                <NavButton key={link.path} {...link} />
-              ))}
-            </nav>
-          </Card>
-        </section>
-      </div>
-    )
+        <Card className={styles.navigationCard}>
+          <nav className={styles.navigationGrid}>
+            {dashboardLink.map((link) => (
+              <NavButton key={link.path} {...link} />
+            ))}
+          </nav>
+        </Card>
+      </section>
+    </div>
   );
 }
