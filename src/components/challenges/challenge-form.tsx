@@ -12,17 +12,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import {
   Controller,
-  type FieldError,
   type UseFormReturn,
   type FieldErrors,
   useFieldArray,
 } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { challengeCategories } from "@/lib/challenge-category";
 import { GameSearchInput } from "@/components/GameSeachInput";
 import { createFormStyles as styles } from "@/styles/create-form.styles";
 import { cn } from "@/lib/utils";
 import { ChallengeFormValues } from "@/features/schema/challenge.schema";
+import { useDifficulties } from "@/features/hooks/useDifficulties";
+import { useCategories } from "@/features/hooks/useCategories";
+import { Loader } from "lucide-react";
 
 type CreateChallengeFormValues = ChallengeFormValues & { igdbId: number };
 
@@ -50,6 +51,9 @@ export function ChallengeForm<
     control,
     name: "hints", // ← doit matcher la clé du schéma
   });
+
+  const { difficulties, loadingDifficulties } = useDifficulties();
+  const { categories, loadingCategories } = useCategories();
 
   const MAX = 500;
 
@@ -189,21 +193,21 @@ export function ChallengeForm<
               <SelectContent
                 className={`${styles["cc-select-content"]} ${styles["cc-select-content--difficulty"]}`}
               >
-                <SelectItem value="1" className={`${styles["cc-select-item"]}`}>
-                  Facile
-                </SelectItem>
-                <SelectItem value="2" className={`${styles["cc-select-item"]}`}>
-                  Moyen
-                </SelectItem>
-                <SelectItem value="3" className={`${styles["cc-select-item"]}`}>
-                  Difficile
-                </SelectItem>
-                <SelectItem value="4" className={`${styles["cc-select-item"]}`}>
-                  Expert
-                </SelectItem>
-                <SelectItem value="5" className={`${styles["cc-select-item"]}`}>
-                  Légendaire
-                </SelectItem>
+                {loadingDifficulties ? (
+                  <Loader size="sm" />
+                ) : (
+                  [...(difficulties ?? [])]
+                    .sort((a, b) => a.difficultyIndex - b.difficultyIndex)
+                    .map((diff) => (
+                      <SelectItem
+                        key={diff.difficultyIndex}
+                        value={String(diff.id)}
+                        className={`${styles["cc-select-item"]}`}
+                      >
+                        {diff.name}
+                      </SelectItem>
+                    ))
+                )}
               </SelectContent>
             </Select>
           )}
@@ -243,23 +247,27 @@ export function ChallengeForm<
               <SelectContent
                 className={`${styles["cc-select-content"]} ${styles["cc-select-content--category"]}`}
               >
-                {challengeCategories.map((c) => (
-                  <SelectItem
-                    key={c.id}
-                    value={String(c.id)}
-                    className={`${styles["cc-select-item"]} ${styles["cc-select-item--category"]}`}
-                  >
-                    <span className="flex items-center gap-2">
-                      <span
-                        className="inline-block w-3 h-3 rounded-full"
-                        style={{ backgroundColor: c.colorCode }}
-                      />
-                      {c.id}
-                      {" - "}
-                      {c.name}
-                    </span>
-                  </SelectItem>
-                ))}
+                {loadingCategories ? (
+                  <Loader size="sm" />
+                ) : (
+                  [...(categories ?? [])].map((category) => (
+                    <SelectItem
+                      key={category.name}
+                      value={String(category.id)}
+                      className={`${styles["cc-select-item"]} ${styles["cc-select-item--category"]}`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span
+                          className="inline-block w-3 h-3 rounded-full"
+                          style={{
+                            backgroundColor: category.colorCode ?? undefined,
+                          }}
+                        />
+                        {category.name}
+                      </span>{" "}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           )}

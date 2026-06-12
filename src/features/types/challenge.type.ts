@@ -114,6 +114,13 @@ export enum DifficultyName {
   legendary = "Légendaire",
 }
 
+export interface Difficulties {
+  id: number;
+  name: DifficultyName;
+  colorCode: string | null;
+  difficultyIndex: number;
+}
+
 export enum CategoryName {
   speedrun = "Speedrun",
   noHit = "No Hit",
@@ -123,6 +130,12 @@ export enum CategoryName {
   pvp = "PvP",
   coop = "Coopératif",
   lowPercent = "Low%",
+}
+
+export interface ChallengeCategories {
+  id: number;
+  name: CategoryName;
+  colorCode: string | null;
 }
 
 export enum OrderBy {
