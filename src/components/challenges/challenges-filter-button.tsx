@@ -54,7 +54,7 @@ export function ChallengesFilterButton({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Filtres</Button>
+        <Button variant="filterButtonAlt">Filtres</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40">
         <DropdownMenuGroup>

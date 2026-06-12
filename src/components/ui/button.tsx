@@ -19,8 +19,10 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
-        filterButton: "rounded-sm bg-secondary text-secondary-foreground hover:brightness-115",
-        filterButtonAlt: "rounded-sm bg-surface dark:hover:brightness-115 dark:bg-background/90 text-text border-test-muted hover:text-secondary",
+        filterButton:
+          "rounded-sm bg-secondary text-secondary-foreground hover:brightness-115",
+        filterButtonAlt:
+          "rounded-full bg-surface-accent text-text border border-border hover:bg-surface-accent-hover",
         iconButton:
           "bg-primary text-primary-foreground hover:brightness-120 w-8 h-8 rounded-full",
         iconButtonToggle:
