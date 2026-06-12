@@ -14,13 +14,13 @@ export const dashboardLink = [
     icon: Trophy,
   },
   {
-    label: "Mes Brouillons",
-    path: `${path}draft`,
-    icon: Pen,
-  },
-  {
     label: "Mes Participations",
     path: `${path}participations`,
     icon: FileText,
+  },
+  {
+    label: "Mes Brouillons",
+    path: `${path}draft`,
+    icon: Pen,
   },
 ];
