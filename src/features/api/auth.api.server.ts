@@ -8,11 +8,11 @@ export async function getMe(): Promise<User | null> {
     const response = await fetch(`${API_BASE_URL}/auth/me`, {
       method: "GET",
       headers,
-    })
-    if (!response.ok) return null
-    
-    return response.json()
+    });
+    if (!response.ok) return null;
+
+    return response.json();
   } catch {
-    return null
+    return null;
   }
 }

@@ -18,14 +18,18 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.jsdelivr.net"
-      }
+        hostname: "cdn.jsdelivr.net",
+      },
     ],
   },
   async rewrites() {
     return [
       {
+<<<<<<< HEAD
         source: "/api/:path*",
+=======
+        source: "/api/:path",
+>>>>>>> b27537c (Fix: differents fixs)
         destination: `${process.env.BACKEND_INTERNAL_URL}/api/:path`,
       },
     ];

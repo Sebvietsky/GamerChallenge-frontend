@@ -29,4 +29,14 @@ export const DASHBOARD_LEVELS = [
     emoji: "👑",
     min: 5000,
   },
+  {
+    name: "L'Innarêtable",
+    emoji: "♾️",
+    min: 15000,
+  },
+  {
+    name: "L'Élu",
+    emoji: "🔱",
+    min: 50000,
+  },
 ] as const;
