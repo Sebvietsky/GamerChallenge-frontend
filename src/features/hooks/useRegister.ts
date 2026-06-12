@@ -1,6 +1,7 @@
 "use client";
 
 import { register as registerApi } from "../api/auth.api";
+import { loginUser } from "../api/auth.api";
 import { useAuth } from "@/features/hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -59,12 +60,13 @@ export function useRegister() {
   async function onSubmit(data: RegisterForm) {
     setError(null);
     try {
-      const response = await registerApi({
+      await registerApi({
         ...data,
         acceptCgu: true
       });
       toast.success("Création de compte réaliser avec succés !")
-      login(response.user);
+      const user = await loginUser(data)
+      login(user);
     } catch (err) {
       toast.error("Erreur lors de la création de compte")
       setError(err instanceof Error ? err.message : "Erreur inconnue");

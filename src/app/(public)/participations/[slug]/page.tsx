@@ -42,84 +42,82 @@ export default async function ParticipationPage({
   return (
     <div className="space-y-8 py-8 px-6 lg:px-8">
       {/* SECTION Header — image gauche + infos droite */}
-      <section className="flex flex-col items-center w-full justify-between lg:flex-row gap-4 lg:gap-6">
-        <div className="flex flex-col lg:flex-row gap-6 order-last lg:w-[80%] lg:order-first">
-          <div className="shrink-0 self-center">
-            <Image
-              src={data.challenge.game.coverUrl}
-              alt={`Cover de ${data.challenge.game.name}`}
-              width={190}
-              height={270}
-              className="rounded-lg object-cover"
+        <section className="flex flex-col w-full justify-between lg:flex-row gap-4 lg:gap-6">
+          <div className="flex flex-col lg:flex-row gap-6 order-last lg:w-[80%] lg:order-first">
+            <div className="shrink-0 self-center w-32 lg:w-48">
+              <Image
+                src={data.challenge.game.coverUrl}
+                alt={`Cover de ${data.challenge.game.name}`}
+                width={190}
+                height={270}
+                className="rounded-lg object-cover"
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+                {isAuthorOrAdmin && (
+                  <div className="flex gap-2">
+                <Link href={`/participations/${slug}/edit`} >
+                  <Button type="button"><Pen />Modifier ma participation</Button>
+                </Link>
+                <DeleteButton slug={data.slug} />
+                </div>
+                )}
+              <TagContainer data={data.challenge} />
+              <h1 className="text-2xl font-bold">
+                {data.challenge.game.name} - {data.challenge.title}
+              </h1>
+              {data.description && (
+                <p className="text-sm mt-2">{data.description}</p>
+              )}
+            </div>
+          </div>
+              <ButtonLike slug={slug} initialVotes={data._count.votes} initialLiked={isLiked} />
+        </section>
+        {/* SECTION bas — vidéo gauche + carte auteur droite */}
+        <section className="flex flex-col lg:flex-row gap-6">
+          {/* Colonne principale : vidéo */}
+          <div className="flex-1 bg-surface rounded-lg p-4 space-y-2">
+            <div className="flex items-center gap-2">
+              <Video size={20} className="shrink-0" />
+              <p className="">{data.title}</p>
+            </div>
+            <iframe
+              src={parseYoutubeUrl(data.video)}
+              title={data.title}
+              className="w-full aspect-video rounded-lg"
+              style={{ border: 0 }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             />
           </div>
-          <div className="flex flex-col gap-3">
-              {isAuthorOrAdmin && (
-                <div className="flex gap-2">
-              <Link href={`/participations/${slug}/edit`} >
-                <Button type="button"><Pen />Modifier ma participation</Button>
-              </Link>
-              <DeleteButton slug={data.slug} />
-              </div>
-              )}
-            <TagContainer data={data.challenge} />
-            <h1 className="text-2xl font-bold">
-              {data.challenge.game.name} - {data.challenge.title}
-            </h1>
-            {data.description && (
-              <p className="text-sm mt-2">{data.description}</p>
-            )}
+          {/* Colonne latérale : carte auteur */}
+          <div className="lg:w-90 w-full shrink-0 bg-surface rounded-lg p-4 space-y-4 self-start">
+            <p className="font-semibold text-sm">Participation de</p>
+            <div className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage
+                  src={data.user.profilePicture || undefined}
+                  alt={data.user.username}
+                />
+                <AvatarFallback>
+                  <User />
+                </AvatarFallback>
+              </Avatar>
+              <span className="font-medium">{data.user.username}</span>
+            </div>
+            <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+              <p className="flex items-center gap-2">
+                <Heart className="w-4 h-4" />
+                {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0)} {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0) > 1 ? "Votes sur les participations" : "Vote sur les participations"}
+              </p>
+              <p className="flex items-center gap-2">
+                <Trophy className="w-4 h-4" />
+                {data.user._count.participations} {data.user._count.participations > 1 ? "Participations" : "Participation"}
+              </p>
+            </div>
           </div>
-        </div>
-            <ButtonLike slug={slug} initialVotes={data._count.votes} initialLiked={isLiked} />
-      </section>
-
-      {/* SECTION bas — vidéo gauche + carte auteur droite */}
-      <section className="flex flex-col lg:flex-row gap-6">
-        {/* Colonne principale : vidéo */}
-        <div className="flex-1 bg-surface rounded-lg p-4 space-y-2">
-          <div className="flex items-center gap-2">
-            <Video size={20} className="shrink-0" />
-            <p className="">{data.title}</p>
-          </div>
-          <iframe
-            src={parseYoutubeUrl(data.video)}
-            title={data.title}
-            className="w-full aspect-video rounded-lg"
-            style={{ border: 0 }}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
-        </div>
-
-        {/* Colonne latérale : carte auteur */}
-        <div className="lg:w-90 w-full shrink-0 bg-surface rounded-lg p-4 space-y-4 self-start">
-          <p className="font-semibold text-sm">Participation de</p>
-          <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarImage
-                src={data.user.profilePicture || undefined}
-                alt={data.user.username}
-              />
-              <AvatarFallback>
-                <User />
-              </AvatarFallback>
-            </Avatar>
-            <span className="font-medium">{data.user.username}</span>
-          </div>
-          <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-            <p className="flex items-center gap-2">
-              <Heart className="w-4 h-4" />
-              {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0)} {data.user.participations.reduce((acc, p) => acc + p._count.votes, 0) > 1 ? "Votes sur les participations" : "Vote sur les participations"}
-            </p>
-            <p className="flex items-center gap-2">
-              <Trophy className="w-4 h-4" />
-              {data.user._count.participations} {data.user._count.participations > 1 ? "Participations" : "Participation"}
-            </p>
-          </div>
-        </div>
-      </section>
+        </section>
     </div>
   );
 }

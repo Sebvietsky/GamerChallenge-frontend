@@ -8,4 +8,3 @@ export const challengeCategories = [
   { id: 7,name: "Coopératif", colorCode: "#FF69B4" },
   { id: 8,name: "Low%", colorCode: "#FF8C00" },
 ]
-  
