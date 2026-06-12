@@ -25,12 +25,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-<<<<<<< HEAD
         source: "/api/:path*",
-=======
-        source: "/api/:path",
->>>>>>> b27537c (Fix: differents fixs)
-        destination: `${process.env.BACKEND_INTERNAL_URL}/api/:path`,
+        destination: `${process.env.BACKEND_INTERNAL_URL}/api/:path*`,
       },
     ];
   },

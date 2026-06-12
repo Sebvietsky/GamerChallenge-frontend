@@ -19,7 +19,6 @@ import {
   Lightbulb,
   Trophy,
   User,
-  Trash,
   Pen,
 } from "lucide-react";
 import {
