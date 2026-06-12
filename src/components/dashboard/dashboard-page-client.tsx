@@ -15,7 +15,6 @@ import { HallOfFameItem } from "./hall-of-fame-item";
 import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
 import { XPBar } from "./xp-bar";
 
-import { HallOfFameItem } from "./hall-of-fame-item";
 import { useDashboard } from "@/features/hooks/useDashboard";
 
 export function DashboardPageClient() {
@@ -85,7 +84,8 @@ export function DashboardPageClient() {
                     : `${dashboard.reputation} XP`}
                 </span>
               </div>
-            )}
+            </div>
+            )
 
               <XPBar progress={dashboard.progressPercent} />
 
