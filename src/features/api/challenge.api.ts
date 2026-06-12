@@ -5,7 +5,7 @@ import {
   type queryParams,
 } from "@/features/types/challenge.type";
 import { API_BASE_URL, fetchWithAuth } from "@/lib/api";
-import { CreateChallengePayload } from "../types/createSchema";
+import type { EditChallengePayload, CreateChallengePayload } from "../types/createSchema";
 
 interface PaginatedResponse {
   data: Challenge[];
@@ -167,7 +167,7 @@ export const favoriteToggle = createToggleService("favorites");
 
 export async function createChallenge(payload: CreateChallengePayload) {
   // title: string,
-  // gameId?: string,
+  // igdbId?: string,
   // description: string,
   // demo?: string,
   // goals?: string,
@@ -176,7 +176,6 @@ export async function createChallenge(payload: CreateChallengePayload) {
   // hints?: string,
   // closesAt?: string,
 
-  // TODO ajouter l'envoie de fichier pour la vidéo
   const response = await fetchWithAuth(`${API_BASE_URL}/challenges`, {
     method: "POST",
     headers: {
@@ -189,6 +188,31 @@ export async function createChallenge(payload: CreateChallengePayload) {
   if (!response.ok) throw new Error(await getErrorMessage(response));
 
   return response.json();
+}
+
+export async function editChallenge(slug: string, payload: EditChallengePayload) {
+
+  const response = await fetchWithAuth(`${API_BASE_URL}/challenges/${slug}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+    body: JSON.stringify(payload),
+  })
+
+  if(!response.ok) throw new Error(await getErrorMessage(response));
+
+  return response.json();
+}
+
+export async function deleteChallenge(slug: string): Promise<void> {
+
+  const response = await fetchWithAuth(`${API_BASE_URL}/challenges/${slug}`, {
+    method: "DELETE",
+  })
+
+  if (!response.ok) throw new Error("Impossible de supprimer le challenge")
 }
 
 function messageFromStatus(status: number): string {

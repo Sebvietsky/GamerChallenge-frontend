@@ -1,4 +1,4 @@
-import { CreateChallenge } from "@/components/common/create-challenge/createFrom";
+import { CreateChallenge } from "@/components/challenges/create-challenge/createFrom";
 
 export default function CreateChallengePage() {
   return (

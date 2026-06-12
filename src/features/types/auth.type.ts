@@ -5,6 +5,7 @@ export type RegisterPayload = {
   password: string
   confirm: string
   country: string
+  acceptCgu:  boolean
   // bio?: string
   // profilPicture?: File
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getMe } from "@/features/api/auth.api.server";
 import { Participation } from "@/components/common/participation/Participation";
 import { formatNumber, parseYoutubeUrl } from "@/lib/utils";
 import { challengeDetail as styles } from "@/styles/challenge-detail.styles";
@@ -11,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Users, Heart, Video, Lightbulb, Trophy, User } from "lucide-react";
+import { Users, Heart, Video, Lightbulb, Trophy, User, Trash, Pen } from "lucide-react";
 import {
   getChallengeBySlug,
   getParticipationsByChallenge,
@@ -26,6 +27,7 @@ import {
 } from "@/components/common/challenge-detail/ButtonLike";
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
+import { DeleteButton } from "./DeleteButton";
 
 interface ChallengeDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -36,10 +38,20 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
+  
+  const me = await getMe();
+  const user = me?.userWithoutPassword
+  
+  let isAuthorOrAdmin = false
+  if(user?.username === data?.user.username || user?.role === "admin") {
+    isAuthorOrAdmin = true;
+  }
+
 
   const likedChallenges = await getUserLikedOnChallenge();
   const favoritedChallenges = await getUserFavoritedOnChallenge();
   const participations = await getParticipationsByChallenge(slug);
+  const canParticipate = !participations?.some(p => p.user.username === user?.username)
 
   const numberOfParticipants = data
     ? data.user.challenges.reduce((acc, p) => acc + p._count.participations, 0)
@@ -64,6 +76,8 @@ export default async function ChallengeDetailPage({
     return null;
   }
 
+  
+
   return (
     <div className={styles.main}>
       {/* SECTION haut de page : Image, titre,...  */}
@@ -79,6 +93,14 @@ export default async function ChallengeDetailPage({
             />
           </div>
           <div className={styles.contentContainer}>
+            { isAuthorOrAdmin && (
+              <div className="flex gap-2 items-center">
+                <Link href={`/challenges/${data.slug}/edit`}>
+                  <Button type="button"><Pen />Modifier le challenge</Button>
+                </Link>
+                <DeleteButton slug={data.slug}/>
+              </div>
+            )}
             <TagContainer data={data} />
             <h1 className={styles.title}>
               {data.game.name} - {data.title}
@@ -206,11 +228,18 @@ export default async function ChallengeDetailPage({
           </p>
         </div>
         <div className="w-full lg:w-[80%]">
+          { canParticipate ? (
           <Link href={`/participate/${slug}`}>
             <Button className={styles.ctaButton}>
               Participer au challenge
             </Button>
           </Link>
+
+          ) : (
+            <Button className={styles.ctaButtonDisable}>
+              Vous y avez déjà participé
+            </Button>
+          )}
         </div>
       </section>
     </div>

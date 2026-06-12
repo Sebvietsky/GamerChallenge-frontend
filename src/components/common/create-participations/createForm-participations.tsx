@@ -8,17 +8,31 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import ChallengeSummaryCard from "@/components/common/create-participations/ChallengeSummaryCard";
-import { Challenge } from "@/features/types/challenge.type";
+import { Challenge, Participation } from "@/features/types/challenge.type";
 import { useCreateParticipation } from "@/features/hooks/useCreateParticipations";
+import { useEditParticipation } from "@/features/hooks/useEditParticipation";
+
+import { RequiredStar } from "../form/RequiredStar";
+
+import type { UseFormReturn, FieldErrors } from "react-hook-form";
 
 type CreateParticipationFormProps = {
+  participation?: Participation
   challenge: Challenge;
 };
 
 export default function CreateParticipationForm({
   challenge,
+  participation
 }: CreateParticipationFormProps) {
-  const { form, errors, onSubmit } = useCreateParticipation(challenge.slug);
+  const createHook = useCreateParticipation(challenge.slug) as any
+  const editHook = useEditParticipation(participation?.slug ?? "", participation ?? {} as Participation) as any
+
+    const { form, errors, onSubmit } = participation ? editHook : createHook  as {
+  form: UseFormReturn<any>;
+  errors: FieldErrors<any>;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+}
 
   return (
     <div className={styles.page}>
@@ -28,7 +42,7 @@ export default function CreateParticipationForm({
         ========================================================= */}
 
         <div className={styles.header}>
-          <h1 className={styles.title}>Ma participation</h1>
+          <h1 className={styles.title}>Ma participation </h1>
         </div>
 
         {/* =========================================================
@@ -49,7 +63,9 @@ export default function CreateParticipationForm({
             ===================================================== */}
 
               <div className={styles.field}>
-                <label className={styles.label}>Titre</label>
+                <label className={styles.label}>
+                  Titre <RequiredStar />
+                </label>
 
                 <Input
                   placeholder="Ex : Victoire sans utiliser d'objets"
@@ -67,7 +83,9 @@ export default function CreateParticipationForm({
             ===================================================== */}
 
               <div className={styles.field}>
-                <label className={styles.label}>Description</label>
+                <label className={styles.label}>
+                  Description <RequiredStar />
+                </label>
 
                 <Textarea
                   rows={8}
@@ -86,7 +104,9 @@ export default function CreateParticipationForm({
             ===================================================== */}
 
               <div className="space-y-4">
-                <label className={styles.label}>Média (optionnel)</label>
+                <label className={styles.label}>
+                  Média (optionnel) <RequiredStar />
+                </label>
 
                 <div className={styles.mediaBox}>
                   <div className={styles.mediaContent}>
@@ -100,9 +120,8 @@ export default function CreateParticipationForm({
                     </p>
                   </div>
                 </div>
-
                 <Input
-                  placeholder="https://youtube.com/watch?v=..."
+                  placeholder="https://youtube.com/watch?v=... "
                   {...form.register("video")}
                 />
                 {errors.video && (
@@ -117,7 +136,7 @@ export default function CreateParticipationForm({
             ===================================================== */}
 
               <Button size="lg" className={styles.submitButton} type="submit">
-                Publier ma participation
+                {!participation ? "Publier ma participation" : "Modifier ma participation"}
               </Button>
             </div>
           </form>

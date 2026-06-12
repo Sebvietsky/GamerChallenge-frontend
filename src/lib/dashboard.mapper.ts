@@ -16,28 +16,28 @@ export function mapDashboardData(data: DashboardResponse): DashboardModelView {
   const totalActivity = votesGiven + votesReceived;
 
   const reputation =
-    data.totalChallengeCreated * 20 +
-    data.totalParticipation * 10 +
-    votesReceived * 5 +
+    data.totalChallengeCreated * 50 +
+    data.totalParticipation * 20 +
+    votesReceived * 10 +
     votesGiven;
 
   const levels = [
     { name: "Novice 🌱", min: 0 },
     { name: "Challenger 🥉", min: 100 },
-    { name: "Compétiteur 🥈", min: 250 },
-    { name: "Vétéran 🥇", min: 500 },
-    { name: "Maître des challenges 🏅", min: 1000 },
-    { name: "Légende 👑", min: 2000 },
+    { name: "Compétiteur 🥈", min: 500 },
+    { name: "Vétéran 🥇", min: 1000 },
+    { name: "Maître des challenges 🏅", min: 2500 },
+    { name: "Légende 👑", min: 5000 },
   ];
 
-  const currentLevel = [...levels]
-    .reverse()
-    .find((level) => reputation >= level.min)!;
+  const currentLevel =
+    [...levels].reverse().find((level) => reputation >= level.min) ?? levels[0];
   const nextLevel = [...levels].find((level) => level.min > reputation) ?? null;
   const nextLevelStep = nextLevel?.min ?? null;
   const pointsToNextLevel = nextLevelStep ? nextLevelStep - reputation : 0;
-  const progressPercent = nextLevelStep
-    ? Math.min((reputation / nextLevelStep) * 100, 100)
+  const progressPercent = nextLevel
+    ? ((reputation - currentLevel.min) / (nextLevel.min - currentLevel.min)) *
+      100
     : 100;
 
   return {

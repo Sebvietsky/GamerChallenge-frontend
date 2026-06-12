@@ -1,6 +1,5 @@
-export interface CreateChallengePayload {
+export interface EditChallengePayload {
   title: string;
-  igdbId: number;
   description: string;
   demo?: string;
   goals?: string;
@@ -9,6 +8,10 @@ export interface CreateChallengePayload {
   hints?: string;
   status?: string;
   closesAt?: Date;
+}
+
+export interface CreateChallengePayload extends EditChallengePayload {
+  igdbId: number;
 }
 
 export interface CreateParticipationPayload {

@@ -2,23 +2,39 @@
 
 import Image from "next/image";
 
-import { User, Trophy, Heart, Vote, Medal } from "lucide-react";
+import { User, Trophy, Heart, Vote, Medal, Loader } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+
 import { useAuth } from "@/features/hooks/useAuth";
+import { useDashboard } from "@/features/hooks/useDashboard";
+
 import { NavButton } from "@/components/dashboard/nav-button";
 import { dashboardLink } from "@/components/dashboard/nav-button-link";
+
 import { dashboardStyles as styles } from "@/styles/dashboard.styles";
-import { DashboardModelView } from "@/features/types/dashboard.type";
 
-type DashboardPageClientProps = {
-  dashboard: DashboardModelView;
-};
+import { HallOfFameItem } from "./hall-of-fame-item";
+import { XPBar } from "./xp-bar";
 
-export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
+import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
+
+export function DashboardPageClient() {
   const { user } = useAuth();
-  console.log(dashboard);
+  const { dashboard, loading } = useDashboard();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!dashboard) {
+    return null;
+  }
 
   return (
     <div className={styles.page}>
@@ -63,28 +79,51 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
               </p>
             )}
 
-            {/* Reputation */}
+            {/* =====================================================
+                RENOMMEE
+            ===================================================== */}
 
             <div className={styles.reputationContainer}>
               <div className={styles.reputationHeader}>
-                <span>Réputation</span>
+                <span>Renommée</span>
+
+                <p className={styles.reputationText}>
+                  {dashboard.nextLevel
+                    ? `Plus que ${dashboard.pointsToNextLevel} points pour atteindre ${dashboard.nextLevel}`
+                    : "🏆 Félicitations, vous avez atteint le rang ULTIME 🏆"}
+                </p>
 
                 <span>
-                  {dashboard.nextLevelStep
+                  {dashboard.nextLevel
                     ? `${dashboard.reputation} / ${dashboard.nextLevelStep}`
                     : `${dashboard.reputation} XP`}
                 </span>
               </div>
+            </div>
 
-              <div className={styles.reputationBar}>
-                <div className={styles.reputationProgress} />
-              </div>
+            <XPBar progress={dashboard.progressPercent} />
 
-              <p className={styles.reputationText}>
-                {dashboard.nextLevel
-                  ? `Plus que ${dashboard.pointsToNextLevel} points pour atteindre ${dashboard.nextLevel}`
-                  : "🏆 Félicitations, vous avez atteint le rang ULTIME 🏆"}
-              </p>
+            <div className={styles.levelTrack}>
+              {DASHBOARD_LEVELS.map((level) => {
+                const unlocked = dashboard.reputation >= level.min;
+                const current = dashboard.level === level.name;
+
+                return (
+                  <span
+                    key={level.name}
+                    title={level.name}
+                    className={
+                      current
+                        ? styles.levelCurrent
+                        : unlocked
+                          ? styles.levelUnlocked
+                          : styles.levelLocked
+                    }
+                  >
+                    {level.emoji}
+                  </span>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -153,9 +192,18 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
               Challenge le plus populaire
             </h3>
 
-            <p className={styles.hallOfFameText}>
-              Aucun challenge populaire pour le moment.
-            </p>
+            {dashboard.hallOfFame.challenge ? (
+              <HallOfFameItem
+                href={`/challenges/${dashboard.hallOfFame.challenge.slug}`}
+                image={dashboard.hallOfFame.challenge.game.coverUrl}
+                title={dashboard.hallOfFame.challenge.title}
+                votes={dashboard.hallOfFame.challenge._count.votes}
+              />
+            ) : (
+              <p className={styles.hallOfFameText}>
+                Aucun challenge populaire pour le moment.
+              </p>
+            )}
           </Card>
 
           <Card className={styles.hallOfFameCard}>
@@ -163,9 +211,20 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
               Participation la plus populaire
             </h3>
 
-            <p className={styles.hallOfFameText}>
-              Aucune participation populaire pour le moment.
-            </p>
+            {dashboard.hallOfFame.participation ? (
+              <HallOfFameItem
+                href={`/participations/${dashboard.hallOfFame.participation.slug}`}
+                image={
+                  dashboard.hallOfFame.participation.challenge?.game.coverUrl
+                }
+                title={dashboard.hallOfFame.participation.title}
+                votes={dashboard.hallOfFame.participation.votes}
+              />
+            ) : (
+              <p className={styles.hallOfFameText}>
+                Aucune participation populaire pour le moment.
+              </p>
+            )}
           </Card>
         </div>
       </section>
@@ -180,15 +239,10 @@ export function DashboardPageClient({ dashboard }: DashboardPageClientProps) {
         <Card className={styles.achievementsCard}>
           <div className={styles.achievementsList}>
             <Badge variant="secondary">Premier défi</Badge>
-
             <Badge variant="secondary">Première participation</Badge>
-
             <Badge variant="secondary">Premier vote reçu</Badge>
-
             <Badge variant="secondary">Créateur confirmé</Badge>
-
             <Badge variant="secondary">Influenceur</Badge>
-
             <Badge variant="secondary">Légende</Badge>
           </div>
         </Card>
