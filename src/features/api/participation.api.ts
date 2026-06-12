@@ -3,20 +3,54 @@ import { getErrorMessage } from "@/features/api/challenge.api";
 import { CreateParticipationPayload } from "../types/createSchema";
 
 import type { Participation } from "@/features/types/challenge.type";
+import { queryParams } from "../types/participation.type";
 
-export async function getParticipationsBySlug(slug: string): Promise<Participation | null> {
-
-  const response = await fetch(`${API_BASE_URL}/participations/${slug}`, {
-    credentials: "include",
-    cache: "no-store"
-  })
-  if(response.status === 404) return null
-  if(!response.ok) throw new Error("Impossible de récupérer la participation")
-  
-  const data: Participation = await response.json()
-  return data;
+interface PaginatedResponse {
+  data: Participation[];
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
 }
 
+export async function getTrendingParticipations({
+  page = 1,
+  limit = 20,
+}: queryParams): Promise<Participation[]> {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/participations/trends?${params}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Impossible de récupérer les participations");
+  }
+
+  const json: PaginatedResponse = await response.json();
+  return json.data;
+}
+
+export async function getParticipationsBySlug(
+  slug: string,
+): Promise<Participation | null> {
+  const response = await fetch(`${API_BASE_URL}/participations/${slug}`, {
+    credentials: "include",
+    cache: "no-store",
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error("Impossible de récupérer la participation");
+
+  const data: Participation = await response.json();
+  return data;
+}
 
 export async function createParticipation(
   challengeSlug: string,
@@ -39,45 +73,57 @@ export async function createParticipation(
 
 export async function editParticipation(
   slug: string,
-  payload: CreateParticipationPayload
+  payload: CreateParticipationPayload,
 ) {
-  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/participations/${slug}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-cache",
+      body: JSON.stringify(payload),
     },
-    cache: "no-cache",
-    body: JSON.stringify(payload)
-  })
+  );
 
-  if(!response.ok) throw new Error(await getErrorMessage(response))
+  if (!response.ok) throw new Error(await getErrorMessage(response));
 
   return response.json();
 }
 
-export async function deleteParticiaption(slug: string){
-  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}`, {
-    method: "DELETE",
-  })
+export async function deleteParticiaption(slug: string) {
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/participations/${slug}`,
+    {
+      method: "DELETE",
+    },
+  );
 
-  if(!response.ok) throw new Error("Impossible de supprimer la participation")
+  if (!response.ok) throw new Error("Impossible de supprimer la participation");
 }
 
 export async function voteParticipation(slug: string): Promise<void> {
-  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}/vote`, {
-    method: "POST",
-  })
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/participations/${slug}/vote`,
+    {
+      method: "POST",
+    },
+  );
 
-  if (response.status === 409) throw new Error("ALREADY_VOTED")
-  if (response.status === 401) throw new Error("UNAUTHORIZED")
-  if (!response.ok) throw new Error("Impossible de voter")
+  if (response.status === 409) throw new Error("ALREADY_VOTED");
+  if (response.status === 401) throw new Error("UNAUTHORIZED");
+  if (!response.ok) throw new Error("Impossible de voter");
 }
 
 export async function unvoteParticipation(slug: string): Promise<void> {
-  const response = await fetchWithAuth(`${API_BASE_URL}/participations/${slug}/vote`, {
-    method: "DELETE",
-  })
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/participations/${slug}/vote`,
+    {
+      method: "DELETE",
+    },
+  );
 
-  if (response.status === 401) throw new Error("UNAUTHORIZED")
-  if (!response.ok) throw new Error("Impossible de retirer le vote")
+  if (response.status === 401) throw new Error("UNAUTHORIZED");
+  if (!response.ok) throw new Error("Impossible de retirer le vote");
 }
