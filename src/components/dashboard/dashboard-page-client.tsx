@@ -23,7 +23,6 @@ import { DASHBOARD_LEVELS } from "@/lib/dashboard-levels";
 export function DashboardPageClient() {
   const { user } = useAuth();
   const { dashboard, loading } = useDashboard();
-
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -95,7 +94,7 @@ export function DashboardPageClient() {
 
                 <span>
                   {dashboard.nextLevel
-                    ? `${dashboard.reputation} / ${dashboard.nextLevelStep}`
+                    ? `${dashboard.currentXp} / ${dashboard.xpRequired}`
                     : `${dashboard.reputation} XP`}
                 </span>
               </div>

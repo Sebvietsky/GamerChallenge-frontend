@@ -41,6 +41,9 @@ export function mapDashboardData(data: DashboardResponse): DashboardModelView {
     ? ((reputation - currentLevel.min) / (nextLevel.min - currentLevel.min)) *
       100
     : 100;
+  const currentXp = reputation - currentLevel.min;
+
+  const xpRequired = nextLevel ? nextLevel.min - currentLevel.min : 0;
 
   return {
     reputation,
@@ -50,6 +53,9 @@ export function mapDashboardData(data: DashboardResponse): DashboardModelView {
     nextLevelStep,
     pointsToNextLevel,
     progressPercent,
+
+    currentXp,
+    xpRequired,
 
     stats: {
       challenges: data.totalChallengeCreated,

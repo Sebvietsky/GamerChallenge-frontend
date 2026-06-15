@@ -42,6 +42,9 @@ export type DashboardModelView = {
   pointsToNextLevel: number;
   progressPercent: number;
 
+  currentXp: number;
+  xpRequired: number;
+
   stats: {
     challenges: number;
     participations: number;
