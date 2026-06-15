@@ -58,7 +58,7 @@ export function useFavoriteChallenges() {
           limit,
         });
         setFavoriteChallenges(data);
-        if (data.length <= limit) setHasMoreData(false);
+        if (data.length < limit) setHasMoreData(false);
       } finally {
         restoredPage.current = null;
         setLoading(false);
