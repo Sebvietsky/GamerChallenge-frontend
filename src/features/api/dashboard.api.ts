@@ -34,10 +34,13 @@ export async function getFavoriteChallenges({
   });
 
   console.log(API_BASE_URL);
-  const response = await fetch(`${API_BASE_URL}/user/getFavorites?${params}`, {
-    credentials: "include",
-    cache: "no-store",
-  });
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/user/getFavorites?${params}`,
+    {
+      cache: "no-store",
+      method: "GET",
+    },
+  );
 
   console.log(response);
 
