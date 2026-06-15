@@ -128,24 +128,26 @@ export default async function ChallengeDetailPage({
               alt="Image du jeu"
             />
           </div>
-          <TagContainer data={data} />
-          <h1 className={styles.title}>
-            {data.game.name} - {data.title}
-          </h1>
-          <div className={styles.dataContainer}>
-            <p className={styles.dataStat}>
-              <Users className={styles.icon} />
-              {formatNumber(data._count.participations)}{" "}
-              {data._count.participations > 1 ? "participants" : "participant"}
-            </p>
-            <p className={styles.dataStat}>
-              <Heart className={styles.icon} />
-              {formatNumber(data._count.votes)}{" "}
-              {data._count.votes > 1 ? "votes" : "vote"}
-            </p>
+          <div className={styles.contentContainer}>
+            <TagContainer data={data} />
+            <h1 className={styles.title}>
+              {data.game.name} - {data.title}
+            </h1>
+            <div className={styles.dataContainer}>
+              <p className={styles.dataStat}>
+                <Users className={styles.icon} />
+                {formatNumber(data._count.participations)}{" "}
+                {data._count.participations > 1 ? "participants" : "participant"}
+              </p>
+              <p className={styles.dataStat}>
+                <Heart className={styles.icon} />
+                {formatNumber(data._count.votes)}{" "}
+                {data._count.votes > 1 ? "votes" : "vote"}
+              </p>
+            </div>
+            <p className={styles.description}>{data.description}</p>
+            <p className={styles.description}>{data.goals}</p>
           </div>
-          <p className={styles.description}>{data.description}</p>
-          <p className={styles.description}>{data.goals}</p>
         </div>
         {/* SECTION Vidéo, Créé par and Indice */}
       </section>
@@ -166,7 +168,7 @@ export default async function ChallengeDetailPage({
             ></iframe>
           ) : (
             <Image
-              src={"/images/image-not-found.png"}
+              src={"/images/image-not-found-old.png"}
               className={styles.iframe}
               alt="Video non trouver"
               width={1000}
