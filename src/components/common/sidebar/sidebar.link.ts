@@ -28,7 +28,7 @@ export const sidebarLinks = [
 
   {
     label: "Participations à la une",
-    href: "/featured",
+    href: "/participations/trends",
     icon: MessageCircle,
   },
 

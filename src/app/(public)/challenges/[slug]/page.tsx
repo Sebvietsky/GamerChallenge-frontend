@@ -46,6 +46,10 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
+  console.log(data);
+  // Sorted hints for display
+  const hints = Array.isArray(data?.hints) ? data.hints : [];
+  const sortedHints = hints.slice().sort((a, b) => a.position - b.position);
 
   const me = await getMe();
   const user = me?.userWithoutPassword;
@@ -89,7 +93,7 @@ export default async function ChallengeDetailPage({
     <div className={styles.main}>
       {/* SECTION haut de page : Image, titre,...  */}
       <section className={styles.sectionDetail}>
-        <div className="flex flex-row-reverse justify-between lg:justify-start items-center">
+        <div className="flex flex-row-reverse justify-between lg:justify-start items-center mb-2">
           <div className={styles.buttonContainer}>
             <LikeButton
               slug={slug}
@@ -125,17 +129,6 @@ export default async function ChallengeDetailPage({
             />
           </div>
           <div className={styles.contentContainer}>
-            {isAuthorOrAdmin && (
-              <div className="flex gap-2 items-center">
-                <Link href={`/challenges/${data.slug}/edit`}>
-                  <Button type="button">
-                    <Pen />
-                    Modifier le challenge
-                  </Button>
-                </Link>
-                <DeleteButton slug={data.slug} />
-              </div>
-            )}
             <TagContainer data={data} />
             <h1 className={styles.title}>
               {data.game.name} - {data.title}
@@ -144,9 +137,7 @@ export default async function ChallengeDetailPage({
               <p className={styles.dataStat}>
                 <Users className={styles.icon} />
                 {formatNumber(data._count.participations)}{" "}
-                {data._count.participations > 1
-                  ? "participants"
-                  : "participant"}
+                {data._count.participations > 1 ? "participants" : "participant"}
               </p>
               <p className={styles.dataStat}>
                 <Heart className={styles.icon} />
@@ -177,7 +168,7 @@ export default async function ChallengeDetailPage({
             ></iframe>
           ) : (
             <Image
-              src={"/images/image-not-found.png"}
+              src={"/images/image-not-found-old.png"}
               className={styles.iframe}
               alt="Video non trouver"
               width={1000}
@@ -186,17 +177,20 @@ export default async function ChallengeDetailPage({
           )}
         </div>
         <div className={styles.hintsContainer}>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="indices">
-              <AccordionTrigger>
-                <Lightbulb />
-                Indices
-              </AccordionTrigger>
-              <AccordionContent>
-                <p>{data.hints}</p>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <h2 className="flex">
+            <Lightbulb /> Indices ({hints.length})
+          </h2>
+          <div>
+            {/* TODO Change by challenge.hints */}
+            <Accordion type="single" collapsible>
+              {sortedHints.map((s) => (
+                <AccordionItem key={s.position} value={`indice ${s.position}`}>
+                  <AccordionTrigger>{`Indices ${s.position}`}</AccordionTrigger>
+                  <AccordionContent>{s.description}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
         <div className={styles.creatorContainer}>
           <h2 className={styles.creatorTitle}>Créé par</h2>

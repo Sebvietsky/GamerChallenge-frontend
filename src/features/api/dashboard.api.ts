@@ -34,19 +34,19 @@ export async function getFavoriteChallenges({
   });
 
   console.log(API_BASE_URL);
-  const response = await fetch(`${API_BASE_URL}/user/getFavorites?${params}`, {
-    credentials: "include",
-    cache: "no-store",
-  });
-
-  console.log(response);
+  const response = await fetchWithAuth(
+    `${API_BASE_URL}/user/getFavorites?${params}`,
+    {
+      cache: "no-store",
+      method: "GET",
+    },
+  );
 
   if (!response.ok) {
-    throw new Error("Impossible de récupérer les challenges");
+    return [];
   }
 
   const json: PaginatedResponse = await response.json();
 
-  console.log(json);
   return json.data;
 }

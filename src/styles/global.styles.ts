@@ -26,6 +26,12 @@ export const homeStyles = {
 
   cardsGrid: "w-full",
 
+  // Liste des Participations
+
+  gridParticipations: "mt-10 flex flex-col gap-6",
+
+  participationCardsGrid: "w-full",
+
   // Bouton de tri
 
   challengesOrderByButtonContainer:
@@ -57,4 +63,6 @@ export const homeStyles = {
   stats: "flex gap-1",
 
   tag: "self-center shadow/40 rounded px-1 py-0.5 font-sans text-xs text-surface lg:text-lg",
+
+  participationTitle: "text-2xl",
 };
