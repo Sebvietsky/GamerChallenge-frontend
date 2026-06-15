@@ -18,8 +18,8 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.jsdelivr.net"
-      }
+        hostname: "cdn.jsdelivr.net",
+      },
     ],
   },
   async rewrites() {

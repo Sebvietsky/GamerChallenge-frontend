@@ -1,4 +1,8 @@
 import type { Challenge } from "@/features/types/challenge.type";
+import {
+  DashboardChallenge,
+  DashboardParticipation,
+} from "./dashboard-content.type";
 
 export type DashboardResponse = {
   totalParticipation: number;
@@ -24,6 +28,9 @@ export type DashboardResponse = {
       };
     };
   } | null;
+
+  allUserChallenges: DashboardChallenge[];
+  allUserParticipations: DashboardParticipation[];
 };
 
 export type DashboardModelView = {

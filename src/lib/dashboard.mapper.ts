@@ -28,6 +28,8 @@ export function mapDashboardData(data: DashboardResponse): DashboardModelView {
     { name: "Vétéran 🥇", min: 1000 },
     { name: "Maître des challenges 🏅", min: 2500 },
     { name: "Légende 👑", min: 5000 },
+    { name: "L'Innarêtable ♾️", min: 15000 },
+    { name: "L'Élu 🔱", min: 50000 },
   ];
 
   const currentLevel =
