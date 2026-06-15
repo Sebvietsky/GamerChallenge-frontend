@@ -59,14 +59,13 @@ export function useFavoriteChallenges() {
         });
         setFavoriteChallenges(data);
         if (data.length < limit) setHasMoreData(false);
-        console.log(hasMoreData);
       } finally {
         restoredPage.current = null;
         setLoading(false);
       }
     }
     fetchChallenges();
-  }, [hasMoreData]);
+  }, []);
 
   // Persiste l'état courant de la liste pour pouvoir le restaurer au retour
   useEffect(() => {
