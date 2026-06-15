@@ -69,3 +69,6 @@ export const EASTER_EGG = {
   },
   isEasterEgg: true,
 };
+
+export const PARTICIPATIONS_PER_PAGE = 5;
+export const PARTICIPATIONS_DEFAULT_PAGE = 1;
