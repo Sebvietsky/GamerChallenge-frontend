@@ -58,7 +58,8 @@ export function useFavoriteChallenges() {
           limit,
         });
         setFavoriteChallenges(data);
-        if (data.length <= limit) setHasMoreData(false);
+        if (data.length < limit) setHasMoreData(false);
+        console.log(hasMoreData);
       } finally {
         restoredPage.current = null;
         setLoading(false);
@@ -76,6 +77,7 @@ export function useFavoriteChallenges() {
     if (!hasMoreData || isFetchingMore.current || loading) return;
     isFetchingMore.current = true;
     const nextPage = page + 1;
+    console.log("HELLO");
     try {
       const data = await getFavoriteChallenges({
         page: nextPage,
