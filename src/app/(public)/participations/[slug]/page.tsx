@@ -1,6 +1,6 @@
 import { TagContainer } from "@/components/common/tagContainer/TagContainer";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { User, Trophy, Heart, Video, Pen, Trash } from "lucide-react";
+import { User, Trophy, Heart, Video, Pen, Trash, ChevronLeft } from "lucide-react";
 import type { LikedAndFavoriteChallenge } from "@/features/types/challenge.type";
 import { formatNumber } from "@/lib/utils";
 
@@ -58,9 +58,11 @@ export default async function ParticipationPage({
           </div>
           <div className="flex flex-col gap-3">
             <TagContainer data={data.challenge} />
-            <h1 className="text-2xl font-bold">
-              {data.challenge.game.name} - {data.challenge.title}
-            </h1>
+            <Link href={`/challenges/${data.challenge.slug}`}>
+              <h1 className="text-2xl font-bold">
+                {data.challenge.game.name} - {data.challenge.title}
+              </h1>
+            </Link>
             {data.description && (
               <p className="text-sm mt-2">{data.description}</p>
             )}
@@ -146,6 +148,13 @@ export default async function ParticipationPage({
             </p>
           </div>
         </div>
+      </section>
+      <section className="w-full lg:w-[80%] m-auto">
+        <Link href={`/challenges/${data.challenge.slug}`} className="w-full">
+          <Button className="w-full py-6">
+            <ChevronLeft size={40} />Retour au challenge
+          </Button>
+        </Link>
       </section>
     </div>
   );
