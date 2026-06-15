@@ -66,7 +66,7 @@ export function useFavoriteChallenges() {
       }
     }
     fetchChallenges();
-  }, []);
+  }, [hasMoreData]);
 
   // Persiste l'état courant de la liste pour pouvoir le restaurer au retour
   useEffect(() => {
