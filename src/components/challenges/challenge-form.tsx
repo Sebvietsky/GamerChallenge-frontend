@@ -10,32 +10,50 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
-import { Controller, type FieldError, type UseFormReturn, type FieldErrors } from "react-hook-form";
+import {
+  Controller,
+  type UseFormReturn,
+  type FieldErrors,
+  useFieldArray,
+} from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { challengeCategories } from "@/lib/challenge-category";
 import { GameSearchInput } from "@/components/GameSeachInput";
 import { createFormStyles as styles } from "@/styles/create-form.styles";
 import { cn } from "@/lib/utils";
 import { ChallengeFormValues } from "@/features/schema/challenge.schema";
+import { useDifficulties } from "@/features/hooks/useDifficulties";
+import { useCategories } from "@/features/hooks/useCategories";
+import { Loader } from "lucide-react";
 
 type CreateChallengeFormValues = ChallengeFormValues & { igdbId: number };
 
-type ChallengeProps<T extends ChallengeFormValues | CreateChallengeFormValues> = {
-  mode: "edit" | "create";
-  form: UseFormReturn<T>;
-  onSubmit: (e: React.SubmitEvent) => void;
-}
+type ChallengeProps<T extends ChallengeFormValues | CreateChallengeFormValues> =
+  {
+    mode: "edit" | "create";
+    form: UseFormReturn<T>;
+    onSubmit: (e: React.SubmitEvent) => void;
+  };
 
-export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFormValues>({form, onSubmit, mode}: ChallengeProps<T>){
+export function ChallengeForm<
+  T extends ChallengeFormValues | CreateChallengeFormValues,
+>({ form, onSubmit, mode }: ChallengeProps<T>) {
   const anyForm = form as UseFormReturn<any>;
   const {
     register,
     watch,
+    control,
     formState: { errors },
   } = anyForm;
   const description = watch("description") ?? "";
   const goals = watch("goals") ?? "";
-  const hints = watch("hints") ?? "";
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "hints", // ← doit matcher la clé du schéma
+  });
+
+  const { difficulties, loadingDifficulties } = useDifficulties();
+  const { categories, loadingCategories } = useCategories();
 
   const MAX = 500;
 
@@ -45,7 +63,8 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
         htmlFor="title"
         className={`${styles["cc-label"]} ${styles["cc-label--title"]}`}
       >
-        Titre<RequiredStar />
+        Titre
+        <RequiredStar />
       </label>
       <Input
         {...register("title")}
@@ -61,35 +80,47 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
       )}
       {mode === "create" && (
         <>
-        <label
-          htmlFor="igdbId"
-          className={`${styles["cc-label"]} ${styles["cc-label--igdbId"]}`}
-        >
-          Jeu<RequiredStar />
-        </label>
-        <div className={`${styles["cc-field"]} ${styles["cc-field--igdbId"]}`}>
-          <Controller
-            name="igdbId"
-            control={(anyForm as UseFormReturn<CreateChallengeFormValues>).control}
-            render={({ field }) => (
-              <GameSearchInput value={field.value} onChange={field.onChange} />
-            )}
-          />
-        </div>
-        {(errors as FieldErrors<CreateChallengeFormValues>).igdbId && (
-          <p className={`${styles["cc-error"]} ${styles["cc-error--igdbId"]}`}>
-            {(errors as FieldErrors<CreateChallengeFormValues>).igdbId?.message}
-          </p>
-        )}
+          <label
+            htmlFor="igdbId"
+            className={`${styles["cc-label"]} ${styles["cc-label--igdbId"]}`}
+          >
+            Jeu
+            <RequiredStar />
+          </label>
+          <div
+            className={`${styles["cc-field"]} ${styles["cc-field--igdbId"]}`}
+          >
+            <Controller
+              name="igdbId"
+              control={
+                (anyForm as UseFormReturn<CreateChallengeFormValues>).control
+              }
+              render={({ field }) => (
+                <GameSearchInput
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </div>
+          {(errors as FieldErrors<CreateChallengeFormValues>).igdbId && (
+            <p
+              className={`${styles["cc-error"]} ${styles["cc-error--igdbId"]}`}
+            >
+              {
+                (errors as FieldErrors<CreateChallengeFormValues>).igdbId
+                  ?.message
+              }
+            </p>
+          )}
         </>
-
       )}
-
       <label
         htmlFor="description"
         className={`${styles["cc-label"]} ${styles["cc-label--description"]}`}
       >
-        Description<RequiredStar />
+        Description
+        <RequiredStar />
       </label>
       <Textarea
         {...register("description")}
@@ -114,7 +145,6 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
           {errors.description.message as string}
         </p>
       )}
-
       <label
         htmlFor="goals"
         className={`${styles["cc-label"]} ${styles["cc-label--goals"]}`}
@@ -137,12 +167,12 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
           {errors.goals.message as string}
         </p>
       )}
-
       <label
         htmlFor="difficultyId"
         className={`${styles["cc-label"]} ${styles["cc-label--difficulty"]}`}
       >
-        Difficulté<RequiredStar />
+        Difficulté
+        <RequiredStar />
       </label>
       <div
         className={`${styles["cc-field"]} ${styles["cc-field--difficulty"]}`}
@@ -163,21 +193,21 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
               <SelectContent
                 className={`${styles["cc-select-content"]} ${styles["cc-select-content--difficulty"]}`}
               >
-                <SelectItem value="1" className={`${styles["cc-select-item"]}`}>
-                  Facile
-                </SelectItem>
-                <SelectItem value="2" className={`${styles["cc-select-item"]}`}>
-                  Moyen
-                </SelectItem>
-                <SelectItem value="3" className={`${styles["cc-select-item"]}`}>
-                  Difficile
-                </SelectItem>
-                <SelectItem value="4" className={`${styles["cc-select-item"]}`}>
-                  Expert
-                </SelectItem>
-                <SelectItem value="5" className={`${styles["cc-select-item"]}`}>
-                  Légendaire
-                </SelectItem>
+                {loadingDifficulties ? (
+                  <Loader size="sm" />
+                ) : (
+                  [...(difficulties ?? [])]
+                    .sort((a, b) => a.difficultyIndex - b.difficultyIndex)
+                    .map((diff) => (
+                      <SelectItem
+                        key={diff.difficultyIndex}
+                        value={String(diff.id)}
+                        className={`${styles["cc-select-item"]}`}
+                      >
+                        {diff.name}
+                      </SelectItem>
+                    ))
+                )}
               </SelectContent>
             </Select>
           )}
@@ -190,7 +220,6 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
           {errors.difficultyId.message as string}
         </p>
       )}
-
       <div
         className={`${styles["cc-field-group"]} ${styles["cc-field-group--category"]} flex flex-col gap-2`}
       >
@@ -198,7 +227,8 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
           htmlFor="challengeCategoryId"
           className={`${styles["cc-label"]} ${styles["cc-label--category"]}`}
         >
-          Catégorie<RequiredStar />
+          Catégorie
+          <RequiredStar />
         </label>
         <Controller
           name="challengeCategoryId"
@@ -217,23 +247,27 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
               <SelectContent
                 className={`${styles["cc-select-content"]} ${styles["cc-select-content--category"]}`}
               >
-                {challengeCategories.map((c) => (
-                  <SelectItem
-                    key={c.id}
-                    value={String(c.id)}
-                    className={`${styles["cc-select-item"]} ${styles["cc-select-item--category"]}`}
-                  >
-                    <span className="flex items-center gap-2">
-                      <span
-                        className="inline-block w-3 h-3 rounded-full"
-                        style={{ backgroundColor: c.colorCode }}
-                      />
-                      {c.id}
-                      {" - "}
-                      {c.name}
-                    </span>
-                  </SelectItem>
-                ))}
+                {loadingCategories ? (
+                  <Loader size="sm" />
+                ) : (
+                  [...(categories ?? [])].map((category) => (
+                    <SelectItem
+                      key={category.name}
+                      value={String(category.id)}
+                      className={`${styles["cc-select-item"]} ${styles["cc-select-item--category"]}`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span
+                          className="inline-block w-3 h-3 rounded-full"
+                          style={{
+                            backgroundColor: category.colorCode ?? undefined,
+                          }}
+                        />
+                        {category.name}
+                      </span>{" "}
+                    </SelectItem>
+                  ))
+                )}
               </SelectContent>
             </Select>
           )}
@@ -246,41 +280,69 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
           </p>
         )}
       </div>
-
-      <label
-        htmlFor="hints"
-        className={`${styles["cc-label"]} ${styles["cc-label--hints"]}`}
-      >
+      <label className={`${styles["cc-label"]} ${styles["cc-label--hints"]}`}>
         Indices
       </label>
-      <Textarea
-        {...register("hints")}
-        maxLength={MAX}
-        className={cn(styles["cc-textarea"], styles["cc-textarea--hints"])}
-        id="hints"
-        name="hints"
-        placeholder="Décris comment réaliser ton challenge"
-      />
-      <p className={`${styles["cc-counter"]} ${styles["cc-counter--hints"]}`}>
-        {hints.length}/{MAX}
-      </p>
-      {errors.hints && (
-        <p className={`${styles["cc-error"]} ${styles["cc-error--hints"]}`}>
-          {errors.hints.message as string}
-        </p>
-      )}
-
-      <label htmlFor="demo"
-        className={"cc-label"}
+      {fields.map((field, index) => {
+        const value = watch(`hints.${index}.description`) ?? "";
+        const hintError = (errors as FieldErrors<ChallengeFormValues>).hints?.[
+          index
+        ]?.description;
+        return (
+          <div key={field.id} className="flex flex-col gap-1">
+            <Textarea
+              {...register(`hints.${index}.description`)}
+              maxLength={MAX}
+              aria-label={`Indice ${index + 1}`}
+              placeholder={`Indice ${index + 1}`}
+              className={cn(
+                styles["cc-textarea"],
+                styles["cc-textarea--hints"],
+              )}
+            />
+            <span
+              className={`${styles["cc-counter"]} ${styles["cc-counter--hints"]}`}
+            >
+              {value.length}/{MAX}
+            </span>
+            {hintError && (
+              <p
+                className={`${styles["cc-error"]} ${styles["cc-error--hints"]}`}
+              >
+                {hintError.message as string}
+              </p>
+            )}
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              className="self-end"
+              onClick={() => remove(index)}
+            >
+              Supprimer
+            </Button>
+          </div>
+        );
+      })}
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="self-start"
+        onClick={() => append({ description: "" })}
       >
+        Ajouter un indice
+      </Button>
+      <label htmlFor="demo" className={"cc-label"}>
         Démonstration
       </label>
-      <Input 
-      placeholder="https://youtube.com/watch?v=..."
-      {...register("demo")}
+      <Input
+        placeholder="https://youtube.com/watch?v=..."
+        {...register("demo")}
       />
-
-      <p className="ml-2 text-xs text-text-muted font-light"><RequiredStar /> {": champs requis"}</p>
+      <p className="ml-2 text-xs text-text-muted font-light">
+        <RequiredStar /> {": champs requis"}
+      </p>
       <Button
         type="submit"
         className={`${styles["cc-button"]} ${styles["cc-button--submit"]}`}
@@ -288,5 +350,5 @@ export function ChallengeForm<T extends ChallengeFormValues | CreateChallengeFor
         {mode === "create" ? "Créer ton challenge" : "Modifier le challenge"}
       </Button>
     </form>
-  )
+  );
 }

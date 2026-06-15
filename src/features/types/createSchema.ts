@@ -5,7 +5,7 @@ export interface EditChallengePayload {
   goals?: string;
   difficultyId: number;
   challengeCategoryId: number;
-  hints?: string;
+  hints?: string[];
   status?: string;
   closesAt?: Date;
 }

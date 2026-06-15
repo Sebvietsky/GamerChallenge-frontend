@@ -18,6 +18,11 @@ interface User {
   }[];
 }
 
+export interface Hints {
+  description: string;
+  position: number;
+}
+
 export interface Challenge {
   id: number;
   title: string;
@@ -27,10 +32,7 @@ export interface Challenge {
   createdAt: string;
   status: string;
   demo?: string;
-  hints: [{
-    position: number,
-    description: string
-  }];
+  hints: Hints[];
   goals: string;
 
   game: {
@@ -90,7 +92,7 @@ export interface Participation {
   _count: {
     votes: number;
   };
-  challenge: Challenge
+  challenge: Challenge;
 }
 
 export interface queryParams {
@@ -112,6 +114,13 @@ export enum DifficultyName {
   legendary = "Légendaire",
 }
 
+export interface Difficulties {
+  id: number;
+  name: DifficultyName;
+  colorCode: string | null;
+  difficultyIndex: number;
+}
+
 export enum CategoryName {
   speedrun = "Speedrun",
   noHit = "No Hit",
@@ -121,6 +130,12 @@ export enum CategoryName {
   pvp = "PvP",
   coop = "Coopératif",
   lowPercent = "Low%",
+}
+
+export interface ChallengeCategories {
+  id: number;
+  name: CategoryName;
+  colorCode: string | null;
 }
 
 export enum OrderBy {

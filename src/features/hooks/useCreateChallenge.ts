@@ -7,7 +7,9 @@ import { toast } from "sonner";
 import { challengeSchema } from "../schema/challenge.schema";
 
 const createChallengeSchema = challengeSchema.extend({
-  igdbId: z.number({ required_error: "Choisissez un jeu"}).min(1, "Choisissez un jeu"),
+  igdbId: z
+    .number({ required_error: "Choisissez un jeu" })
+    .min(1, "Choisissez un jeu"),
 });
 
 type CreateChallengeFormValues = z.infer<typeof createChallengeSchema>;
@@ -23,7 +25,7 @@ export const useCreateChallenge = () => {
       goals: "",
       difficultyId: undefined,
       challengeCategoryId: undefined,
-      hints: "",
+      hints: [],
       demo: "",
     },
   });
@@ -38,7 +40,7 @@ export const useCreateChallenge = () => {
         ...values,
         demo: values.demo || undefined,
         goals: values.goals || undefined,
-        hints: values.hints || undefined,
+        hints: values.hints?.map((hints) => hints.description),
       });
       toast.success("Challenge créé avec succès !");
       router.push("/");
