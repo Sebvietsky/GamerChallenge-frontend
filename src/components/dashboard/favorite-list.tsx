@@ -9,6 +9,7 @@ import type { ChallengeItem } from "@/features/types/challenge.type";
 
 // STYLE
 import { homeStyles as styles } from "@/styles/global.styles";
+import Image from "next/image";
 
 type FavoriteChallengeListProps = {
   favoriteChallenges: ChallengeItem[];
