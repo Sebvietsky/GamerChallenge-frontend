@@ -21,7 +21,7 @@ export function FavoriteList({
   hasMoreData = false,
   loadMoreChallenges = async () => {},
 }: FavoriteChallengeListProps) {
-  return favoriteChallenges ? (
+  return favoriteChallenges.length > 0 ? (
     <InfiniteScroll
       dataLength={favoriteChallenges.length}
       next={loadMoreChallenges}

@@ -42,14 +42,11 @@ export async function getFavoriteChallenges({
     },
   );
 
-  console.log(response);
-
   if (!response.ok) {
-    throw new Error("Impossible de récupérer les challenges");
+    return [];
   }
 
   const json: PaginatedResponse = await response.json();
 
-  console.log(json);
   return json.data;
 }
