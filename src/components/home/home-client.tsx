@@ -15,6 +15,7 @@ import { PageLoader } from "../ui/page-loader";
 import { useAuth } from "@/features/hooks/useAuth";
 import { useDashboard } from "@/features/hooks/useDashboard";
 import Link from "next/link";
+import { XPBar } from "../dashboard/xp-bar";
 
 interface HomeClientProps {
   queryParams: queryParams;
@@ -56,15 +57,12 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
               {dashboard.nextLevel && (
                 <div className={styles.userBannerProgress}>
                   <div className={styles.userBannerProgressLabel}>
-                    <span>{dashboard.reputation} rep</span>
+                    <span>
+                      {dashboard.currentXp} / {dashboard.xpRequired} XP
+                    </span>
                     <span>→ {dashboard.nextLevel}</span>
                   </div>
-                  <div className={styles.userBannerProgressBar}>
-                    <div
-                      className={styles.userBannerProgressFill}
-                      style={{ width: `${dashboard.progressPercent}%` }}
-                    />
-                  </div>
+                  <XPBar progress={dashboard.progressPercent} />
                 </div>
               )}
 
