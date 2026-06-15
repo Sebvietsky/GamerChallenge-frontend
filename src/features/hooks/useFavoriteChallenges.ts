@@ -76,7 +76,6 @@ export function useFavoriteChallenges() {
     if (!hasMoreData || isFetchingMore.current || loading) return;
     isFetchingMore.current = true;
     const nextPage = page + 1;
-    console.log("HELLO");
     try {
       const data = await getFavoriteChallenges({
         page: nextPage,
