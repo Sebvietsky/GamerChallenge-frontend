@@ -35,7 +35,7 @@ export const challengeDetail = {
 
   description: "w-full text-sm md:text-base text-text-muted",
 
-  buttonContainer: "flex justify-end gap-1.5 px-0 md:px-4 lg:px-8",
+  buttonContainer: "flex justify-end items-center gap-1.5 px-0 md:px-4 lg:px-8",
 
   iconButton: "w-8 h-8 rounded-full",
 

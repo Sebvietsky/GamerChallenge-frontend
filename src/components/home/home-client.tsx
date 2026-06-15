@@ -14,6 +14,7 @@ import type { OrderBy, queryParams } from "@/features/types/challenge.type";
 import { PageLoader } from "../ui/page-loader";
 import { useAuth } from "@/features/hooks/useAuth";
 import { useDashboard } from "@/features/hooks/useDashboard";
+import Link from "next/link";
 
 interface HomeClientProps {
   queryParams: queryParams;
@@ -38,7 +39,7 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
   }, [isLoading]);
 
   return (
-    <main className={styles.page}>
+    <section className={styles.page}>
       <div className={styles.layout}>
         <section className={styles.header}>
           {!loading && dashboard && (
@@ -95,13 +96,17 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
               </p>
 
               <div className={styles.showcaseActions}>
-                <button className={styles.primaryButton}>
-                  Créer un challenge
-                </button>
+                <Link href={"/create-challenge"}>
+                  <button className={styles.primaryButton}>
+                    Créer un challenge
+                  </button>
+                </Link>
 
-                <button className={styles.secondaryButton}>
-                  Voir les challenges
-                </button>
+                <Link href={"/challenges"}>
+                  <button className={styles.secondaryButton}>
+                    Voir les challenges
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -137,6 +142,6 @@ export default function HomeClient({ queryParams }: HomeClientProps) {
           </section>
         </section>
       </div>
-    </main>
+    </section>
   );
 }

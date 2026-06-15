@@ -18,6 +18,11 @@ interface User {
   }[];
 }
 
+export interface Hints {
+  position: number,
+  description: string,
+}
+
 export interface Challenge {
   id: number;
   title: string;
@@ -27,7 +32,7 @@ export interface Challenge {
   createdAt: string;
   status: string;
   demo?: string;
-  hints: string;
+  hints: Hints[];
   goals: string;
 
   game: {

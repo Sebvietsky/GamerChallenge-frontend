@@ -71,9 +71,9 @@ export default async function ParticipationPage({
             </p>
           </div>
         </div>
-        <div className="flex justify-between gap-1">
+        <div className="flex flex-row-reverse justify-between gap-1">
           {isAuthorOrAdmin && (
-            <div className="flex content-center gap-2 my-2">
+            <div className="flex order-2 content-center gap-2 my-2">
               <Link href={`/participations/${slug}/edit`}>
                 <Button type="button" className="text-xs">
                   <Pen />
