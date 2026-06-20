@@ -36,9 +36,16 @@ export function AuthProvider({
     // Garantit que fetchWithAuth peut déclencher la déconnexion à tout moment.
     setSessionExpiredHandler(() => setUser(null));
 
+    const hasAuthHint = document.cookie
+      .split("; ")
+      .some((c) => c.startsWith("isAuthenticated="));
+
     // fetchWithAuth gère le refresh silencieux si l'access token est expiré.
     async function checkAuth() {
       try {
+        if (!hasAuthHint) {
+          return;
+        }
         const res = await fetchWithAuth(`${API_URL}/auth/me`);
         if (res.ok) setUser(await res.json());
       } catch {
