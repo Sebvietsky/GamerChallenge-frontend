@@ -46,7 +46,6 @@ export default async function ChallengeDetailPage({
 }: ChallengeDetailPageProps) {
   const { slug } = await params;
   const data = await getChallengeBySlug(slug);
-  console.log(data);
   // Sorted hints for display
   const hints = Array.isArray(data?.hints) ? data.hints : [];
   const sortedHints = hints.slice().sort((a, b) => a.position - b.position);
@@ -181,7 +180,7 @@ export default async function ChallengeDetailPage({
             <Lightbulb /> Indices ({hints.length})
           </h2>
           <div>
-            {/* TODO Change by challenge.hints */}
+
             <Accordion type="single" collapsible>
               {sortedHints.map((s) => (
                 <AccordionItem key={s.position} value={`indice ${s.position}`}>
